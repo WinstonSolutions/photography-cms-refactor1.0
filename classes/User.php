@@ -31,4 +31,19 @@ class User {
         }
         return false;
     }
+    
+    // 获取所有用户
+    public function getAllUsers() {
+        $sql = "SELECT * FROM users ORDER BY created_at DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    // 删除用户
+    public function deleteUser($user_id) {
+        $sql = "DELETE FROM users WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([$user_id]);
+    }
 } 

@@ -1,1 +1,119 @@
- 
+/* 重置样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* 导航栏样式 */
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* 画廊网格样式 */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.gallery-item {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.gallery-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 首页样式 */
+.banner {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+    margin-bottom: 2rem;
+}
+
+.cta-buttons {
+    margin-top: 2rem;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #333;
+    color: #333;
+}
+
+/* 认证页面样式 */
+.auth-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.auth-form {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.auth-links {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* 画廊页面样式 */
+.gallery-filters {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.filter-form select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.pagination {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.pagination .btn {
+    margin: 0 0.2rem;
+}
+
+.pagination .btn.active {
+    background: #666;
+}
+
+.image-info {
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.author {
+    color: #666;
+    font-size: 0.9rem;
+} 
