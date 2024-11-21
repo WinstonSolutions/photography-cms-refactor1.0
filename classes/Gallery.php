@@ -8,9 +8,10 @@ class Gallery {
     
     // 获取最新图片
     public function getLatestImages($limit = 12) {
-        $sql = "SELECT * FROM images ORDER BY created_at DESC LIMIT ?";
+        $limit = (int)$limit;
+        $sql = "SELECT * FROM images ORDER BY created_at DESC LIMIT $limit";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$limit]);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     

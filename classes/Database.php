@@ -5,7 +5,7 @@ class Database {
     
     // 私有构造函数，防止直接创建对象
     private function __construct() {
-        $config = require_once '../config/database.php';
+        $config = require_once(__DIR__ . '/../config/database.php');
         try {
             $this->connection = new PDO(
                 "mysql:host={$config['host']};dbname={$config['dbname']};charset={$config['charset']}",
