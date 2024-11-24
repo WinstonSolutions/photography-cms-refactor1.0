@@ -34,28 +34,31 @@ include __DIR__ . '/../includes/header.php';
 
 <div class="auth-container">
     <div class="auth-form">
-        <h1>登录</h1>
+        <h1>Login</h1>
         
         <?php if($error): ?>
             <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
         
-        <form method="POST">
+        <form method="POST" class="login-form">
             <div class="form-group">
-                <label for="email">邮箱</label>
-                <input type="email" id="email" name="email" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
             </div>
             
             <div class="form-group">
-                <label for="password">密码</label>
-                <input type="password" id="password" name="password" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
             </div>
             
-            <button type="submit" class="btn">登录</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
         </form>
         
         <div class="auth-links">
-            <p>还没有账号？ <a href="/register">立即注册</a></p>
+            <p>Don't have an account? <a href="register.php" class="register-link">Register Now</a></p>
+            <p><a href="/forgot-password" class="forgot-password-link">Forgot Password?</a></p>
         </div>
     </div>
 </div>

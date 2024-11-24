@@ -1,13 +1,6 @@
 <?php
-session_start();
-require_once 'includes/functions.php';
-require_once 'classes/User.php';
-
-// 如果已经登录，重定向到首页
-if(is_logged_in()) {
-    header('Location: /');
-    exit();
-}
+require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../classes/User.php';
 
 $error = '';
 
@@ -18,62 +11,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirm_password = $_POST['confirm_password'];
     
     if ($password !== $confirm_password) {
-        $error = '两次输入的密码不一致';
+        $error = 'Passwords do not match.';
     } else {
         $user = new User();
-        if ($user->register($username, $email, $password)) {
-            // 注册成功后自动登录
-            $logged_user = $user->login($email, $password);
-            $_SESSION['user_id'] = $logged_user['id'];
-            $_SESSION['username'] = $logged_user['username'];
-            $_SESSION['user_role'] = $logged_user['role'];
-            header('Location: /');
+        $registration_success = $user->register($username, $email, $password);
+        
+        if ($registration_success) {
+            header('Location: /login');
             exit();
         } else {
-            $error = '注册失败，邮箱可能已被使用';
+            $error = 'Registration failed. Please try again.';
         }
     }
 }
 
-include 'includes/header.php';
+include __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="auth-container">
     <div class="auth-form">
-        <h1>注册新账号</h1>
+        <h1>Register</h1>
         
         <?php if($error): ?>
             <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
         
-        <form method="POST">
+        <form method="POST" class="register-form">
             <div class="form-group">
-                <label for="username">用户名</label>
-                <input type="text" id="username" name="username" required>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
             </div>
             
             <div class="form-group">
-                <label for="email">邮箱</label>
-                <input type="email" id="email" name="email" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
             </div>
             
             <div class="form-group">
-                <label for="password">密码</label>
-                <input type="password" id="password" name="password" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
             </div>
             
             <div class="form-group">
-                <label for="confirm_password">确认密码</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm your password">
             </div>
             
-            <button type="submit" class="btn">注册</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-user-plus"></i> Register
+            </button>
         </form>
         
         <div class="auth-links">
-            <p>已有账号？ <a href="/login">立即登录</a></p>
+            <p>Already have an account? <a href="login.php" class="login-link">Login Now</a></p>
         </div>
     </div>
 </div>
 
-<?php include 'includes/footer.php'; ?> 
+<?php include __DIR__ . '/../includes/footer.php'; ?> 

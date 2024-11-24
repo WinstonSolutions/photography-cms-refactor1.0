@@ -1,11 +1,18 @@
-/* 基础样式 */
-body, html {
+/* Reset default margins and paddings */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: Arial, sans-serif;
 }
 
-/* 头部样式 */
+/* Header styles */
 .header {
     position: relative;
     width: 100%;
@@ -24,37 +31,73 @@ body, html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
     text-align: center;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* 导航栏样式 */
+/* Main content styles */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    min-height: calc(100vh - 200px - 300px); /* viewport height - header height - footer height */
+}
+
+/* Footer styles */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 0;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 15px;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Navigation styles */
 .navbar {
     background-color: #333;
-    padding: 15px 0;
+    padding: 10px 0;
 }
 
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
-/* 下拉菜单样式 */
+/* Dropdown styles */
 .dropdown {
     position: relative;
     display: inline-block;
 }
 
 .dropbtn {
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     border: none;
-    background: none;
     cursor: pointer;
-    font-size: 16px;
+    border-radius: 4px;
 }
 
 .dropdown-content {
@@ -81,120 +124,14 @@ body, html {
     display: block;
 }
 
-.main-content {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-/* Footer 样式 */
-.footer {
-    background-color: #333;
-    color: #fff;
-    padding: 40px 0 20px;
-    margin-top: 50px;
-    width: 100%;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 40px;
-}
-
-.footer-section {
-    flex: 0 1 30%;
-    padding: 0 20px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.footer-section h3 {
-    color: #fff;
-    margin-bottom: 20px;
-    font-size: 1.4em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.footer-section p {
-    line-height: 1.8;
-    color: #ccc;
-    margin: 0 auto;
-    max-width: 300px;
-}
-
-.social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
-}
-
+/* Social icons styles */
 .social-icons a {
-    color: #fff;
-    font-size: 24px;
-    transition: transform 0.3s ease, color 0.3s ease;
+    color: white;
+    margin-right: 15px;
+    font-size: 20px;
+    text-decoration: none;
 }
 
 .social-icons a:hover {
-    color: #ddd;
-    transform: translateY(-3px);
-}
-
-.footer-section i {
-    margin-right: 10px;
-    color: #ccc;
-    width: 20px;
-    text-align: center;
-}
-
-.footer-bottom {
-    text-align: center;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #444;
-}
-
-.footer-bottom p {
-    color: #ccc;
-    font-size: 0.9em;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .footer-content {
-        flex-direction: column;
-        gap: 40px;
-    }
-    
-    .footer-section {
-        flex: 1;
-        padding: 0;
-        width: 100%;
-    }
-} 
-
-/* Footer 样式修改 */
-.footer-section:last-child {  /* 针对Contact Info部分 */
-    text-align: left;  /* 左对齐 */
-}
-
-.footer-section:last-child p {
-    margin: 0;  /* 移除默认外边距 */
-    max-width: none;  /* 移除最大宽度限制 */
-    line-height: 2;  /* 增加行高 */
-}
-
-.footer-section:last-child i {
-    width: 25px;  /* 增加图标宽度，使其对齐 */
-    margin-right: 15px;  /* 增加图标右侧间距 */
-    text-align: center;  /* 图标居中对齐 */
-}
-
-.footer-section:last-child br {
-    margin-bottom: 5px;  /* 增加行间距 */
+    color: #4CAF50;
 } 

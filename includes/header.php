@@ -16,6 +16,7 @@ $categories = $category->getAllCategories();
     <title>Photography CMS - Home</title>
     <link rel="stylesheet" href="../public/css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
     <!-- 头部区域 -->

@@ -1,22 +1,25 @@
 <?php
+
+require_once __DIR__ . '/../config/config.php'; // 确保配置文件中有数据库连接信息
+require_once __DIR__ . '/../classes/Database.php'; // 确保路径正确
+
 class User {
     private $db;
     
     public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
+        $this->db = new Database(); // 实例化 Database 类
     }
     
     // 用户注册
     public function register($username, $email, $password) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $query = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
+        $this->db->query($query);
+        $this->db->bind(':username', $username);
+        $this->db->bind(':email', $email);
+        $this->db->bind(':password', $hashed_password);
         
-        try {
-            $stmt = $this->db->prepare($sql);
-            return $stmt->execute([$username, $email, $hashed_password]);
-        } catch(PDOException $e) {
-            return false;
-        }
+        return $this->db->execute();
     }
     
     // 用户登录
