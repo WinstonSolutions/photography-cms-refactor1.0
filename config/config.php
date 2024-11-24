@@ -3,14 +3,7 @@
  * Applicationonfiguration
 */
 return [
-   // Database configuration
-   'db' => [
-       'host' => 'localhost',
-       'dbname' => 'photography_cms',
-       'username' => 'root',
-       'password' => '',
-       'charset' => 'utf8mb4'
-   ],
+  
    
    // Site configuration
    'site' => [

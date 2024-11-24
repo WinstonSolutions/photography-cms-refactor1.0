@@ -5,7 +5,7 @@ class Database {
     
     // Private constructor to prevent direct creation
     private function __construct() {
-        $config = require_once(__DIR__ . '/../config/database.php');
+        $config = require_once(__DIR__ . '/../config/database.php');//use the config file to connect to the database
         try {
             $this->connection = new PDO(
                 "mysql:host={$config['host']};dbname={$config['dbname']};charset={$config['charset']}",

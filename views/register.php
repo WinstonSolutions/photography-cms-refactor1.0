@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $registration_success = $user->register($username, $email, $password);
         
         if ($registration_success) {
-            header('Location: /login');
+            header('Location: login.php');
             exit();
         } else {
             $error = 'Registration failed. Please try again.';
