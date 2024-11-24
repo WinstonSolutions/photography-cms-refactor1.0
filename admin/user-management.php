@@ -1,13 +1,9 @@
 <?php
-session_start();
-require_once '../includes/functions.php';
-require_once '../classes/User.php';
 
-// 检查是否登录且是管理员
-if (!is_logged_in() || !is_admin()) {
-    header('Location: /login.php');
-    exit();
-}
+require_once  __DIR__ . '/../includes/functions.php';
+require_once  __DIR__ . '/../classes/User.php';
+
+
 
 $user = new User();
 $users = $user->getAllUsers(); // 需要在User类中添加此方法

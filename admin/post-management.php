@@ -1,7 +1,7 @@
 <?php
-session_start();
-require_once '../includes/functions.php';
-require_once '../classes/Post.php';
+
+require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../classes/Post.php';
 
 // Check admin access
 if (!is_logged_in() || !is_admin()) {
