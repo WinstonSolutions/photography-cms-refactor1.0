@@ -1,0 +1,188 @@
+2 - Content Management System CRUD	
+	
+As an administrative or logged-in user I should be able to: 	
+2.1	Create new page by entering the required data into an HTML form.
+	- Database must include at least 10 pages. These can include 10 "posts" or "products"
+	- Data must be real. No key mashing or any variations of lorem ipsum allowed.
+	- Only admin / logged-in users can reach this form and create new pages.
+2.2	Edit and delete existing page.
+	- Only admin / logged-in users can reach and use edit / delete forms.
+2.3	View a list of pages that already exist in the system with the ability to sort this list. (List should be sorted at a database level not on client.)
+	- List can be sorted by title, created at date and updated by date. (Or any three columns approved by your instructor.)
+	- There must be some indication of the type of sorting currently applied to the list.
+	- Only admin / logged-in users can view and sort this list of pages.
+2.4	Create a list of categories that apply to the pages in your system and assign categories to existing pages.
+	- Categories must be implemented using a separate categories table with a 1-to-many  or many-to-many association with your pages table.
+	- Users must be able to Create and Update categories in this table using an HTML form. (Deleting categories is optional.)
+	- Assigning categories to pages should be implemented by adding a drop-down list box (HTML Select Element) to the pages CRUD.
+	- Only admin / logged-in users can CRUD categories and assign them to pages.
+2.5	View and moderate comments on pages submitted by non-admins.
+	View and moderate comments on pages submitted by non-admins.
+	- Comment moderation can take the form of deleting comments, hiding them from public view, or "disemvoweling" comments.
+	- Only admin users can moderate comments.
+2.6	Make uses of a WYSIWYG editor when adding or editing page data.
+	- What You See Is What You Get editing is added to your page create and update forms for the page content.
+	- The addition of WYSIWYG editing should not break how pages are displayed.
+	- String sanitization may need to be modified or removed for the WYSIWYG content.
+	Note: A few possible JS WYSIWYG libraries: TinyMCE, CKEditor, Summernote, WYSIHTML5, Quill.
+	
+As a non-administrative  user I should be able to: 	
+2.7 	Navigate the available pages created by admin or logged-in users.
+	- User should be able to see a menu, list or table of links to all available Content. These links must be generated from the database.
+	- Clicking on any of the provided links will take the user to that particular content item (usually a row in your database).
+2.8	Navigate the pages by way of their associated categories.
+	- There must be some mechanism that allows the user to navigate to all the pages associated with a particular category.
+	Note: For example, there could be a menu that lists all available categories and links to a list of all pages for each category.
+2.9	Comment on specific pages.
+	- Each page should contain a form where a user can submit a comment.
+	- If you are allowing non-logged in users to comment then you need to allow them to submit a name with their comment.
+	- Once a comment is submitted it should be displayed along with the page.
+	- Comments should be displayed in reverse chronological order.
+	- Comment forms must *not* be WYSIWYG.
+2.10	Submit a CAPTCHA to prove one's humanity while submitting a comment.
+	- Embedded CAPTCHAs like reCAPTCHA are not permitted.
+	- The CAPTCHA must randomly generated and displayed as an image.
+	- PHP session must be used to verify if the user entered the CAPTCHA correctly.
+	- If the CAPTCHA is not submitted correctly the users comment should not be accepted.
+	- If the CAPTCHA is not submitted correctly the users should be given another chance without having to retype their comment.
+	
+3 - Content Search	
+	
+As a user of the website I should be able to:	
+3.1	Search for specific pages by keyword using a search form.
+	- A search form is available at the top of all pages.
+	- The keyword or keywords entered into the search form will be used to search for pages that include the provided word or phrase.
+	- At a minimum the page name will be searched using a SQL LIKE query with wildcards, but other page properties can also be searched.
+	- The search will result in a list of links to all found pages.
+3.2	Search for specific pages by keyword while limiting the search results to a specific category of pages.
+	- Assumes page categories have been implemented as defined in feature 2.4.
+	- This is not a search for categories. The user provided keywords are still used to search for pages. 
+	- The search form includes a dropdown menu to restrict the search to pages from a specific category.
+	- The provided category dropdown includes all page categories from feature 2.4, along with the option to search all categories.
+	- When "all categories" is selected search works as in 3.1, otherwise search results only include pages from selected category.
+3.3	Search results are paginated.
+	- Pagination is the process of dividing up your search results into discrete pages. Each of your result pages should include at most N search results.
+	- Below each page of search results is a set of links to all available pages, along with previous page and next page links (if applicable).
+	- Pagination links are only shown if there are greater than N search results. 
+	- For testing purposes it should be easy to switch the value of N to a smaller or larger number.
+	
+4 - Validation and Security (Marked During Your Final Marking Session)	
+	
+As the CMS programmer I should have: 	
+4.1 	Implemented validation rules that are used on the data provided when creating and updating pages.
+	- You must be able to show your instructor where you handle validation when creating and updating pages.
+	- You must have validations in place that reflect the type of data being submitted for all form fields, or...
+	- For any form fields that do not have validations you must be able to explain why you feel validations are not required.
+4.2 	Sanitized and validated the numericality of all ids retrieved from GET or POST parameters used in SQL queries.
+	- You must be able to show your instructor all the places where user provided (GET/POSTed) ids are used in your code.
+	- For each of these ids you must show how they are being santized and validated as numeric.
+4.3 	Sanitized all strings retrieved from GET or POST parameters to prevent HTML injection attacks.
+	- You must be able to show your instructor where you handle the sanitization of all strings that are submitted by the user.
+	
+5 - Layout and Design	
+	
+As the CMS programmer I should have: 	
+5.1	Created valid markup and CSS for all pages on the website.
+	- You must be in the final week of the project to receive marks for this requirement.
+	- All of the HTML documents validate using the W3C HTML5 validator.
+	- All of the stylesheets included in your website that you coded yourself must validate using the W3C CSS validator.
+5.2	Designed a consistent look and feel for all pages on the website.
+	- You must be in the final week of the project to receive marks for this requirement.
+	- It must be obvious that you've spent time crafting your layout. You will be asked to give an overview of your stylesheet(s).
+5.3	Built all markup and styling around a CSS framework like Bootstrap.
+	- It is recommended that you use Bootstrap 4 but you can also look into Semantic UI, Materialize, or Bulma.
+	- Your layout is built using the CSS frameworks grid system. Your instructor may ask you to demonstrate your understand of the grid.
+	- Your main navigation menu is available on all pages and is based on one of the CSS framework's menu navigation components.
+5.4	Created page permalink URLs that include ids and are SEO friendly.
+	- You've read the extra reading material on SEO permalinks. (Follow this link.)
+	- The URLs for all your pages include both an id and a some "slug" text.
+	- Admins can specify the "slug" text to use when creating or updating pages. (The slug can be a separate property or based on the title.)
+	- Spaces in the "slug" text should be automatically convert into dashes when creating or updating pages. 
+	- If either the id or the "slug" text in the URL is changed the URL should no longer work.
+5.5	Implemented enhanced "super pretty" permalinks.
+	- You've read the extra reading material on 'pretty' SEO permalinks. (Follow this link.)
+	- You've already implemented SEO friendly permalinks as described in 5.4
+	- The "super pretty" permalinks are implemented using Apache mod rewrite rules.
+	- All extra punctuation (&, =, +, and ?) have been removed from the URL.
+	- The path portion of the URL should follow this format /id/slug-text/ where id is a numberic id and slug-text is the permalink "slug" text.
+	
+6 - Image Uploads and Image Processing	
+	
+As an administrative or logged-in user I should be able to: 	
+6.1 	Add an image to a page by way of a form upload. (Reminder: A page is defined as a database-backed entity in your CMS.)
+	- Images can be added when creating and updating pages.
+	- Images are optional. Pages can still be created and updated without adding an image.
+	- Uploaded images must be tested for “image-ness” as shown in the course notes.
+	- Uploads that pass this "image-ness" test are moved to an uploads folder and with their filename added to a row in an images table.
+	- Uploads that do not pass the "image-ness" test will be gracefully rejected and will not end up in the file system or database.
+6.2	Remove an associated image from a page.
+	- Images can be removed from a page via the page update form. (A "delete" checkbox is recommended.)
+	- Pages without associated images will not include the option to remove an image when updating the page.
+	- When an image is removed from a page the image will be removed from the database and from the file system.
+6.3	Automatically resized images when uploaded.
+	- Image resizing must be handled by PHP, not CSS. (In other words, the image filesize should change when resized.)
+	- Image resizing can be manually coded using the PHP "gd" methods. A 3rd party library or composer package can also be used.
+	
+As a user of the website I should be able to:	
+6.4 	View the image associated with a page when navigating pages.
+	- Pages that have an associated image should display the image using an HTML image tag.
+	- Pages without images (or pages whose images have been removed) should not include an HTML image tag.
+	
+7 - Administrative Logins	
+	
+As the CMS programmer I should ensure that: 	
+7.1 	Only admins can perform admin page CUD tasks.
+	- Create, Update, Delete that only the highest level of user would be able to perform (like a manage users area)
+	- The security could be as simple as using the provided auth script from the blog assignment, or more complex as defined below.
+7.2	Usernames & passwords are stored in a users table with CRUD admin access.
+	- Logins as specified in requirement 7.4 must be implemented to receive this mark.
+	- Admin users must have the ability to view all registered users, add users, update users, and delete users.
+7.3	Passwords stored in the user table are hashed and salted. 
+	- Database logins as specified in requirement 7.2 and 7.4 must be implemented to receive this mark.
+	- Password salting and hashing must be performed during user registration using PHP's password_hash function.
+	- Passwords must be verified during the login process using PHP's password_verify function.
+	
+As a user of the website I should be able to:	
+7.4	- Logins are handled by way of an HTML form submitted to a PHP script.
+	- There must be some sort of message or indication that the login was successful.
+	- If the username and/or the password was incorrect the user should be shown a login failure message.
+	- PHP session should be used to remember successfully logged in users.
+	- There must also be some way for the user to log out which also involve PHP session.
+	
+7.5	Register for a login account by providing and username and a password.
+	- Registrations are handled by way of an HTML form submitted to a PHP script.
+	- User registration will involve submitting an email address and a password. 
+	- The registration form should ask the user to submit their password twice, using an input of type password.
+	- If the two passwords submitted by the user do not match they should be shown an error message and asked to try again.
+	
+8 - Advanced Web Dev Technologies	
+	
+As the CMS programmer I used this technology to implement a "non-trival" feature (ONLY TWO PERMITTED):	
+8.1	AJAX
+	- Before implementing an feature using AJAX you've received approval to proceed from your instructor. 
+	- The AJAX feature you implement should not be the username check provided in the course notes. 
+8.2	3rd Party API
+	- Before implementing an feature using a 3rd party API you've received approval to proceed from your instructor.
+8.3	PHP Generated Email (Instead of using a real SMTP server you can use a service like mailtrap.io)
+	- Before implementing an feature using PHP Generated Email you've received approval to proceed from your instructor.
+8.4	Advanced Coding Practices
+	- A discretionary mark awarded by your instructor for an interesting feature you've implemented that doesn't fit in another requirement.
+8.5	Epic Fail
+	- A discretionary mark awarded for a well documented failure. 
+	- You'll need a series of git commits to document your battle along with URLs to the resources you used to try to solve the problem.
+8.6	React
+	- A React component is added to enhance or introduce a feature to the CMS. 
+	
+9 - Deployment, Dependency Management and Version Control	
+	
+As the CMS programmer you should ensure that:	
+9.1	You can deploy your CMS to a shared host, a VPS, or a cloud service.
+	- You've deployed your PHP scripts to an online server and they are now accessible via a public URL.
+	- You've migrated your database tables and any require rows to an online MySQL server accessible by your PHP scripts.
+9.2	Your project makes use of the Composer package management system.
+	- You can explain what Composer is and what benefits it offers compared to manually adding 3rd party code to your project.
+	- Your project makes use of two or more Composer packages.
+9.3	You've been using Git to keep your project source code under control.
+	- You've made at least 20 commits (over time) to your project repository in one or more branches.
+	- Each commit should be accompanied by a well-written commit message detailing the intent behind the code changes being captured.
+	- Your project has been linked to a private online repo on Github or Bitbucket.

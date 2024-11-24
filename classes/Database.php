@@ -3,7 +3,7 @@ class Database {
     private $connection;
     private static $instance = null;
     
-    // 私有构造函数，防止直接创建对象
+    // Private constructor to prevent direct creation
     private function __construct() {
         $config = require_once(__DIR__ . '/../config/database.php');
         try {
@@ -14,11 +14,11 @@ class Database {
             );
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $e) {
-            die("连接失败: " . $e->getMessage());
+            die("Connection failed: " . $e->getMessage());
         }
     }
     
-    // 获取数据库实例（单例模式）
+    // Get database instance (Singleton pattern)
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -26,7 +26,7 @@ class Database {
         return self::$instance;
     }
     
-    // 获取数据库连接
+    // Get database connection
     public function getConnection() {
         return $this->connection;
     }

@@ -2,7 +2,7 @@
 $config = require_once 'config/config.php';
 ?>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +16,14 @@ $config = require_once 'config/config.php';
                 <a href="/photography-cms/"><?php echo $config['site_name']; ?></a>
             </div>
             <ul class="nav-links">
-                <li><a href="/photography-cms/">首页</a></li>
-                <li><a href="/photography-cms/gallery">画廊</a></li>
+                <li><a href="/photography-cms/">Home</a></li>
+                <li><a href="/photography-cms/gallery">Gallery</a></li>
                 <?php if(isset($_SESSION['user_id'])): ?>
-                    <li><a href="/photography-cms/admin">管理后台</a></li>
-                    <li><a href="/photography-cms/logout">退出</a></li>
+                    <li><a href="/photography-cms/admin">Admin</a></li>
+                    <li><a href="/photography-cms/logout">Logout</a></li>
                 <?php else: ?>
-                    <li><a href="/photography-cms/login">登录</a></li>
-                    <li><a href="/photography-cms/register">注册</a></li>
+                    <li><a href="/photography-cms/login">Login</a></li>
+                    <li><a href="/photography-cms/register">Register</a></li>
                 <?php endif; ?>
             </ul>
         </nav>

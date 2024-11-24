@@ -34,6 +34,29 @@ try {
     $db->exec("INSERT INTO users (username, email, password, role) 
                VALUES ('admin', 'admin@example.com', '$admin_password', 'admin')");
     
+    // 创建分类表
+    $db->exec("CREATE TABLE IF NOT EXISTS categories (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(50) NOT NULL,
+        description TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )");
+    
+    // 创建posts表
+    $db->exec("CREATE TABLE IF NOT EXISTS posts (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        content TEXT,
+        slug VARCHAR(255) NOT NULL,
+        user_id INT NOT NULL,
+        category_id INT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+    )");
+    
     echo "数据库表创建成功！<br>";
     echo "管理员账户：<br>";
     echo "邮箱: admin@example.com<br>";
