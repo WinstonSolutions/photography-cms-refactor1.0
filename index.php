@@ -67,7 +67,7 @@
     <img id="bgImage" class="bg-image" src="./img/background.jpeg" alt="Background">
     
     <!-- CMS入口链接 -->
-    <a href="admin/login.php" id="cmsEnter" class="cms-enter">ACCESS THE CMS</a>
+    <a href="./views/home.php" id="cmsEnter" class="cms-enter">ACCESS THE CMS</a>
 
     <script>
         // 动画序列控制

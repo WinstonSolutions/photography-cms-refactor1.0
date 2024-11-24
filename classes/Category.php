@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/Database.php';
+
 class Category {
     private $db;
     
@@ -19,14 +21,19 @@ class Category {
     }
     
     public function getAllCategories() {
-        $sql = "SELECT c.*, COUNT(p.id) as posts_count 
-                FROM categories c 
-                LEFT JOIN posts p ON c.id = p.category_id 
-                GROUP BY c.id 
-                ORDER BY c.name";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $sql = "SELECT c.*, COUNT(i.id) as posts_count 
+                    FROM categories c 
+                    LEFT JOIN images i ON c.id = i.category 
+                    GROUP BY c.id 
+                    ORDER BY c.name";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            error_log("Category::getAllCategories Error: " . $e->getMessage());
+            return [];
+        }
     }
     
     public function getCategory($id) {
