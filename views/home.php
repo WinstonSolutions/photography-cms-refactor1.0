@@ -14,97 +14,15 @@ $categories = $category->getAllCategories();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photography CMS - Home</title>
-    <style>
-        /* 基础样式 */
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        /* 头部样式 */
-        .header {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            overflow: hidden;
-        }
-
-        .header-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .header-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        /* 导航栏样式 */
-        .navbar {
-            background-color: #333;
-            padding: 15px 0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        /* 下拉菜单样式 */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropbtn {
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="../public/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <!-- 头部区域 -->
     <div class="header">
         <img src="../img/homeheader.jpg" alt="Header Image" class="header-image">
         <div class="header-text">
-            <h1>Welcome to Photography CMS</h1>
+            <h1>Welcome to Wentao Zhao's Photography CMS</h1>
             <p>Capture the moment, preserve the memory</p>
         </div>
     </div>
@@ -146,6 +64,38 @@ $categories = $category->getAllCategories();
     <div class="main-content">
         <!-- 这里可以添加其他内容 -->
     </div>
+
+    <!-- Footer 区域 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>A professional photography content management system designed to showcase and manage your precious moments.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="social-icons">  <!-- 新增social-icons容器 -->
+                    <a href="https://twitter.com/your-handle" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://tiktok.com/@your-handle" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://facebook.com/your-page" target="_blank"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>
+                    <i class="fa fa-phone"></i> +1 431 990 1234<br>
+                    <i class="fa fa-envelope"></i> wzhao8@academic.rrc.ca<br>
+                    <i class="fa fa-map-marker"></i> Winnipeg, Canada
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; <?php echo date('Y'); ?> Photography CMS. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         // 如果需要添加任何JavaScript功能
