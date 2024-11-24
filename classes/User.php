@@ -11,8 +11,8 @@ class User {
     }
     
     // 用户注册
-    public function register($username, $email, $password_hash) {
-        $query = "INSERT INTO users (username, email, password_hash) VALUES (:username, :email, :password_hash)";
+    public function register($username, $email, $password) {
+        $query = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
         
         // 使用 prepare 方法准备 SQL 语句
         $stmt = $this->db->prepare($query);
@@ -20,23 +20,32 @@ class User {
         // 绑定参数
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password_hash', $password_hash);
+        $stmt->bindParam(':password', $password);
         
         // 执行查询
         return $stmt->execute();
     }
     
     // 用户登录
-    public function login($email, $password_hash) {
+    public function login($email, $password) {
         $sql = "SELECT * FROM users WHERE email = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($user && password_verify($password_hash, $user['password_hash'])) {
-            return $user;
+        // 调试信息：检查查询结果
+        if (!$user) {
+            echo "No user found with this email.";
+            return false;
         }
-        return false;
+        
+        // 直接比较明文密码
+        if ($password !== $user['password']) {
+            echo "Password does not match.";
+            return false;
+        }
+        
+        return $user;
     }
     
     // 获取所有用户

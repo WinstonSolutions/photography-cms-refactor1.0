@@ -1,5 +1,6 @@
 <?php
 session_start();
+print_r($_SESSION);
 require_once '../config/config.php';
 require_once '../classes/Category.php';
 
@@ -49,9 +50,9 @@ $categories = $category->getAllCategories();
                 <button class="dropbtn">Identity</button>
                 <div class="dropdown-content">
                     <?php if(isset($_SESSION['user_id'])): ?>
-                        <a href="profile.php">Personal Information</a>
+                        <p>Hello <?php echo $_SESSION['username']; ?></p>
                         <a href="../admin/index.php">Backend Management</a>
-                        <a href="logout.php">Logout</a>
+                        <a href="home.php?action=logout">Logout</a>
                     <?php else: ?>
                         <a href="login.php">Login</a>
                         <a href="register.php">Register</a>

@@ -2,10 +2,11 @@
 
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../classes/User.php';
+include __DIR__ . '/../includes/header.php';
 
 // 如果已经登录，重定向到首页
 if(is_logged_in()) {
-    header('Location: /');
+    header('Location: home.php');
     exit();
 }
 
@@ -22,14 +23,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $logged_user['id'];
         $_SESSION['username'] = $logged_user['username'];
         $_SESSION['user_role'] = $logged_user['role'];
-        header('Location: /');
+        header('Location: home.php');
         exit();
     } else {
         $error = '邮箱或密码错误';
     }
 }
 
-include __DIR__ . '/../includes/header.php';
+
 ?>
 
 <div class="auth-container">
@@ -43,12 +44,12 @@ include __DIR__ . '/../includes/header.php';
         <form method="POST" class="login-form">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                <input type="email" id="email" name="email" required placeholder="Enter your email" value="">
             </div>
             
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                <input type="password" id="password" name="password" required placeholder="Enter your password" value="">
             </div>
             
             <button type="submit" class="btn btn-primary">
