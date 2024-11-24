@@ -85,84 +85,114 @@ $stats = [
         </div>
     </div>
 
-    <!-- 原有的仪表盘内容 -->
-    <div class="admin-dashboard">
-        <h1>CMS Administration</h1>
-        
-        <div class="admin-section">
-            <h2>Administration Home</h2>
-            
-            <div class="stats-grid">
-                <!-- 照片统计 -->
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-image"></i>
-                    </div>
-                    <div class="stat-number"><?php echo number_format($stats['photos']); ?></div>
-                    <div class="stat-label">Photos</div>
-                </div>
+    <!-- 在 body 标签内，admin-header 之后添加 -->
+    <div class="admin-container">
+        <!-- 左侧导航栏 -->
+        <div class="admin-sidebar">
+            <a href="index.php" class="sidebar-item active">
+                <i class="fas fa-desktop"></i> Dashboard
+            </a>
+            <div class="sidebar-group">
+                <a href="photo-add.php" class="sidebar-item">
+                    <i class="fas fa-folder"></i> Photos
+                </a>
+            </div>
+
+            <div class="sidebar-group">
+                <a href="albums.php" class="sidebar-item">
+                    <i class="fas fa-folder"></i> Albums
+                </a>
+            </div>
+
+            <div class="sidebar-group">
+                <a href="user-management.php" class="sidebar-item">
+                    <i class="fas fa-users"></i> Users
+                </a>
+            </div>
+        </div>
+
+        <!-- 主要内容区域 -->
+        <div class="admin-content">
+            <!-- 将原有的 admin-dashboard 移到这里 -->
+            <div class="admin-dashboard">
+                <h1>CMS Administration</h1>
                 
-                <!-- 相册统计 -->
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-folder"></i>
+                <div class="admin-section">
+                    <h2>Administration Home</h2>
+                    
+                    <div class="stats-grid">
+                        <!-- 照片统计 -->
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="stat-number"><?php echo number_format($stats['photos']); ?></div>
+                            <div class="stat-label">Photos</div>
+                        </div>
+                        
+                        <!-- 相册统计 -->
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-folder"></i>
+                            </div>
+                            <div class="stat-number"><?php echo number_format($stats['albums']); ?></div>
+                            <div class="stat-label">Albums</div>
+                        </div>
+                        
+                        <!-- 关键词统计 -->
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tags"></i>
+                            </div>
+                            <div class="stat-number"><?php echo number_format($stats['keywords']); ?></div>
+                            <div class="stat-label">Keywords</div>
+                        </div>
+                        
+                        <!-- 用户组统计 -->
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-number"><?php echo number_format($stats['groups']); ?></div>
+                            <div class="stat-label">Groups</div>
+                        </div>
+                        
+                        <!-- 页面访问量 -->
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-number"><?php echo number_format($stats['pages_seen']); ?>k</div>
+                            <div class="stat-label">Pages seen</div>
+                        </div>
+                        
+                        <!-- 插件数量 -->
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <div class="stat-number"><?php echo $stats['plugins']; ?></div>
+                            <div class="stat-label">Plugins</div>
+                        </div>
+                        
+                        <!-- 存储使用量 -->
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="stat-number"><?php echo $stats['storage']; ?></div>
+                            <div class="stat-label">Storage used</div>
+                        </div>
+                        
+                        <!-- 首张照片时间 -->
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-number"><?php echo $stats['first_photo']; ?></div>
+                            <div class="stat-label">First photo added</div>
+                        </div>
                     </div>
-                    <div class="stat-number"><?php echo number_format($stats['albums']); ?></div>
-                    <div class="stat-label">Albums</div>
-                </div>
-                
-                <!-- 关键词统计 -->
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-tags"></i>
-                    </div>
-                    <div class="stat-number"><?php echo number_format($stats['keywords']); ?></div>
-                    <div class="stat-label">Keywords</div>
-                </div>
-                
-                <!-- 用户组统计 -->
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-number"><?php echo number_format($stats['groups']); ?></div>
-                    <div class="stat-label">Groups</div>
-                </div>
-                
-                <!-- 页面访问量 -->
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="stat-number"><?php echo number_format($stats['pages_seen']); ?>k</div>
-                    <div class="stat-label">Pages seen</div>
-                </div>
-                
-                <!-- 插件数量 -->
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-puzzle-piece"></i>
-                    </div>
-                    <div class="stat-number"><?php echo $stats['plugins']; ?></div>
-                    <div class="stat-label">Plugins</div>
-                </div>
-                
-                <!-- 存储使用量 -->
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="stat-number"><?php echo $stats['storage']; ?></div>
-                    <div class="stat-label">Storage used</div>
-                </div>
-                
-                <!-- 首张照片时间 -->
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-number"><?php echo $stats['first_photo']; ?></div>
-                    <div class="stat-label">First photo added</div>
                 </div>
             </div>
         </div>
@@ -230,6 +260,88 @@ h2 {
     color: #666;
     font-size: 1.2em;
     margin-bottom: 15px;
+}
+
+.admin-container {
+    display: flex;
+    min-height: calc(100vh - 60px); /* 减去header高度 */
+}
+
+.admin-sidebar {
+    width: 250px;
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+.sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-item.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-item .fa-chevron-down {
+    margin-left: auto;
+    font-size: 0.8em;
+}
+
+.sidebar-submenu {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5px 0;
+}
+
+.sidebar-subitem {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px 8px 40px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s;
+    font-size: 0.9em;
+}
+
+.sidebar-subitem:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-subitem i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 20px;
+    background: #f0f2f5;
+}
+
+.sidebar-group {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 调整原有的样式 */
+.admin-dashboard {
+    max-width: none;
+    padding: 0;
 }
 </style>
 

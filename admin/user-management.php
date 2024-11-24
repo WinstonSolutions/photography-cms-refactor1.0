@@ -16,7 +16,6 @@ if (isset($_POST['delete_user'])) {
     exit();
 }
 
-include '../includes/header.php';
 ?>
 
 <div class="admin-content">
@@ -53,4 +52,3 @@ include '../includes/header.php';
     </table>
 </div>
 
-<?php include '../includes/footer.php'; ?> 
