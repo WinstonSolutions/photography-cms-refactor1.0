@@ -1,7 +1,7 @@
 <?php
-session_start();
-require_once 'includes/functions.php';
-require_once 'classes/User.php';
+
+require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../classes/User.php';
 
 // 如果已经登录，重定向到首页
 if(is_logged_in()) {
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-include 'includes/header.php';
+include __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="auth-container">
@@ -60,4 +60,4 @@ include 'includes/header.php';
     </div>
 </div>
 
-<?php include 'includes/footer.php'; ?> 
+<?php include __DIR__ . '/../includes/footer.php'; ?> 

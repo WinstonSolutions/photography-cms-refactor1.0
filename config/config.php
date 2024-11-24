@@ -1,10 +1,28 @@
 <?php
-// Website basic configuration
+/**
+ * Applicationonfiguration
+*/
 return [
-    'site_name' => 'Photography CMS',
-    'upload_path' => 'public/uploads/',
-    'allowed_image_types' => ['jpg', 'jpeg', 'png', 'gif'],
-    'max_file_size' => 5242880, // 5MB
-    'thumbnail_width' => 300,
-    'thumbnail_height' => 200
-]; 
+   // Database configuration
+   'db' => [
+       'host' => 'localhost',
+       'dbname' => 'photography_cms',
+       'username' => 'root',
+       'password' => '',
+       'charset' => 'utf8mb4'
+   ],
+   
+   // Site configuration
+   'site' => [
+       'name' => 'Photography Portfolio System',
+       'url' => 'http://localhost/photography-cms',
+       'upload_path' => __DIR__ . '/../uploads',
+       'thumbnail_path' => __DIR__ . '/../uploads/thumbnails'
+   ],
+   
+   // Security configuration
+   'security' => [
+       'salt' => 'your_random_salt_here',
+       'session_timeout' => 3600 // 1 hour
+   ]
+];
