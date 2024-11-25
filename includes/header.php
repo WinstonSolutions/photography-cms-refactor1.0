@@ -1,6 +1,6 @@
 <?php
 session_start();
-// print_r($_SESSION);
+print_r($_SESSION);
 require_once '../config/config.php';
 require_once '../classes/Category.php';
 

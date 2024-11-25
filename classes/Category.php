@@ -42,4 +42,12 @@ class Category {
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    
+    public function exists($id) {
+        $query = "SELECT COUNT(*) FROM categories WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0; // 返回是否存在
+    }
 } 

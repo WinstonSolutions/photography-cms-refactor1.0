@@ -89,23 +89,21 @@ $stats = [
     <div class="admin-container">
         <!-- 左侧导航栏 -->
         <div class="admin-sidebar">
-            <a href="index.php" class="sidebar-item active">
+            <a href="index.php" class="sidebar-item <?php echo !isset($_GET['page']) ? 'active' : ''; ?>">
                 <i class="fas fa-desktop"></i> Dashboard
             </a>
             <div class="sidebar-group">
-                <a href="photo-add.php" class="sidebar-item">
+                <a href="index.php?page=photos" class="sidebar-item <?php echo ($_GET['page'] ?? '') === 'photos' ? 'active' : ''; ?>">
                     <i class="fas fa-folder"></i> Photos
                 </a>
             </div>
-
             <div class="sidebar-group">
-                <a href="albums.php" class="sidebar-item">
+                <a href="index.php?page=albums" class="sidebar-item <?php echo ($_GET['page'] ?? '') === 'albums' ? 'active' : ''; ?>">
                     <i class="fas fa-folder"></i> Albums
                 </a>
             </div>
-
             <div class="sidebar-group">
-                <a href="user-management.php" class="sidebar-item">
+                <a href="index.php?page=users" class="sidebar-item <?php echo ($_GET['page'] ?? '') === 'users' ? 'active' : ''; ?>">
                     <i class="fas fa-users"></i> Users
                 </a>
             </div>
@@ -113,88 +111,26 @@ $stats = [
 
         <!-- 主要内容区域 -->
         <div class="admin-content">
-            <!-- 将原有的 admin-dashboard 移到这里 -->
-            <div class="admin-dashboard">
-                <h1>CMS Administration</h1>
-                
-                <div class="admin-section">
-                    <h2>Administration Home</h2>
-                    
-                    <div class="stats-grid">
-                        <!-- 照片统计 -->
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <div class="stat-number"><?php echo number_format($stats['photos']); ?></div>
-                            <div class="stat-label">Photos</div>
-                        </div>
-                        
-                        <!-- 相册统计 -->
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-folder"></i>
-                            </div>
-                            <div class="stat-number"><?php echo number_format($stats['albums']); ?></div>
-                            <div class="stat-label">Albums</div>
-                        </div>
-                        
-                        <!-- 关键词统计 -->
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-tags"></i>
-                            </div>
-                            <div class="stat-number"><?php echo number_format($stats['keywords']); ?></div>
-                            <div class="stat-label">Keywords</div>
-                        </div>
-                        
-                        <!-- 用户组统计 -->
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="stat-number"><?php echo number_format($stats['groups']); ?></div>
-                            <div class="stat-label">Groups</div>
-                        </div>
-                        
-                        <!-- 页面访问量 -->
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="stat-number"><?php echo number_format($stats['pages_seen']); ?>k</div>
-                            <div class="stat-label">Pages seen</div>
-                        </div>
-                        
-                        <!-- 插件数量 -->
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-puzzle-piece"></i>
-                            </div>
-                            <div class="stat-number"><?php echo $stats['plugins']; ?></div>
-                            <div class="stat-label">Plugins</div>
-                        </div>
-                        
-                        <!-- 存储使用量 -->
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-database"></i>
-                            </div>
-                            <div class="stat-number"><?php echo $stats['storage']; ?></div>
-                            <div class="stat-label">Storage used</div>
-                        </div>
-                        
-                        <!-- 首张照片时间 -->
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="stat-number"><?php echo $stats['first_photo']; ?></div>
-                            <div class="stat-label">First photo added</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            // 获取当前页面参数
+            $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+            
+            // 根据页面参数加载不同的内容
+            switch($page) {
+                case 'users':
+                    include __DIR__ . '/user-management.php';
+                    break;
+                case 'photos':
+                    include __DIR__ . '/post-management.php';
+                    break;
+                case 'albums':
+                    include __DIR__ . '/album-management.php';
+                    break;
+                default:
+                    // 显示默认的 dashboard 内容
+                    include __DIR__ . '/dashboard-content.php';
+            }
+            ?>
         </div>
     </div>
 </body>

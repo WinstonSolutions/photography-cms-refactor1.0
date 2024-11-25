@@ -1,139 +1,96 @@
 <?php
 
 require_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../classes/Post.php';
+require_once __DIR__ . '/../classes/Category.php';
+require_once __DIR__ . '/../classes/Image.php';
 
-// Check admin access
-if (!is_logged_in() || !is_admin()) {
-    header('Location: /photography-cms/login');
-    exit();
-}
 
-$post = new Post();
 
-// Handle form submission
+$category = new Category();
+$categories = $category->getAllCategories(); // Get all albums
+
+$error = '';
+$success = '';
+
+// Handle file upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['action'])) {
-        switch ($_POST['action']) {
-            case 'create':
-                $title = clean_input($_POST['title']);
-                $content = $_POST['content']; // Allow HTML from WYSIWYG
-                $category_id = (int)$_POST['category_id'];
-                $slug = create_slug($title);
-                
-                $post->create([
-                    'title' => $title,
-                    'content' => $content,
-                    'category_id' => $category_id,
-                    'slug' => $slug,
-                    'user_id' => $_SESSION['user_id']
-                ]);
-                break;
-                
-            case 'update':
-                // Similar to create but with ID
-                break;
-                
-            case 'delete':
-                $post->delete((int)$_POST['post_id']);
-                break;
+    $album_id = clean_input($_POST['album_id']);
+    print_r($album_id);
+    $file = $_FILES['image'];
+
+    // Check album_id is valid
+    if (!$category->exists($album_id)) { // Assuming you have a method to check if the album exists
+        $error = 'Selected album does not exist.';
+    } else {
+        // Check file format
+        $allowed_extensions = ['jpg', 'jpeg', 'png'];
+        $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+
+        if (!in_array(strtolower($file_extension), $allowed_extensions)) {
+            $error = 'Only JPG, JPEG, and PNG file formats are allowed.';
+        } else {
+            // Handle file upload
+            $image = new Image();
+            $upload_success = $image->upload($file, $album_id, $_SESSION['user_id']); // 传递 user_id
+
+            if ($upload_success) {
+                $success = 'File uploaded successfully!';
+            } else {
+                $error = 'File upload failed, please try again.';
+            }
         }
     }
 }
-
-// Get posts with sorting
-$sort = isset($_GET['sort']) ? clean_input($_GET['sort']) : 'created_at';
-$direction = isset($_GET['direction']) ? clean_input($_GET['direction']) : 'DESC';
-$posts = $post->getAllPosts($sort, $direction);
-
-include '../includes/header.php';
 ?>
 
-<!-- Add TinyMCE -->
-<script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/5/tinymce.min.js"></script>
-<script>
-    tinymce.init({
-        selector: '#content'
-    });
-</script>
-
-<div class="admin-content">
-    <h1>Post Management</h1>
+<div class="admin-dashboard">
+    <h1>Upload Photo</h1>
     
-    <!-- Create/Edit Form -->
-    <div class="post-form">
-        <h2>Create New Post</h2>
-        <form method="POST">
-            <input type="hidden" name="action" value="create">
-            
+    <div class="admin-section">
+        <h2>Select an Album</h2>
+        
+        <?php if ($error): ?>
+            <div class="error"><?php echo $error; ?></div>
+        <?php endif; ?>
+        
+        <?php if ($success): ?>
+            <div class="success"><?php echo $success; ?></div>
+        <?php endif; ?>
+        
+        <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="content">Content</label>
-                <textarea id="content" name="content"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="category">Category</label>
-                <select name="category_id" required>
-                    <?php foreach($categories as $category): ?>
-                        <option value="<?php echo $category['id']; ?>">
-                            <?php echo $category['name']; ?>
-                        </option>
+                <label for="album_id">Select an Album</label>
+                <select id="album_id" name="album_id" required>
+                    <option value="">Please select an album</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['name']); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
             
-            <button type="submit" class="btn">Create Post</button>
+            <div class="form-group">
+                <label for="image">Select File</label>
+                <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png" required>
+                <p>Allowed file types: .jpg, .jpeg, .png</p>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Upload Image</button>
         </form>
-    </div>
-    
-    <!-- Posts List -->
-    <div class="posts-list">
-        <h2>All Posts</h2>
-        
-        <!-- Sorting Controls -->
-        <div class="sort-controls">
-            Sort by:
-            <a href="?sort=title" class="<?php echo $sort === 'title' ? 'active' : ''; ?>">Title</a>
-            <a href="?sort=created_at" class="<?php echo $sort === 'created_at' ? 'active' : ''; ?>">Date Created</a>
-            <a href="?sort=updated_at" class="<?php echo $sort === 'updated_at' ? 'active' : ''; ?>">Date Updated</a>
-        </div>
-        
-        <table class="posts-table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Created</th>
-                    <th>Updated</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($posts as $post): ?>
-                    <tr>
-                        <td><?php echo $post['title']; ?></td>
-                        <td><?php echo $post['category_name']; ?></td>
-                        <td><?php echo $post['created_at']; ?></td>
-                        <td><?php echo $post['updated_at']; ?></td>
-                        <td>
-                            <a href="?edit=<?php echo $post['id']; ?>" class="btn btn-edit">Edit</a>
-                            <form method="POST" style="display: inline;">
-                                <input type="hidden" name="action" value="delete">
-                                <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
-                                <button type="submit" class="btn btn-delete" 
-                                        onclick="return confirm('Are you sure?')">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?> 
+<style>
+/* Add styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+</style>
+

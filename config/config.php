@@ -1,21 +1,12 @@
 <?php
-/**
- * Applicationonfiguration
-*/
-return [
-  
-   
-   // Site configuration
-   'site' => [
-       'name' => 'Photography Portfolio System',
-       'url' => 'http://localhost/photography-cms',
-       'upload_path' => __DIR__ . '/../uploads',
-       'thumbnail_path' => __DIR__ . '/../uploads/thumbnails'
-   ],
-   
-   // Security configuration
-   'security' => [
-       'salt' => 'your_random_salt_here',
-       'session_timeout' => 3600 // 1 hour
-   ]
+
+$config = [
+    
+    'upload_path' => __DIR__ . '/../uploads/', // 文件上传路径
+    'allowed_image_types' => ['jpg', 'jpeg', 'png'], // 允许的文件类型
+    'max_file_size' => 5 * 1024 * 1024, // 最大文件大小（5MB）
+    'thumbnail_width' => 150,          // 缩略图宽度
+    'thumbnail_height' => 150          // 缩略图高度
 ];
+
+return $config;
