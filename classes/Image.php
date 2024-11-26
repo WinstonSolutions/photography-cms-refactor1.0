@@ -32,18 +32,39 @@ class Image {
             throw new Exception('File upload failed');
         }
         
-        // 保存到数据库
-        $query = "INSERT INTO images (file_path, album_id, user_id, created_at) VALUES (:file_path, :album_id, :user_id, NOW())";
-        // print_r($query);
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':file_path', $upload_path);
-        $stmt->bindParam(':album_id', $album_id);
-        $stmt->bindParam(':user_id', $user_id);
+        // 返回上传的路径
+        return $upload_path; // 返回原图路径
+    }
 
-        if (!$stmt->execute()) {
-            throw new Exception('Failed to save image information to database');
-        }
-        
-        return true; // 上传成功
+    public function getAllImages() {
+        $query = "SELECT file_path, thumbnail_path, album_id FROM images"; // 获取所有图片，包括缩略图路径和相册ID
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Save both original and thumbnail paths to the database.
+     *
+     * @param string $file_path The path of the original image.
+     * @param string $thumbnail_path The path of the thumbnail image.
+     * @param int $album_id The ID of the album.
+     * @param int $user_id The ID of the user.
+     * @return bool True on success, false on failure.
+     */
+    public function saveImagePaths($file_path, $thumbnail_path, $album_id, $user_id) {
+        // 只存储相对路径
+        $relative_file_path = 'uploads/' . basename($file_path); // 只存储文件名
+        $relative_thumbnail_path = 'uploads/' . basename($thumbnail_path); // 只存储缩略图文件名
+
+        // Prepare the SQL statement
+        $stmt = $this->db->prepare("INSERT INTO images (file_path, thumbnail_path, album_id, user_id, created_at) VALUES (?, ?, ?, ?, NOW())");
+        $stmt->bindParam(1, $relative_file_path);
+        $stmt->bindParam(2, $relative_thumbnail_path);
+        $stmt->bindParam(3, $album_id);
+        $stmt->bindParam(4, $user_id);
+
+        // Execute the statement and return the result
+        return $stmt->execute();
     }
 } 

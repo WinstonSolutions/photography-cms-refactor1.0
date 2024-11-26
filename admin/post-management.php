@@ -4,7 +4,10 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../classes/Category.php';
 require_once __DIR__ . '/../classes/Image.php';
 
+require_once __DIR__ . '/../lib/php-image-resize/lib/ImageResize.php';
+require_once __DIR__ . '/../lib/php-image-resize/lib/ImageResizeException.php';
 
+use \Gumlet\ImageResize;
 
 $category = new Category();
 $categories = $category->getAllCategories(); // Get all albums
@@ -12,14 +15,16 @@ $categories = $category->getAllCategories(); // Get all albums
 $error = '';
 $success = '';
 
+// 获取配置
+$config = require __DIR__ . '/../config/config.php'; // 确保配置文件路径正确
+
 // Handle file upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $album_id = clean_input($_POST['album_id']);
-    print_r($album_id);
     $file = $_FILES['image'];
 
     // Check album_id is valid
-    if (!$category->exists($album_id)) { // Assuming you have a method to check if the album exists
+    if (!$category->exists($album_id)) {
         $error = 'Selected album does not exist.';
     } else {
         // Check file format
@@ -34,7 +39,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $upload_success = $image->upload($file, $album_id, $_SESSION['user_id']); // 传递 user_id
 
             if ($upload_success) {
-                $success = 'File uploaded successfully!';
+                // Create thumbnail version of the uploaded image
+                try {
+                    // 确保缩略图目录存在
+                    $thumbnail_dir = $config['upload_path']; // 使用 $config 中的路径
+                    if (!is_dir($thumbnail_dir)) {
+                        mkdir($thumbnail_dir, 0755, true); // 创建目录
+                    }
+                    
+                    $thumbnail_path = $thumbnail_dir . uniqid() . '_' . basename($file['name']); // 定义缩略图路径
+                    $imageResize = new ImageResize($upload_success); // Load the uploaded image
+                    $imageResize->resizeToWidth(150); // Resize to width of 150 pixels
+                    $imageResize->save($thumbnail_path); // Save the thumbnail
+
+                    // Save both original and thumbnail paths to the database
+                    $image->saveImagePaths($upload_success, $thumbnail_path, $album_id, $_SESSION['user_id']); // Save both paths
+
+                    $success = 'File uploaded successfully and thumbnail created!';
+                } catch (Exception $e) {
+                    $error = 'Thumbnail creation failed: ' . $e->getMessage() . ' at ' . $thumbnail_path;
+                }
             } else {
                 $error = 'File upload failed, please try again.';
             }
