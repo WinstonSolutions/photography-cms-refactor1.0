@@ -21,7 +21,7 @@ $config = require __DIR__ . '/../config/config.php'; // 确保配置文件路径
 // Handle file upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $album_id = clean_input($_POST['album_id']);
-    $file = $_FILES['image'];
+    $file = $_FILES['image']; // Get the uploaded file
 
     // Check album_id is valid
     if (!$category->exists($album_id)) {
@@ -53,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $imageResize->save($thumbnail_path); // Save the thumbnail
 
                     // Save both original and thumbnail paths to the database
-                    $image->saveImagePaths($upload_success, $thumbnail_path, $album_id, $_SESSION['user_id']); // Save both paths
+                    $filename = basename($file['name']); // 获取文件名
+                    $image->saveImagePaths($upload_success, $thumbnail_path, $album_id, $_SESSION['user_id'], $filename); // Save both paths and filename
 
                     $success = 'File uploaded successfully and thumbnail created!';
                 } catch (Exception $e) {

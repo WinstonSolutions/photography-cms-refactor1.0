@@ -50,19 +50,21 @@ class Image {
      * @param string $thumbnail_path The path of the thumbnail image.
      * @param int $album_id The ID of the album.
      * @param int $user_id The ID of the user.
+     * @param string $filename The filename of the image.
      * @return bool True on success, false on failure.
      */
-    public function saveImagePaths($file_path, $thumbnail_path, $album_id, $user_id) {
+    public function saveImagePaths($file_path, $thumbnail_path, $album_id, $user_id, $filename) {
         // 只存储相对路径
         $relative_file_path = 'uploads/' . basename($file_path); // 只存储文件名
         $relative_thumbnail_path = 'uploads/' . basename($thumbnail_path); // 只存储缩略图文件名
 
         // Prepare the SQL statement
-        $stmt = $this->db->prepare("INSERT INTO images (file_path, thumbnail_path, album_id, user_id, created_at) VALUES (?, ?, ?, ?, NOW())");
+        $stmt = $this->db->prepare("INSERT INTO images (file_path, thumbnail_path, album_id, user_id, filename, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
         $stmt->bindParam(1, $relative_file_path);
         $stmt->bindParam(2, $relative_thumbnail_path);
         $stmt->bindParam(3, $album_id);
         $stmt->bindParam(4, $user_id);
+        $stmt->bindParam(5, $filename); // 绑定文件名参数
 
         // Execute the statement and return the result
         return $stmt->execute();
