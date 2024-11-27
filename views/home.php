@@ -12,6 +12,9 @@ $albums = $albumModel->getAllAlbums();
 // 获取所有图片
 $images = $image->getAllImages(); // 假设你在 Image 类中有这个方法
 
+// 获取相册 ID
+$selectedAlbumId = isset($_GET['album_id']) ? intval($_GET['album_id']) : null;
+
 // 检查是否有注销请求
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     // 清除所有会话变量
@@ -30,25 +33,44 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 <div class="main-content" style="background-color: black; color: white; padding: 20px;">
     <h1>Albums</h1>
     
-    <?php foreach ($albums as $album): ?>
-        <h2><?php echo htmlspecialchars($album['name']); ?></h2>
+    <?php if ($selectedAlbumId !== null): ?>
+        <?php 
+        // 获取所选相册的信息
+        $selectedAlbum = $albumModel->getCategory($selectedAlbumId); // 获取相册信息
+        ?>
+        <h2><?php echo htmlspecialchars($selectedAlbum['name']); ?></h2> <!-- 只显示所选相册的名称 -->
         <div class="image-gallery">
             <?php foreach ($images as $img): ?>
                 <?php 
-                // 检查图片是否与当前相册相关联
-                $isAssociated = $image->isImageInAlbum($img['id'], $album['id']); // 新方法，用于检查图片与相册的关系
+                // 检查图片是否与所选相册相关联
+                $isAssociated = $image->isImageInAlbum($img['id'], $selectedAlbumId); // 使用所选相册 ID
                 if ($isAssociated): ?>
                     <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>')">
-                        <?php 
-                            // 生成正确的缩略图路径
-                            $thumbnail_path = htmlspecialchars($img['thumbnail_path']); // 使用相对路径
-                        ?>
-                        <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . $thumbnail_path; ?>" alt="Image" />
+                        <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>" alt="Image" />
+                        <p><?php echo htmlspecialchars($img['filename']); ?></p>
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>
         </div>
-    <?php endforeach; ?>
+    <?php else: ?>
+        <!-- 显示所有相册及其图片 -->
+        <?php foreach ($albums as $album): ?>
+            <h2><?php echo htmlspecialchars($album['name']); ?></h2>
+            <div class="image-gallery">
+                <?php foreach ($images as $img): ?>
+                    <?php 
+                    // 检查图片是否与当前相册相关联
+                    $isAssociated = $image->isImageInAlbum($img['id'], $album['id']); // 使用 img['id'] 来检查
+                    if ($isAssociated): ?>
+                        <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>')">
+                            <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>" alt="Image" />
+                            <p><?php echo htmlspecialchars($img['filename']); ?></p>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>
 
 <!-- 模态框 -->

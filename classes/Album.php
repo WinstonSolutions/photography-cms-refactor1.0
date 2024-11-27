@@ -50,4 +50,12 @@ class Album {
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
     }
+    
+    public function getCategory($id) {
+        $sql = "SELECT * FROM albums WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 } 

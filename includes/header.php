@@ -18,6 +18,7 @@ $albums = $album->getAllAlbums();
     <link rel="stylesheet" href="../public/css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../public/css/style.css">
+    
 </head>
 <body>
     <!-- 头部区域 -->
@@ -34,16 +35,17 @@ $albums = $album->getAllAlbums();
         <div class="nav-container">
             <!-- 相册下拉菜单 -->
             <div class="dropdown">
-                <button class="dropbtn">Albums</button>
+                <a href="home.php"  class="dropbtn">Albums</a>
                 <div class="dropdown-content">
                     <?php foreach($albums as $album): ?>
-                        <a href="gallery.php?album=<?php echo $album['id']; ?>">
+                        <a href="home.php?album_id=<?php echo $album['id']; ?>" class="nav-link">
                             <?php echo htmlspecialchars($album['name']); ?> 
-                            (<?php echo $album['posts_count']; ?>)
                         </a>
                     <?php endforeach; ?>
                 </div>
             </div>
+
+           
 
             <!-- 用户信息下拉菜单 -->
             <div class="dropdown">
