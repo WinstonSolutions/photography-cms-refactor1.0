@@ -37,7 +37,10 @@ class Image {
     }
 
     public function getAllImages() {
-        $query = "SELECT id, file_path, thumbnail_path, filename, created_at FROM images"; // 获取所有图片，包括缩略图路径、文件名和创建时间
+        $query = "SELECT i.id, i.file_path, i.thumbnail_path, i.filename, i.created_at, i.user_id, a.id AS album_id, a.name AS album_name 
+                  FROM images i 
+                  LEFT JOIN album_images ai ON i.id = ai.image_id 
+                  LEFT JOIN albums a ON ai.album_id = a.id"; // 获取所有图片的信息及其相册
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

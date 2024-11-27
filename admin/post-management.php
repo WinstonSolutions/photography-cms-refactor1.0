@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../classes/Album.php';
 require_once __DIR__ . '/../classes/Image.php';
+require_once __DIR__ . '/../classes/User.php';
 
 require_once __DIR__ . '/../lib/php-image-resize/lib/ImageResize.php';
 require_once __DIR__ . '/../lib/php-image-resize/lib/ImageResizeException.php';
@@ -71,6 +72,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+$imageModel = new Image();
+$albumModel = new Album();
+$userModel = new User();
+
+// 获取所有图片
+$images = $imageModel->getAllImages(); // 获取所有图片的信息，包括相册 ID
+
+// 检查是否有注销请求
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    // 清除所有会话变量
+    $_SESSION = [];
+    
+    // 销毁会话
+    session_destroy();
+    
+    // 重定向到登录页面
+    header('Location: login.php');
+    exit();
+}
+
+// 处理删除请求
+if (isset($_GET['delete_id'])) {
+    $deleteId = intval($_GET['delete_id']);
+    $imageToDelete = $imageModel->getImageById($deleteId); // 获取图片信息
+
+    // 检查用户权限
+    if ($imageToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['role'] === 'admin') {
+        $imageModel->deleteImage($deleteId); // 删除图片
+        header('Location: post-management.php'); // 重定向到当前页面
+        exit();
+    } else {
+        $error = "You do not have permission to delete this image.";
+    }
+}
 ?>
 
 <div class="admin-dashboard">
@@ -107,6 +143,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="btn btn-primary">Upload Image</button>
         </form>
     </div>
+
+    <div class="image-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Thumbnail</th>
+                    <th>Filename</th>
+                    <th>Uploaded By</th>
+                    <th>Created At</th>
+                    <th>Album</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($images as $img): ?>
+                    <tr>
+                        <td>
+                            <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>" alt="Image" style="width: 100px; height: auto;" />
+                        </td>
+                        <td><?php echo htmlspecialchars($img['filename']); ?></td>
+                        <td><?php echo htmlspecialchars($userModel->getUsernameById($img['user_id'])); ?></td> <!-- 获取用户名 -->
+                        <td><?php echo htmlspecialchars($img['created_at']); ?></td>
+                        <td><?php echo htmlspecialchars($img['album_name']); ?></td> <!-- 显示相册名称 -->
+                        <td>
+                            <?php if ($img['user_id'] === $_SESSION['user_id'] || $_SESSION['role'] === 'admin'): ?>
+                                <a href="?delete_id=<?php echo $img['id']; ?>" onclick="return confirm('Are you sure you want to delete this image?');">Delete</a>
+                            <?php else: ?>
+                                N/A
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <style>
@@ -121,6 +192,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 .success {
     color: green;
+}
+
+.image-list {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+th {
+    background-color: #f2f2f2;
 }
 </style>
 

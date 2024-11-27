@@ -62,4 +62,12 @@ class User {
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$user_id]);
     }
+    
+    public function getUsernameById($id) {
+        $sql = "SELECT username FROM users WHERE id = :id"; // 假设用户表名为 users
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetchColumn(); // 返回用户名
+    }
 } 
