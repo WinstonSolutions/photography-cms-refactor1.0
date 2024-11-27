@@ -37,7 +37,7 @@ class Image {
     }
 
     public function getAllImages() {
-        $query = "SELECT id, file_path, thumbnail_path, filename FROM images"; // 获取所有图片，包括缩略图路径和图片 ID
+        $query = "SELECT id, file_path, thumbnail_path, filename, created_at FROM images"; // 获取所有图片，包括缩略图路径、文件名和创建时间
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

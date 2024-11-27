@@ -15,6 +15,9 @@ $images = $image->getAllImages(); // 假设你在 Image 类中有这个方法
 // 获取相册 ID
 $selectedAlbumId = isset($_GET['album_id']) ? intval($_GET['album_id']) : null;
 
+// 获取排序方式
+$sortBy = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'filename_asc'; // 默认按 filename 升序排序
+
 // 检查是否有注销请求
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     // 清除所有会话变量
@@ -39,8 +42,38 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         $selectedAlbum = $albumModel->getCategory($selectedAlbumId); // 获取相册信息
         ?>
         <h2><?php echo htmlspecialchars($selectedAlbum['name']); ?></h2> <!-- 只显示所选相册的名称 -->
+        
+        <!-- 排序按钮 -->
+        <div>
+            <form method="GET" action="">
+                <input type="hidden" name="album_id" value="<?php echo $selectedAlbumId; ?>">
+                <label for="sort_by">Sort by:</label>
+                <select name="sort_by" id="sort_by" onchange="this.form.submit()">
+                    <option value="filename_asc" <?php echo $sortBy === 'filename_asc' ? 'selected' : ''; ?>>Filename A-Z</option>
+                    <option value="filename_desc" <?php echo $sortBy === 'filename_desc' ? 'selected' : ''; ?>>Filename Z-A</option>
+                    <option value="created_at_new_old" <?php echo $sortBy === 'created_at_new_old' ? 'selected' : ''; ?>>Created At New-Old</option>
+                    <option value="created_at_old_new" <?php echo $sortBy === 'created_at_old_new' ? 'selected' : ''; ?>>Created At Old-New</option>
+                </select>
+            </form>
+        </div>
+
         <div class="image-gallery">
-            <?php foreach ($images as $img): ?>
+            <?php 
+            // 根据选择的排序方式对图片进行排序
+            usort($images, function($a, $b) use ($sortBy) {
+                switch ($sortBy) {
+                    case 'filename_asc':
+                        return strcmp($a['filename'], $b['filename']);
+                    case 'filename_desc':
+                        return strcmp($b['filename'], $a['filename']);
+                    case 'created_at_new_old':
+                        return strtotime($b['created_at']) - strtotime($a['created_at']);
+                    case 'created_at_old_new':
+                        return strtotime($a['created_at']) - strtotime($b['created_at']);
+                }
+            });
+
+            foreach ($images as $img): ?>
                 <?php 
                 // 检查图片是否与所选相册相关联
                 $isAssociated = $image->isImageInAlbum($img['id'], $selectedAlbumId); // 使用所选相册 ID
