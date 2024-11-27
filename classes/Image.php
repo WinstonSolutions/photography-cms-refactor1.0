@@ -37,7 +37,7 @@ class Image {
     }
 
     public function getAllImages() {
-        $query = "SELECT file_path, thumbnail_path, album_id FROM images"; // 获取所有图片，包括缩略图路径和相册ID
+        $query = "SELECT file_path, thumbnail_path FROM images"; // 获取所有图片，包括缩略图路径和相册ID
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -48,25 +48,44 @@ class Image {
      *
      * @param string $file_path The path of the original image.
      * @param string $thumbnail_path The path of the thumbnail image.
-     * @param int $album_id The ID of the album.
      * @param int $user_id The ID of the user.
      * @param string $filename The filename of the image.
      * @return bool True on success, false on failure.
      */
-    public function saveImagePaths($file_path, $thumbnail_path, $album_id, $user_id, $filename) {
+    public function saveImagePaths($file_path, $thumbnail_path, $user_id, $filename) {
         // 只存储相对路径
         $relative_file_path = 'uploads/' . basename($file_path); // 只存储文件名
         $relative_thumbnail_path = 'uploads/' . basename($thumbnail_path); // 只存储缩略图文件名
 
         // Prepare the SQL statement
-        $stmt = $this->db->prepare("INSERT INTO images (file_path, thumbnail_path, album_id, user_id, filename, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+        $stmt = $this->db->prepare("INSERT INTO images (file_path, thumbnail_path, user_id, filename, created_at) VALUES (?, ?, ?, ?, NOW())");
         $stmt->bindParam(1, $relative_file_path);
         $stmt->bindParam(2, $relative_thumbnail_path);
-        $stmt->bindParam(3, $album_id);
-        $stmt->bindParam(4, $user_id);
-        $stmt->bindParam(5, $filename); // 绑定文件名参数
+        $stmt->bindParam(3, $user_id);
+        $stmt->bindParam(4, $filename); // 绑定文件名参数
 
         // Execute the statement and return the result
-        return $stmt->execute();
+        if ($stmt->execute()) {
+            return $this->db->lastInsertId(); // 返回新插入的图片 ID
+        }
+        return false; // 插入失败
+    }
+
+    public function associateImageWithAlbum($imageId, $albumId) {
+        // 插入图片与相册的关系到 album_images 表
+        $sql = "INSERT INTO album_images (album_id, image_id) VALUES (:album_id, :image_id)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':album_id', $albumId);
+        $stmt->bindParam(':image_id', $imageId);
+        return $stmt->execute(); // 返回执行结果
+    }
+
+    public function isImageInAlbum($imageId, $albumId) {
+        $sql = "SELECT COUNT(*) FROM album_images WHERE image_id = :image_id AND album_id = :album_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':image_id', $imageId);
+        $stmt->bindParam(':album_id', $albumId);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0; // 返回是否存在
     }
 } 

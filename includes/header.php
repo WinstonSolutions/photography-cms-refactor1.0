@@ -2,11 +2,11 @@
 session_start();
 // print_r($_SESSION);
 require_once '../config/config.php';
-require_once '../classes/Category.php';
+require_once '../classes/Album.php';
 
-// 实例化Category类获取所有分类
-$category = new Category();
-$categories = $category->getAllCategories();
+// 实例化Album类获取所有分类
+$album = new Album();
+$albums = $album->getAllAlbums();
 ?>
 
 <!DOCTYPE html>
@@ -36,10 +36,10 @@ $categories = $category->getAllCategories();
             <div class="dropdown">
                 <button class="dropbtn">Albums</button>
                 <div class="dropdown-content">
-                    <?php foreach($categories as $category): ?>
-                        <a href="gallery.php?category=<?php echo $category['id']; ?>">
-                            <?php echo htmlspecialchars($category['name']); ?> 
-                            (<?php echo $category['posts_count']; ?>)
+                    <?php foreach($albums as $album): ?>
+                        <a href="gallery.php?album=<?php echo $album['id']; ?>">
+                            <?php echo htmlspecialchars($album['name']); ?> 
+                            (<?php echo $album['posts_count']; ?>)
                         </a>
                     <?php endforeach; ?>
                 </div>

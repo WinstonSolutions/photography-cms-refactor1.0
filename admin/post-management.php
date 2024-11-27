@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../classes/Category.php';
+require_once __DIR__ . '/../classes/Album.php';
 require_once __DIR__ . '/../classes/Image.php';
 
 require_once __DIR__ . '/../lib/php-image-resize/lib/ImageResize.php';
@@ -9,8 +9,8 @@ require_once __DIR__ . '/../lib/php-image-resize/lib/ImageResizeException.php';
 
 use \Gumlet\ImageResize;
 
-$category = new Category();
-$categories = $category->getAllCategories(); // Get all albums
+$albumModel = new Album();
+$albums = $albumModel->getAllAlbums(); // 获取所有相册
 
 $error = '';
 $success = '';
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $file = $_FILES['image']; // Get the uploaded file
 
     // Check album_id is valid
-    if (!$category->exists($album_id)) {
+    if (!$albumModel->exists($album_id)) {
         $error = 'Selected album does not exist.';
     } else {
         // Check file format
@@ -54,7 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Save both original and thumbnail paths to the database
                     $filename = basename($file['name']); // 获取文件名
-                    $image->saveImagePaths($upload_success, $thumbnail_path, $album_id, $_SESSION['user_id'], $filename); // Save both paths and filename
+                    $imageId = $image->saveImagePaths($upload_success, $thumbnail_path, $_SESSION['user_id'], $filename); // Save both paths and filename
+
+                    // 关联图片与相册
+                    if ($imageId) {
+                        $image->associateImageWithAlbum($imageId, $album_id); // 关联图片与相册
+                    }
 
                     $success = 'File uploaded successfully and thumbnail created!';
                 } catch (Exception $e) {
@@ -87,8 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="album_id">Select an Album</label>
                 <select id="album_id" name="album_id" required>
                     <option value="">Please select an album</option>
-                    <?php foreach ($categories as $category): ?>
-                        <option value="<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['name']); ?></option>
+                    <?php foreach ($albums as $album): ?>
+                        <option value="<?php echo $album['id']; ?>"><?php echo htmlspecialchars($album['name']); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

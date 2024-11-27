@@ -1,13 +1,13 @@
 <?php
 include __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../classes/Image.php';
-require_once __DIR__ . '/../classes/Category.php';
+require_once __DIR__ . '/../classes/Album.php';
 
 $image = new Image();
-$category = new Category();
+$albumModel = new Album();
 
-// 获取所有类别
-$categories = $category->getAllCategories();
+// 获取所有相册
+$albums = $albumModel->getAllAlbums();
 
 // 获取所有图片
 $images = $image->getAllImages(); // 假设你在 Image 类中有这个方法
@@ -28,13 +28,16 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
 <!-- 主要内容区域 -->
 <div class="main-content" style="background-color: black; color: white; padding: 20px;">
-    <h1>Gallery</h1>
+    <h1>Albums</h1>
     
-    <?php foreach ($categories as $cat): ?>
-        <h2><?php echo htmlspecialchars($cat['name']); ?></h2>
+    <?php foreach ($albums as $album): ?>
+        <h2><?php echo htmlspecialchars($album['name']); ?></h2>
         <div class="image-gallery">
             <?php foreach ($images as $img): ?>
-                <?php if ($img['album_id'] == $cat['id']): // 根据类别过滤图片 ?>
+                <?php 
+                // 检查图片是否与当前相册相关联
+                $isAssociated = $image->isImageInAlbum($img['id'], $album['id']); // 新方法，用于检查图片与相册的关系
+                if ($isAssociated): ?>
                     <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>')">
                         <?php 
                             // 生成正确的缩略图路径

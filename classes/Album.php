@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/Database.php';
 
-class Category {
+class Album {
     private $db;
     
     public function __construct() {
@@ -20,7 +20,7 @@ class Category {
         return $stmt->execute([$data['name'], $data['description'], $id]);
     }
     
-    public function getAllCategories() {
+    public function getAllAlbums() {
         try {
             $sql = "SELECT a.*, COUNT(i.id) as posts_count 
                     FROM albums a 
@@ -31,12 +31,12 @@ class Category {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {
-            error_log("Category::getAllCategories Error: " . $e->getMessage());
+            error_log("Album::getAllAlbums Error: " . $e->getMessage());
             return [];
         }
     }
     
-    public function getCategory($id) {
+    public function getAlbum($id) {
         $sql = "SELECT * FROM albums WHERE id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
@@ -48,6 +48,6 @@ class Category {
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        return $stmt->fetchColumn() > 0; // 返回是否存在
+        return $stmt->fetchColumn() > 0;
     }
 } 
