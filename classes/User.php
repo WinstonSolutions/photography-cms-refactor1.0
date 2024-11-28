@@ -70,4 +70,12 @@ class User {
         $stmt->execute();
         return $stmt->fetchColumn(); // 返回用户名
     }
+    public function getUsersCount() {
+        $query = "SELECT COUNT(*) as count FROM users";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count'];    
+    }
+
 } 

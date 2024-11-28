@@ -106,4 +106,13 @@ class Image {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC); // 返回图片信息
     }
+
+    // 获取照片数量的方法
+    public function getPhotosCount() {
+        $query = "SELECT COUNT(*) as count FROM images"; // 查询照片数量
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); // 获取结果
+        return $result['count']; // 返回照片数量
+    }
 } 

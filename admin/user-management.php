@@ -3,7 +3,7 @@
 require_once  __DIR__ . '/../includes/functions.php';
 require_once  __DIR__ . '/../classes/User.php';
 
-session_start(); // Ensure session is started
+
 
 $user = new User();
 $users = $user->getAllUsers(); // Get all users
@@ -43,12 +43,14 @@ if (isset($_POST['delete_user'])) {
                         <td><?php echo htmlspecialchars($user['email']); ?></td>
                         <td><?php echo htmlspecialchars($user['role']); ?></td>
                         <td>
-                            <form method="POST" style="display: inline;">
-                                <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                                <button type="submit" name="delete_user" 
-                                        onclick="return confirm('Are you sure you want to delete this user?')" 
-                                        class="btn-delete">Delete</button>
-                            </form>
+                            <?php if ($_SESSION['user_role'] === 'admin'): ?>
+                                <a href="post-management.php?delete_id=<?php echo $img['id']; ?>"
+                                    onclick="return confirm('Are you sure you want to delete this image?');"
+                                    class="delete-btn delete-active">Delete</a>
+                            <?php else: ?>
+                                <a href="#" onclick="alert('You do not have permission to delete this User'); return false;"
+                                    class="delete-btn delete-inactive">Delete</a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -81,17 +83,28 @@ if (isset($_POST['delete_user'])) {
     background-color: #f5f5f5;
 }
 
-.btn-delete {
-    background-color: #dc3545; /* Bootstrap danger color */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
+.delete-btn {
+        padding: 5px 10px;
+        text-decoration: none;
+        border-radius: 3px;
+        transition: background-color 0.3s ease;
+    }
 
-.btn-delete:hover {
-    background-color: #c82333; /* Darker red on hover */
-}
+    .delete-active {
+        background-color: red;
+        color: white;
+        cursor: pointer;
+    }
+
+    .delete-active:hover {
+        background-color: darkred;
+    }
+
+    .delete-inactive {
+        background-color: #cccccc;
+        color: #666666;
+        cursor: not-allowed;
+    }
+
 </style>
 

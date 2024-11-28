@@ -4,19 +4,7 @@ require_once '../includes/functions.php';
 
 
 
-// 获取统计数据
-$stats = [
-    'photos' => 0,      // 从数据库获取照片总数
-    'albums' => 0,      // 从数据库获取相册总数
-    'keywords' => 0,    // 从数据库获取关键词总数
-    'groups' => 0,      // 从数据库获取用户组总数
-    'pages_seen' => 0,  // 从数据库获取页面访问量
-    'plugins' => 8,     // 插件数量
-    'storage' => '0GB', // 存储使用量
-    'first_photo' => '0 months' // 第一张照片上传时间
-];
 
-// TODO: 实现获取实际统计数据的逻辑
 ?>
 
 <!DOCTYPE html>

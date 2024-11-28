@@ -22,9 +22,9 @@ class Album {
     
     public function getAllAlbums() {
         try {
-            $sql = "SELECT a.*, COUNT(i.id) as posts_count 
+            $sql = "SELECT a.*, COUNT(ai.image_id) as posts_count 
                     FROM albums a 
-                    LEFT JOIN images i ON a.id = i.category 
+                    LEFT JOIN album_images ai ON a.id = ai.album_id 
                     GROUP BY a.id 
                     ORDER BY a.name";
             $stmt = $this->db->prepare($sql);
@@ -57,5 +57,13 @@ class Album {
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getAlbumsCount() {
+        $query = "SELECT COUNT(*) as count FROM albums";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count'];    
     }
 } 
