@@ -9,9 +9,13 @@ class Album {
     }
     
     public function create($data) {
-        $sql = "INSERT INTO albums (name, description) VALUES (?, ?)";
+        $name = $data['name'];
+        $description = $data['description'];
+        $userId = $data['user_id'];
+
+        $sql = "INSERT INTO albums (name, description, user_id) VALUES ('$name', '$description', '$userId')";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$data['name'], $data['description']]);
+        return $stmt->execute();
     }
     
     public function update($id, $data) {
@@ -22,11 +26,12 @@ class Album {
     
     public function getAllAlbums() {
         try {
-            $sql = "SELECT a.*, COUNT(ai.image_id) as posts_count 
+            $sql = "SELECT a.*, COUNT(ai.image_id) as posts_count, u.username, a.created_at 
                     FROM albums a 
                     LEFT JOIN album_images ai ON a.id = ai.album_id 
+                    LEFT JOIN users u ON a.user_id = u.id 
                     GROUP BY a.id 
-                    ORDER BY a.name";
+                    ORDER BY a.created_at DESC";
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

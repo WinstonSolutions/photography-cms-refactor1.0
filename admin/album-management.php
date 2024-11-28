@@ -1,5 +1,5 @@
 <?php
-
+// print_r($_SESSION);
 require_once '../includes/functions.php';
 require_once '../classes/Album.php';
 
@@ -15,21 +15,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             case 'create':
                 $name = clean_input($_POST['name']);
                 $description = clean_input($_POST['description']);
-                if ($Album->create(['name' => $name, 'description' => $description])) {
+                $userId = $_SESSION['user_id']; // 从会话中获取用户 ID
+                if ($Album->create(['name' => $name, 'description' => $description, 'user_id' => $userId])) {
                     $success = 'Album created successfully!'; // Success message
                 } else {
                     $error = 'Failed to create album.'; // Error message
                 }
                 break;
                 
-            case 'update':
+                
+            case 'delete':
                 $id = (int)$_POST['Album_id'];
-                $name = clean_input($_POST['name']);
-                $description = clean_input($_POST['description']);
-                if ($Album->update($id, ['name' => $name, 'description' => $description])) {
-                    $success = 'Album updated successfully!'; // Success message
+                if ($Album->delete($id)) {
+                    $success = 'Album deleted successfully!';
                 } else {
-                    $error = 'Failed to update album.'; // Error message
+                    $error = 'Failed to delete album.';
                 }
                 break;
         }
@@ -82,6 +82,8 @@ $Albums = $Albums->getAllAlbums();
                     <th>Name</th>
                     <th>Description</th>
                     <th>Posts Count</th>
+                    <th>Created By</th>
+                    <th>Created At</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -91,8 +93,17 @@ $Albums = $Albums->getAllAlbums();
                         <td><?php echo $cat['name']; ?></td>
                         <td><?php echo $cat['description']; ?></td>
                         <td><?php echo $cat['posts_count']; ?></td>
+                        <td><?php echo $cat['username']; ?></td>
+                        <td><?php echo $cat['created_at']; ?></td>
                         <td>
-                            <a href="?edit=<?php echo $cat['id']; ?>" class="btn btn-edit">Edit</a>
+                            <?php if ($_SESSION['user_role'] === 'admin'): ?>
+                                <a href="post-management.php?delete_id=<?php echo $img['id']; ?>"
+                                    onclick="return confirm('Are you sure you want to delete All Posts in this Album?');"
+                                    class="delete-btn delete-active">Delete</a>
+                            <?php else: ?>
+                                <a href="#" onclick="alert('You do not have permission to delete this Album'); return false;"
+                                    class="delete-btn delete-inactive">Delete</a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -100,4 +111,31 @@ $Albums = $Albums->getAllAlbums();
         </table>
     </div>
 </div>
+
+
+<style>
+.delete-btn {
+        padding: 5px 10px;
+        text-decoration: none;
+        border-radius: 3px;
+        transition: background-color 0.3s ease;
+    }
+
+    .delete-active {
+        background-color: red;
+        color: white;
+        cursor: pointer;
+    }
+
+    .delete-active:hover {
+        background-color: darkred;
+    }
+
+    .delete-inactive {
+        background-color: #cccccc;
+        color: #666666;
+        cursor: not-allowed;
+    }
+
+</style>
 
