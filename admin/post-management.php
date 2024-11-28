@@ -171,7 +171,7 @@ if (isset($_GET['delete_id'])) {
                         <td><?php echo htmlspecialchars($img['created_at']); ?></td>
                         <td><?php echo htmlspecialchars($img['album_name']); ?></td> <!-- 显示相册名称 -->
                         <td>
-                            <?php if ($img['user_id'] === $_SESSION['user_id'] || $_SESSION['role'] === 'admin'): ?>
+                            <?php if ($img['user_id'] === $_SESSION['user_id'] || $_SESSION['user_role'] === 'admin'): ?>
                                 <a href="post-management.php?delete_id=<?php echo $img['id']; ?>" onclick="return confirm('Are you sure you want to delete this image?');">Delete</a>
                             <?php else: ?>
                                 N/A

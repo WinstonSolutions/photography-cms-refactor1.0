@@ -81,7 +81,7 @@ $stats = [
         </div>
         <div class="header-right">
             <a href="#"><i class="fas fa-user"></i> <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'User'; ?></a>
-            <a href="../views/home.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <!-- <a href="../views/home.php"><i class="fas fa-sign-out-alt"></i> Logout</a> -->
         </div>
     </div>
 
