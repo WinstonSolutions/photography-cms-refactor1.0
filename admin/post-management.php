@@ -110,7 +110,7 @@ if (isset($_GET['delete_id'])) {
     // 检查用户权限
     if ($imageToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['role'] === 'admin') {
         if ($imageModel->deleteImage($deleteId)) { // 删除图片
-            header('Location: index.php?page=photos'); // 重定向到 photos 页面
+            header('Location: post-management.php'); // 重定向到 post-management 页面
             exit();
         } else {
             $error = "Failed to delete the image."; // 添加错误信息
@@ -180,7 +180,7 @@ if (isset($_GET['delete_id'])) {
                         <td><?php echo htmlspecialchars($img['album_name']); ?></td> <!-- 显示相册名称 -->
                         <td>
                             <?php if ($img['user_id'] === $_SESSION['user_id'] || $_SESSION['role'] === 'admin'): ?>
-                                <a href="?delete_id=<?php echo $img['id']; ?>" onclick="return confirm('Are you sure you want to delete this image?');">Delete</a>
+                                <a href="post-management.php?delete_id=<?php echo $img['id']; ?>" onclick="return confirm('Are you sure you want to delete this image?');">Delete</a>
                             <?php else: ?>
                                 N/A
                             <?php endif; ?>
