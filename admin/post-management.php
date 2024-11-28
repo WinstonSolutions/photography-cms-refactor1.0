@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (!is_dir($thumbnail_dir)) {
                         mkdir($thumbnail_dir, 0755, true); // 创建目录
                     }
-                    
+
                     $thumbnail_path = $thumbnail_dir . uniqid() . '_' . basename($file['name']); // 定义缩略图路径
                     $imageResize = new ImageResize($upload_success); // Load the uploaded image
                     $imageResize->resizeToWidth(150); // Resize to width of 150 pixels
@@ -85,10 +85,10 @@ $images = $imageModel->getAllImages(); // 获取所有图片的信息，包括�
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     // 清除所有会话变量
     $_SESSION = [];
-    
+
     // 销毁会话
     session_destroy();
-    
+
     // 重定向到登录页面
     header('Location: login.php');
     exit();
@@ -115,18 +115,18 @@ if (isset($_GET['delete_id'])) {
 
 <div class="admin-dashboard">
     <h1>Upload Photo</h1>
-    
+
     <div class="admin-section">
         <h2>Select an Album</h2>
-        
+
         <?php if ($error): ?>
             <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
-        
+
         <?php if ($success): ?>
             <div class="success"><?php echo $success; ?></div>
         <?php endif; ?>
-        
+
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="album_id">Select an Album</label>
@@ -137,13 +137,13 @@ if (isset($_GET['delete_id'])) {
                     <?php endforeach; ?>
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label for="image">Select File</label>
                 <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png" required>
                 <p>Allowed file types: .jpg, .jpeg, .png</p>
             </div>
-            
+
             <button type="submit" class="btn btn-primary">Upload Image</button>
         </form>
     </div>
@@ -154,9 +154,9 @@ if (isset($_GET['delete_id'])) {
                 <tr>
                     <th>Thumbnail</th>
                     <th>Filename</th>
-                    <th>Uploaded By</th>
                     <th>Created At</th>
                     <th>Album</th>
+                    <th>Uploaded By</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -164,17 +164,21 @@ if (isset($_GET['delete_id'])) {
                 <?php foreach ($images as $img): ?>
                     <tr>
                         <td>
-                            <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>" alt="Image" style="width: 100px; height: auto;" />
+                            <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>"
+                                alt="Image" style="width: 100px; height: auto;" />
                         </td>
                         <td><?php echo htmlspecialchars($img['filename']); ?></td>
-                        <td><?php echo htmlspecialchars($userModel->getUsernameById($img['user_id'])); ?></td> <!-- 获取用户名 -->
                         <td><?php echo htmlspecialchars($img['created_at']); ?></td>
                         <td><?php echo htmlspecialchars($img['album_name']); ?></td> <!-- 显示相册名称 -->
+                        <td><?php echo htmlspecialchars($userModel->getUsernameById($img['user_id'])); ?></td>
                         <td>
                             <?php if ($img['user_id'] === $_SESSION['user_id'] || $_SESSION['user_role'] === 'admin'): ?>
-                                <a href="post-management.php?delete_id=<?php echo $img['id']; ?>" onclick="return confirm('Are you sure you want to delete this image?');">Delete</a>
+                                <a href="post-management.php?delete_id=<?php echo $img['id']; ?>"
+                                    onclick="return confirm('Are you sure you want to delete this image?');"
+                                    class="delete-btn delete-active">Delete</a>
                             <?php else: ?>
-                                N/A
+                                <a href="#" onclick="alert('You do not have permission to delete this item'); return false;"
+                                    class="delete-btn delete-inactive">Delete</a>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -185,36 +189,59 @@ if (isset($_GET['delete_id'])) {
 </div>
 
 <style>
-/* Add styles */
-.form-group {
-    margin-bottom: 15px;
-}
+    /* Add styles */
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-.error {
-    color: red;
-}
+    .error {
+        color: red;
+    }
 
-.success {
-    color: green;
-}
+    .success {
+        color: green;
+    }
 
-.image-list {
-    margin-top: 20px;
-}
+    .image-list {
+        margin-top: 20px;
+    }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ccc;
-}
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ccc;
+    }
 
-th {
-    background-color: #f2f2f2;
-}
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .delete-btn {
+        padding: 5px 10px;
+        text-decoration: none;
+        border-radius: 3px;
+        transition: background-color 0.3s ease;
+    }
+
+    .delete-active {
+        background-color: red;
+        color: white;
+        cursor: pointer;
+    }
+
+    .delete-active:hover {
+        background-color: darkred;
+    }
+
+    .delete-inactive {
+        background-color: #cccccc;
+        color: #666666;
+        cursor: not-allowed;
+    }
 </style>
-
