@@ -74,8 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $imageModel = new Image();
-$albumModel = new Album();
-$userModel = new User();
+$userModel = new User(); // 实例化 User 类
 
 // 获取所有图片
 $images = $imageModel->getAllImages(); // 获取所有图片的信息，包括相册 ID
@@ -95,14 +94,17 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
 // 处理删除请求
 if (isset($_GET['delete_id'])) {
-    $deleteId = intval($_GET['delete_id']);
+    $deleteId = intval($_GET['delete_id']); // 获取要删除的图片 ID
     $imageToDelete = $imageModel->getImageById($deleteId); // 获取图片信息
 
     // 检查用户权限
     if ($imageToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['role'] === 'admin') {
-        $imageModel->deleteImage($deleteId); // 删除图片
-        header('Location: post-management.php'); // 重定向到当前页面
-        exit();
+        if ($imageModel->deleteImage($deleteId)) { // 删除图片
+            header('Location: index.php?page=photos'); // 重定向到 photos 页面
+            exit();
+        } else {
+            $error = "Failed to delete the image."; // 添加错误信息
+        }
     } else {
         $error = "You do not have permission to delete this image.";
     }
@@ -150,9 +152,9 @@ if (isset($_GET['delete_id'])) {
                 <tr>
                     <th>Thumbnail</th>
                     <th>Filename</th>
-                    <th>Uploaded By</th>
                     <th>Created At</th>
                     <th>Album</th>
+                    <th>Uploaded By</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -163,9 +165,9 @@ if (isset($_GET['delete_id'])) {
                             <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>" alt="Image" style="width: 100px; height: auto;" />
                         </td>
                         <td><?php echo htmlspecialchars($img['filename']); ?></td>
-                        <td><?php echo htmlspecialchars($userModel->getUsernameById($img['user_id'])); ?></td> <!-- 获取用户名 -->
                         <td><?php echo htmlspecialchars($img['created_at']); ?></td>
-                        <td><?php echo htmlspecialchars($img['album_name']); ?></td> <!-- 显示相册名称 -->
+                        <td><?php echo htmlspecialchars($img['album_name']); ?></td>
+                        <td><?php echo htmlspecialchars($userModel->getUsernameById($img['user_id'])); ?></td>
                         <td>
                             <?php if ($img['user_id'] === $_SESSION['user_id'] || $_SESSION['role'] === 'admin'): ?>
                                 <a href="?delete_id=<?php echo $img['id']; ?>" onclick="return confirm('Are you sure you want to delete this image?');">Delete</a>

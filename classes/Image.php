@@ -91,4 +91,19 @@ class Image {
         $stmt->execute();
         return $stmt->fetchColumn() > 0; // 返回是否存在
     }
+
+    public function deleteImage($id) {
+        $sql = "DELETE FROM images WHERE id = :id"; // 删除图片的 SQL 语句
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute(); // 返回执行结果
+    }
+
+    public function getImageById($id) {
+        $sql = "SELECT * FROM images WHERE id = :id"; // 获取图片信息的 SQL 语句
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC); // 返回图片信息
+    }
 } 
