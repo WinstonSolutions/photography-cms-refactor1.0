@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 // 清理输入数据
 function clean_input($data) {
     $data = trim($data);

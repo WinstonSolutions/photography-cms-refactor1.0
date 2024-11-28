@@ -1,5 +1,6 @@
 <?php
-session_start();
+// session_start();
+require_once __DIR__ . '/../includes/functions.php'; // 确保在这里调用 session_start()
 // print_r($_SESSION);
 require_once '../config/config.php';
 require_once '../classes/Album.php';
