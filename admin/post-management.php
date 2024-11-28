@@ -96,21 +96,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
 // 处理删除请求
 if (isset($_GET['delete_id'])) {
-    echo "Delete request received."; // 调试信息
     $deleteId = intval($_GET['delete_id']); // 获取要删除的图片 ID
     $imageToDelete = $imageModel->getImageById($deleteId); // 获取图片信息
-
-    // 调试信息
-    if ($imageToDelete) {
-        echo "Image found: " . htmlspecialchars($imageToDelete['filename']);
-    } else {
-        echo "Image not found.";
-    }
 
     // 检查用户权限
     if ($imageToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['role'] === 'admin') {
         if ($imageModel->deleteImage($deleteId)) { // 删除图片
-            header('Location: post-management.php'); // 重定向到 post-management 页面
+            header('Location: index.php?page=photos'); // 重定向到 photos 页面
             exit();
         } else {
             $error = "Failed to delete the image."; // 添加错误信息
