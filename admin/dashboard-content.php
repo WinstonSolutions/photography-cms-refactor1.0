@@ -66,40 +66,7 @@ $stats['users'] = $users->getUsersCount();
                 <div class="stat-label">Users</div>
             </div>
             
-            <!-- 关键词统计 -->
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-tags"></i>
-                </div>
-                <div class="stat-number"><?php echo number_format($stats['keywords']); ?></div>
-                <div class="stat-label">Keywords</div>
-            </div>
-            <!-- 页面访问量 -->
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="stat-number"><?php echo number_format($stats['pages_seen']); ?>k</div>
-                <div class="stat-label">Pages seen</div>
-            </div>
-            
-            <!-- 插件数量 -->
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-puzzle-piece"></i>
-                </div>
-                <div class="stat-number"><?php echo $stats['plugins']; ?></div>
-                <div class="stat-label">Plugins</div>
-            </div>
-            
-            <!-- 存储使用量 -->
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-database"></i>
-                </div>
-                <div class="stat-number"><?php echo $stats['storage']; ?></div>
-                <div class="stat-label">Storage used</div>
-            </div>
+          
             
             <!-- 首张照片时间 -->
             <div class="stat-card">
