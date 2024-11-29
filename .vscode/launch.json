@@ -10,19 +10,13 @@
             "request": "launch",
             "runtimeArgs": [
                 "-S",
-                "localhost:8000",
+                "localhost:8000",  // 使用 localhost 和端口 8000
                 "-t",
-                "E:/xampp/htdocs/WebDevelopment2/photography-cms"
+                "E:/xampp/htdocs/WebDevelopment2/photography-cms"  // 本地项目路径，注意使用正斜杠 /
             ],
-            "cwd": "E:/xampp/htdocs/WebDevelopment2/photography-cms",
             "port": 9003,
-            "pathMappings": {
-                "/": "E:/xampp/htdocs/WebDevelopment2/photography-cms"
-            },
             "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "Development Server \\(http://localhost:8000\\)",
-                "uriFormat": "http://localhost:8000"
+                "action": "openExternally"
             }
         },
         {

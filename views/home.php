@@ -4,10 +4,14 @@ require_once '../config/config.php';;
 include __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../classes/Image.php';
 require_once __DIR__ . '/../classes/Album.php';
+
 $host = $_SERVER['HTTP_HOST'];
 if (strpos($host, ':8000') !== false) {
     $host = 'localhost';
 }
+
+$a = 1;
+echo $a;
 
 $image = new Image();
 $albumModel = new Album();
