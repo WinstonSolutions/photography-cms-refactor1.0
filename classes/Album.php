@@ -94,7 +94,7 @@ class Album {
 
         // 删除所有图片
         foreach ($images as $image) {
-            if ($this->deleteImage($image['id'])) { // 假设有此方法
+            if ($this->deleteImage($image['image_id'])) { // 假设有此方法
                 error_log("Successfully deleted image ID: " . $image['id']);
             } else {
                 error_log("Failed to delete image ID: " . $image['id']);

@@ -10,8 +10,6 @@ if (strpos($host, ':8000') !== false) {
     $host = 'localhost';
 }
 
-$a = 1;
-echo $a;
 
 $image = new Image();
 $albumModel = new Album();
