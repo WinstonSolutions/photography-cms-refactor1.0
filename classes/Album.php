@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/Database.php';
+require_once __DIR__ .'/Image.php';
 
 class Album {
     private $db;
@@ -70,5 +71,55 @@ class Album {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['count'];    
+    }
+
+    public function deleteAlbum($id) {
+        $sql = "DELETE FROM albums WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
+    public function getAlbumById($id) {
+        $sql = "SELECT * FROM albums WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteAlbumWithImages($albumId) {
+        // 获取专辑中的所有图片
+        $images = $this->getImagesByAlbumId($albumId); // 假设有此方法
+
+        // 删除所有图片
+        foreach ($images as $image) {
+            if ($this->deleteImage($image['id'])) { // 假设有此方法
+                error_log("Successfully deleted image ID: " . $image['id']);
+            } else {
+                error_log("Failed to delete image ID: " . $image['id']);
+            }
+        }
+
+        // 删除专辑
+        return $this->deleteAlbum($albumId); // 假设有此方法
+    }
+
+    public function getImagesByAlbumId($albumId) {
+        $sql = "SELECT * FROM album_images WHERE album_id = :album_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':album_id', $albumId);
+        $stmt->execute();
+        $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // 调试信息
+        error_log("Images for album ID $albumId: " . print_r($images, true));
+        
+        return $images;
+    }
+
+    public function deleteImage($imageId) {
+        $image = new Image(); // 创建 Image 类的实例
+        return $image->deleteImage($imageId); // 调用 Image 类中的 deleteImage 方法
     }
 } 

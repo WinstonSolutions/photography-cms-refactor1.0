@@ -1,7 +1,13 @@
 <?php
+require_once '../config/config.php';;
+
 include __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../classes/Image.php';
 require_once __DIR__ . '/../classes/Album.php';
+$host = $_SERVER['HTTP_HOST'];
+if (strpos($host, ':8000') !== false) {
+    $host = 'localhost';
+}
 
 $image = new Image();
 $albumModel = new Album();
@@ -96,7 +102,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     $isAssociated = $image->isImageInAlbum($img['id'], $album['id']); // 使用 img['id'] 来检查
                     if ($isAssociated): ?>
                         <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>')">
-                            <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>" alt="Image" />
+                            <img src="<?php echo 'http://' . $host . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>" alt="Image" />
                             <p><?php echo htmlspecialchars($img['filename']); ?></p>
                         </div>
                     <?php endif; ?>

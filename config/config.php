@@ -1,5 +1,6 @@
 <?php
 
+
 $config = [
     
     'upload_path' => __DIR__ . '/../uploads/', // 文件上传路径

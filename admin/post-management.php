@@ -100,7 +100,7 @@ if (isset($_GET['delete_id'])) {
     $imageToDelete = $imageModel->getImageById($deleteId); // 获取图片信息
 
     // 检查用户权限
-    if ($imageToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['role'] === 'admin') {
+    if ($imageToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['user_role'] === 'admin') {
         if ($imageModel->deleteImage($deleteId)) { // 删除图片
             header('Location: index.php?page=photos'); // 重定向到 photos 页面
             exit();
