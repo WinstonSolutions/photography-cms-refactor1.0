@@ -86,8 +86,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 // 检查图片是否与所选相册相关联
                 $isAssociated = $image->isImageInAlbum($img['id'], $selectedAlbumId); // 使用所选相册 ID
                 if ($isAssociated): ?>
-                    <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>')">
-                        <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>" alt="Image" />
+                    <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>')">
+                        <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
                         <p><?php echo htmlspecialchars($img['filename']); ?></p>
                     </div>
                 <?php endif; ?>
@@ -103,8 +103,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     // 检查图片是否与当前相册相关联
                     $isAssociated = $image->isImageInAlbum($img['id'], $album['id']); // 使用 img['id'] 来检查
                     if ($isAssociated): ?>
-                        <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>')">
-                            <img src="<?php echo 'http://' . $host . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>" alt="Image" />
+                        <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>')">
+                            <img src="<?php echo 'http://' . $host . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
                             <p><?php echo htmlspecialchars($img['filename']); ?></p>
                         </div>
                     <?php endif; ?>

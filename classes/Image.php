@@ -92,12 +92,29 @@ class Image {
         return $stmt->fetchColumn() > 0; // 返回是否存在
     }
 
+    // public function deleteImage($id) {
+    //     $sql = "DELETE FROM images WHERE id = :id"; // 删除图片的 SQL 语句
+    //     $stmt = $this->db->prepare($sql);
+    //     $stmt->bindParam(':id', $id);
+    //     return $stmt->execute(); // 返回执行结果
+    // }
+
     public function deleteImage($id) {
-        $sql = "DELETE FROM images WHERE id = :id"; // 删除图片的 SQL 语句
+        // 验证 ID 是否是有效的数字
+        if (!is_numeric($id)) {
+            throw new InvalidArgumentException("Invalid ID"); // 如果 ID 不是数字，抛出异常
+        }
+    
+        // 强制转换为整数，确保 ID 是一个有效的数值
+        $id = (int)$id;
+    
+        // 删除图片的 SQL 语句
+        $sql = "DELETE FROM images WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute(); // 返回执行结果
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT); // 绑定参数，并明确声明为整数类型
+        return $stmt->execute(); // 执行并返回结果
     }
+    
 
     public function getImageById($id) {
         $sql = "SELECT * FROM images WHERE id = :id"; // 获取图片信息的 SQL 语句

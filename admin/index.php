@@ -81,17 +81,17 @@ require_once '../includes/functions.php';
                 <i class="fas fa-desktop"></i> Dashboard
             </a>
             <div class="sidebar-group">
-                <a href="index.php?page=photos" class="sidebar-item <?php echo ($_GET['page'] ?? '') === 'photos' ? 'active' : ''; ?>">
+                <a href="index.php?page=photos" class="sidebar-item <?php echo (htmlspecialchars($_GET['page'] ?? '') === 'photos') ? 'active' : ''; ?>">
                     <i class="fas fa-folder"></i> Photos
                 </a>
             </div>
             <div class="sidebar-group">
-                <a href="index.php?page=albums" class="sidebar-item <?php echo ($_GET['page'] ?? '') === 'albums' ? 'active' : ''; ?>">
+                <a href="index.php?page=albums" class="sidebar-item <?php echo (htmlspecialchars($_GET['page'] ?? '') === 'albums') ? 'active' : ''; ?>">
                     <i class="fas fa-folder"></i> Albums
                 </a>
             </div>
             <div class="sidebar-group">
-                <a href="index.php?page=users" class="sidebar-item <?php echo ($_GET['page'] ?? '') === 'users' ? 'active' : ''; ?>">
+                <a href="index.php?page=users" class="sidebar-item <?php echo (htmlspecialchars($_GET['page'] ?? '') === 'users') ? 'active' : ''; ?>">
                     <i class="fas fa-users"></i> Users
                 </a>
             </div>
