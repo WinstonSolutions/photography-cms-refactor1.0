@@ -21,6 +21,13 @@ $success = '';
 // 获取配置
 $config = require __DIR__ . '/../config/config.php'; // 确保配置文件路径正确
 
+$host = $_SERVER['HTTP_HOST'];
+if (strpos($host, ':8000') !== false) {
+    $host = 'localhost';
+} else {
+    $host = 'web2.byethost18.com';
+}
+
 // Handle file upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $album_id = clean_input($_POST['album_id']);
@@ -164,7 +171,7 @@ if (isset($_GET['delete_id'])) {
                 <?php foreach ($images as $img): ?>
                     <tr>
                         <td>
-                            <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['thumbnail_path']); ?>"
+                            <img src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['thumbnail_path']); ?>"
                                 alt="Image" style="width: 100px; height: auto;" />
                         </td>
                         <td><?php echo htmlspecialchars($img['filename']); ?></td>

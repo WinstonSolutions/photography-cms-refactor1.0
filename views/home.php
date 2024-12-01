@@ -8,6 +8,8 @@ require_once __DIR__ . '/../classes/Album.php';
 $host = $_SERVER['HTTP_HOST'];
 if (strpos($host, ':8000') !== false) {
     $host = 'localhost';
+} else {
+    $host = 'web2.byethost18.com';
 }
 
 
@@ -112,8 +114,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 // 检查选择的相册是否匹配
                 $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $selectedAlbumId;
                 if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
-                    <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>')">
-                        <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
+                    <div class="image-item" onclick="openModal('<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>')">
+                        <img src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
                         <p><?php echo htmlspecialchars($img['filename']); ?></p>
                     </div>
                 <?php endif; ?>
@@ -133,8 +135,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     // 检查选择的相册是否匹配
                     $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $album['id'];
                     if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
-                        <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>')">
-                            <img src="<?php echo 'http://' . $host . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
+                        <div class="image-item" onclick="openModal('<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>')">
+                            <img src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
                             <p><?php echo htmlspecialchars($img['filename']); ?></p>
                         </div>
                     <?php endif; ?>
