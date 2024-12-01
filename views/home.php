@@ -26,6 +26,12 @@ $selectedAlbumId = isset($_GET['album_id']) ? intval($_GET['album_id']) : null;
 // 获取排序方式
 $sortBy = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'filename_asc'; // 默认按 filename 升序排序
 
+// 获取搜索关键字
+$searchQuery = isset($_GET['search']) ? $_GET['search'] : ''; // 获取搜索框的输入
+
+// 获取选择的相册
+$selectedAlbumSearch = isset($_GET['album_search']) ? intval($_GET['album_search']) : null; // 获取选择的相册 ID
+
 // 检查是否有注销请求
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     // 清除所有会话变量
@@ -44,6 +50,22 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 <div class="main-content" style="background-color: black; color: white; padding: 20px;">
     <h1>Albums</h1>
     
+    <!-- 添加搜索框 -->
+    <div>
+        <form method="GET" action="">
+            <input type="text" name="search" placeholder="Search by filename" value="<?php echo htmlspecialchars($searchQuery); ?>">
+            <select name="album_search">
+                <option value="">Select Album</option>
+                <?php foreach ($albums as $album): ?>
+                    <option value="<?php echo $album['id']; ?>" <?php echo $selectedAlbumSearch === $album['id'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($album['name']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
     <?php if ($selectedAlbumId !== null): ?>
         <?php 
         // 获取所选相册的信息
@@ -85,7 +107,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <?php 
                 // 检查图片是否与所选相册相关联
                 $isAssociated = $image->isImageInAlbum($img['id'], $selectedAlbumId); // 使用所选相册 ID
-                if ($isAssociated): ?>
+                // 检查搜索关键字是否匹配
+                $matchesSearch = empty($searchQuery) || stripos($img['filename'], $searchQuery) !== false;
+                // 检查选择的相册是否匹配
+                $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $selectedAlbumId;
+                if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
                     <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>')">
                         <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
                         <p><?php echo htmlspecialchars($img['filename']); ?></p>
@@ -102,7 +128,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     <?php 
                     // 检查图片是否与当前相册相关联
                     $isAssociated = $image->isImageInAlbum($img['id'], $album['id']); // 使用 img['id'] 来检查
-                    if ($isAssociated): ?>
+                    // 检查搜索关键字是否匹配
+                    $matchesSearch = empty($searchQuery) || stripos($img['filename'], $searchQuery) !== false;
+                    // 检查选择的相册是否匹配
+                    $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $album['id'];
+                    if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
                         <div class="image-item" onclick="openModal('<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>')">
                             <img src="<?php echo 'http://' . $host . '/WebDevelopment2/photography-cms/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
                             <p><?php echo htmlspecialchars($img['filename']); ?></p>
