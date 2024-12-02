@@ -126,28 +126,91 @@ if (isset($_GET['delete_id'])) {
 
 
 <style>
-.delete-btn {
-        padding: 5px 10px;
-        text-decoration: none;
-        border-radius: 3px;
-        transition: background-color 0.3s ease;
+    /* Add styles for the album management page */
+    .admin-content {
+        padding: 20px; /* Add padding to the content */
+        background-color: #f9f9f9; /* Light background color */
+        border-radius: 5px; /* Rounded corners */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+
+    h1, h2 {
+        color: #333; /* Darker text color for headings */
+    }
+
+    .error {
+        color: red; /* Error message color */
+        font-weight: bold; /* Bold error messages */
+    }
+
+    .success {
+        color: green; /* Success message color */
+        font-weight: bold; /* Bold success messages */
+    }
+
+    .Album-form {
+        margin-bottom: 20px; /* Space below the form */
+        padding: 15px; /* Padding inside the form */
+        background-color: #fff; /* White background for the form */
+        border-radius: 5px; /* Rounded corners */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+
+    .form-group {
+        margin-bottom: 15px; /* Space between form groups */
+    }
+
+    .btn {
+        background-color: #007bff; /* Primary button color */
+        color: white; /* Button text color */
+        padding: 10px 15px; /* Button padding */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s; /* Smooth background color transition */
+    }
+
+    .btn:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .Albums-table {
+        width: 100%; /* Full width for the table */
+        border-collapse: collapse; /* Collapse borders */
+        margin-top: 20px; /* Space above the table */
+    }
+
+    th, td {
+        padding: 10px; /* Padding for table cells */
+        text-align: left; /* Left align text */
+        border: 1px solid #ccc; /* Light border for cells */
+    }
+
+    th {
+        background-color: #f2f2f2; /* Light gray background for headers */
+        color: #333; /* Darker text color for headers */
+    }
+
+    .delete-btn {
+        padding: 5px 10px; /* Padding for delete button */
+        text-decoration: none; /* Remove underline */
+        border-radius: 3px; /* Rounded corners */
+        transition: background-color 0.3s ease; /* Smooth background color transition */
     }
 
     .delete-active {
-        background-color: red;
-        color: white;
-        cursor: pointer;
+        background-color: red; /* Red background for active delete button */
+        color: white; /* White text for delete button */
     }
 
     .delete-active:hover {
-        background-color: darkred;
+        background-color: darkred; /* Darker red on hover */
     }
 
     .delete-inactive {
-        background-color: #cccccc;
-        color: #666666;
-        cursor: not-allowed;
+        background-color: #cccccc; /* Gray background for inactive delete button */
+        color: #666666; /* Darker gray text for inactive button */
+        cursor: not-allowed; /* Not-allowed cursor for inactive button */
     }
-
 </style>
 

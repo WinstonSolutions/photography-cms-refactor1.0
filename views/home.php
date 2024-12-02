@@ -124,7 +124,19 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <?php else: ?>
         <!-- 显示所有相册及其图片 -->
         <?php foreach ($albums as $album): ?>
-            <h2><?php echo htmlspecialchars($album['name']); ?></h2>
+            <?php 
+            // 检查相册中是否有图片
+            $hasImages = false;
+            foreach ($images as $img) {
+                if ($image->isImageInAlbum($img['id'], $album['id'])) {
+                    $hasImages = true;
+                    break; // 找到至少一张图片后退出循环
+                }
+            }
+            ?>
+            <?php if ($hasImages): // 只有在相册中有图片时才显示相册名称 ?>
+                <h2><?php echo htmlspecialchars($album['name']); ?></h2>
+            <?php endif; ?>
             <div class="image-gallery">
                 <?php foreach ($images as $img): ?>
                     <?php 
