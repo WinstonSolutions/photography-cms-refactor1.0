@@ -22,8 +22,9 @@ $success = '';
 $config = require __DIR__ . '/../config/config.php'; // 确保配置文件路径正确
 
 $host = $_SERVER['HTTP_HOST'];
-if (strpos($host, ':8000') !== false) {
-    $host = 'localhost';
+print_r($host);
+if ($host === 'localhost') {
+    $host = 'localhost/WebDevelopment2/photography-cms';
 } else {
     $host = 'web2.byethost18.com';
 }

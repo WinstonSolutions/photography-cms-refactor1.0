@@ -6,8 +6,8 @@ require_once __DIR__ . '/../classes/Image.php';
 require_once __DIR__ . '/../classes/Album.php';
 
 $host = $_SERVER['HTTP_HOST'];
-if (strpos($host, ':8000') !== false) {
-    $host = 'localhost';
+if ($host === 'localhost') {
+    $host = 'localhost/WebDevelopment2/photography-cms';
 } else {
     $host = 'web2.byethost18.com';
 }
