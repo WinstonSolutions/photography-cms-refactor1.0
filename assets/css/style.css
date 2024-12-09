@@ -1,0 +1,52 @@
+/* 基础样式设置 */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* 主标题样式 */
+.main-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2.5em;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 2s;
+}
+
+/* 背景图片容器 */
+.bg-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 2s;
+    object-fit: cover;
+}
+
+/* CMS入口链接样式 */
+.cms-enter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+    opacity: 0;
+    transition: all 0.3s;
+    padding: 10px 20px;
+    border: 2px solid white;
+}
+
+.cms-enter:hover {
+    background: rgba(255, 255, 255, 0.2);
+} 
