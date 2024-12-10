@@ -26,7 +26,7 @@ $albums = $album->getAllAlbums();
     <div class="header">
         <img src="../img/homeheader.jpg" alt="Header Image" class="header-image">
         <div class="header-text">
-            <h1>Welcome to Wentao Zhao's Photography CMS</h1>
+            <h1>Welcome to Winston's Photography CMS</h1>
             <p>Capture the moment, preserve the memory</p>
         </div>
     </div>

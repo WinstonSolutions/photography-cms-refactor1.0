@@ -22,7 +22,7 @@ $success = '';
 $config = require __DIR__ . '/../config/config.php'; // 确保配置文件路径正确
 
 $host = $_SERVER['HTTP_HOST'];
-print_r($host);
+// print_r($host);
 if ($host === 'localhost') {
     $host = 'localhost/WebDevelopment2/photography-cms';
 } else {

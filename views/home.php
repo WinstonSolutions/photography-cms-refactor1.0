@@ -115,8 +115,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $selectedAlbumId;
                 if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
                     <div class="image-item" onclick="openModal('<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>')">
-                        <img src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
-                        <p><?php echo htmlspecialchars($img['filename']); ?></p>
+                        <img 
+                            src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>" 
+                            alt="<?php echo htmlspecialchars($img['filename']); ?>"
+                            loading="lazy"
+                        />
+                        <p class="image-title"><?php echo htmlspecialchars($img['filename']); ?></p>
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>
@@ -148,8 +152,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $album['id'];
                     if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
                         <div class="image-item" onclick="openModal('<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>')">
-                            <img src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>" alt="Image" />
-                            <p><?php echo htmlspecialchars($img['filename']); ?></p>
+                            <img 
+                                src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>" 
+                                alt="<?php echo htmlspecialchars($img['filename']); ?>"
+                                loading="lazy"
+                            />
+                            <p class="image-title"><?php echo htmlspecialchars($img['filename']); ?></p>
                         </div>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -166,61 +174,138 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 </div>
 
 <style>
+/* 图片画廊容器 */
 .image-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    column-count: 3;
+    column-gap: 15px; /* 减小列间距 */
+    padding: 15px;
+    width: 100%;
+    max-width: 100%; /* 移除最大宽度限制 */
+    margin: 0 auto;
 }
 
+/* 每个图片项的容器 */
 .image-item {
-    width: calc(33.33% - 10px); /* 三列布局 */
-    cursor: pointer; /* 鼠标悬停时显示为手型 */
+    break-inside: avoid;
+    margin-bottom: 15px;
+    position: relative;
+    width: 100%;
+    display: block;
+    cursor: pointer;
 }
 
+/* 图片样式 */
 .image-item img {
     width: 100%;
-    max-width: 150px; /* 设置最大宽度 */
-    height: auto; /* 保持纵横比 */
+    height: auto;
+    display: block;
     border-radius: 8px;
-    transition: transform 0.2s; /* 添加过渡效果 */
+    transition: all 0.3s ease;
+    object-fit: cover;
 }
 
-.image-item img:hover {
-    transform: scale(1.05); /* 鼠标悬停时放大 */
+.image-title {
+    opacity: 0; /* 初始隐藏标题 */
+    transition: opacity 0.3s ease;
+    color: white;
+    padding: 8px;
+    margin: 0;
 }
 
-/* 模态框样式 */
+.image-title.loaded {
+    opacity: 1; /* 图片加载完成后显示标题 */
+}
+
+/* 主要内容区域样式 */
+.main-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+/* 响应式布局优化 */
+@media (min-width: 1200px) {
+    .image-gallery {
+        column-count: 3;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+    .image-gallery {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 767px) {
+    .image-gallery {
+        column-count: 1;
+    }
+}
+
+/* 模态框样式优化 */
 .modal {
-    display: none; /* 默认隐藏 */
-    position: fixed; /* 固定位置 */
-    z-index: 1000; /* 在最上层 */
+    display: none;
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%; /* 全屏 */
-    height: 100%; /* 全屏 */
-    overflow: auto; /* 如果需要，添加滚动条 */
-    background-color: rgba(0, 0, 0, 0.8); /* 半透明背景 */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 40px;
+    box-sizing: border-box;
 }
 
 .modal-content {
     margin: auto;
     display: block;
-    width: 80%; /* 设置宽度 */
-    max-width: 700px; /* 最大宽度 */
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
 }
 
 .close {
     position: absolute;
-    top: 15px;
-    right: 35px;
+    top: 20px;
+    right: 30px;
     color: white;
-    font-size: 40px;
+    font-size: 35px;
     font-weight: bold;
     cursor: pointer;
+    transition: color 0.3s ease;
 }
+
+.close:hover {
+    color: #999;
+}
+
+
+
 </style>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('.image-item img');
+    
+    images.forEach(img => {
+        // 设置懒加载
+        img.loading = 'lazy';
+        
+        // 添加加载事件监听器
+        img.addEventListener('load', function() {
+            // 图片加载完成后的处理
+            img.style.display = 'block';
+            const title = img.nextElementSibling;
+            if (title && title.classList.contains('image-title')) {
+                title.style.display = 'block';
+            }
+        });
+    });
+});
+
 function openModal(src) {
     document.getElementById("modal").style.display = "block";
     document.getElementById("modal-img").src = src;
