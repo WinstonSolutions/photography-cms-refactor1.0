@@ -1,12 +1,16 @@
 <?php
+namespace Src\Model;
 
-require_once __DIR__ . '/../Core/Database.php';
-require_once __DIR__ . '/../../config/config.php';
+use Src\Core\Database;
+use PDO;
+
 class User {
     private $db;
+    private $config;
     
-    public function __construct() { //use the singleton pattern to create a database instance
+    public function __construct() {
         $this->db = Database::getInstance()->getConnection();
+        $this->config = require __DIR__ . '/../../config/config.php';
     }
     
     // 用户注册

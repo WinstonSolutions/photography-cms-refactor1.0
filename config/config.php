@@ -1,16 +1,22 @@
 <?php
 
+// 只在常量未定义时定义它
+if (!defined('BASE_URL')) {
+    define('BASE_URL', 'http://localhost/WebDevelopment2/photography-cms-refactor1.0/');
+}
 
-$config = [
-    
-    'upload_path' => __DIR__ . '/../uploads/', // 文件上传路径
-    'allowed_image_types' => ['jpg', 'jpeg', 'png'], // 允许的文件类型
-    'max_file_size' => 10 * 1024 * 1024, // 最大文件大小（5MB） 
-    'thumbnail_width' => 150,          // 缩略图宽度
-    'thumbnail_height' => 150          // 缩略图高度
+return [
+    // 数据库配置
+    'db_host' => 'localhost',
+    'db_name' => 'photography_cms',
+    'db_user' => 'root',     // 你的数据库用户名
+    'db_pass' => '',         // 你的数据库密码
+
+    // 其他配置
+    'upload_path' => __DIR__ . '/../public/uploads/',
+    'allowed_image_types' => ['jpg', 'jpeg', 'png', 'gif'],
+    'max_file_size' => 5242880, // 5MB in bytes
+    'host' => 'localhost',
+    'base_url' => BASE_URL,  // 将常量也作为配置项提供
 ];
-
-define('BASE_URL', 'http://localhost/WebDevelopment2/photography-cms-refactor1.0/'); // 例如: http://localhost/photography-cms
-
-return $config;
 

@@ -1,15 +1,19 @@
 <?php
+namespace Src\Model;
 
-require_once __DIR__ . '/../Core/Database.php';
-require_once __DIR__ . '/../../config/config.php';
+use Src\Core\Database;
+use PDO;
+use PDOException;
+
 require_once __DIR__ . '/Image.php';
-
 
 class Album {
     private $db;
+    private $config;
     
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
+        $this->config = require __DIR__ . '/../../config/config.php';
     }
     
     public function create($data) {
@@ -90,14 +94,14 @@ class Album {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
+    
     public function deleteAlbumWithImages($albumId) {
         // 获取专辑中的所有图片
-        $images = $this->getImagesByAlbumId($albumId); // 假设有此方法
+        $images = $this->getImagesByAlbumId($albumId);
 
         // 删除所有图片
         foreach ($images as $image) {
-            if ($this->deleteImage($image['image_id'])) { // 假设有此方法
+            if ($this->deleteImage($image['image_id'])) {
                 error_log("Successfully deleted image ID: " . $image['id']);
             } else {
                 error_log("Failed to delete image ID: " . $image['id']);
@@ -105,7 +109,7 @@ class Album {
         }
 
         // 删除专辑
-        return $this->deleteAlbum($albumId); // 假设有此方法
+        return $this->deleteAlbum($albumId);
     }
 
     public function getImagesByAlbumId($albumId) {

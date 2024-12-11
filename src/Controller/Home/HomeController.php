@@ -1,5 +1,5 @@
 <?php
-namespace Controller\Home;
+namespace Src\Controller\Home;
 
 // 使用绝对路径引入所有需要的类
 require_once ROOT_PATH . '/src/Model/Image.php';
@@ -8,10 +8,10 @@ require_once ROOT_PATH . '/src/Model/User.php';
 require_once ROOT_PATH . '/src/Core/Helpers/Session.php';
 
 // 使用声明
-use Model\Image;
-use Model\Album;
-use Model\User;
-use Core\Helpers\Session;
+use Src\Model\Image;
+use Src\Model\Album;
+use Src\Model\User;
+use Src\Core\Helpers\Session;
 
 class HomeController {
     private $imageModel;

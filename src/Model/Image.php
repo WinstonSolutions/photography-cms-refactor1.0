@@ -1,4 +1,9 @@
 <?php
+namespace Src\Model;
+
+use Src\Core\Database;
+use PDO;
+
 require_once __DIR__ . '/../Core/Database.php';
 require_once __DIR__ . '/../../config/config.php';
 

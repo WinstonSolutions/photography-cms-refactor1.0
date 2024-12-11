@@ -8,8 +8,8 @@ require_once ROOT_PATH . '/config/config.php';
 
 // 如果有请求访问CMS
 if (isset($_GET['access_cms'])) {
-    // 实例化控制器
-    $controller = new \Controller\Home\HomeController();
+    // 实例化控制器，使用正确的命名空间
+    $controller = new \Src\Controller\Home\HomeController();
     // 调用index方法
     $controller->index();
     exit;
