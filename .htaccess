@@ -15,4 +15,4 @@ Require all granted
 # URL 重写规则
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+RewriteRule ^(.*)$ public/index.php [QSA,L]
