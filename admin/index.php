@@ -1,10 +1,27 @@
 <?php
-// session_start();
-require_once '../includes/functions.php';
+require_once __DIR__ . '/../src/Core/Helpers/functions.php';
+require_once __DIR__ . '/../src/Core/Helpers/Session.php';
+require_once __DIR__ . '/../src/Controller/Admin/AdminController.php';
 
+use Core\Helpers\Session;
 
+Session::start();
 
+$controller = new \Controller\Admin\AdminController();
 
+// 获取当前页面参数
+$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+
+// 根据页面参数获取数据
+switch($page) {
+    case 'dashboard':
+        $viewData = $controller->dashboard();
+        break;
+    // ... 其他页面处理
+}
+
+// 解构数据
+extract($viewData);
 ?>
 
 <!DOCTYPE html>
@@ -100,23 +117,20 @@ require_once '../includes/functions.php';
         <!-- 主要内容区域 -->
         <div class="admin-content">
             <?php
-            // 获取当前页面参数
-            $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
-            
             // 根据页面参数加载不同的内容
             switch($page) {
                 case 'users':
-                    include __DIR__ . '/user-management.php';
+                    include __DIR__ . '/../src/View/Admin/users.php';
                     break;
                 case 'photos':
-                    include __DIR__ . '/post-management.php';
+                    include __DIR__ . '/../src/View/Admin/photos.php';
                     break;
                 case 'albums':
-                    include __DIR__ . '/album-management.php';
+                    include __DIR__ . '/../src/View/Admin/albums.php';
                     break;
                 default:
                     // 显示默认的 dashboard 内容
-                    include __DIR__ . '/dashboard-content.php';
+                    include __DIR__ . '/../src/View/Admin/dashboard.php';
             }
             ?>
         </div>

@@ -1,8 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../config/config.php'; // 确保配置文件中有数据库连接信息
-require_once __DIR__ . '/Database.php';
-
+require_once __DIR__ . '/../Core/Database.php';
+require_once __DIR__ . '/../../config/config.php';
 class User {
     private $db;
     

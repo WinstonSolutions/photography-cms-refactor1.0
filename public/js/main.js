@@ -1,20 +1,26 @@
-// 图片预览功能
-function previewImage(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('image-preview').src = e.target.result;
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-// 图片加载错误处理
+// 动画序列控制
 document.addEventListener('DOMContentLoaded', function() {
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-        img.onerror = function() {
-            this.src = '/public/images/placeholder.jpg';
-        }
-    });
+    const mainTitle = document.getElementById('mainTitle');
+    const bgImage = document.getElementById('bgImage');
+    const cmsEnter = document.getElementById('cmsEnter');
+
+    // 显示主标题
+    setTimeout(() => {
+        mainTitle.style.opacity = '1';
+    }, 500);
+
+    // 淡出主标题
+    setTimeout(() => {
+        mainTitle.style.opacity = '0';
+    }, 3000);
+
+    // 显示背景图片
+    setTimeout(() => {
+        bgImage.style.opacity = '1';
+    }, 4000);
+
+    // 显示CMS入口链接
+    setTimeout(() => {
+        cmsEnter.style.opacity = '1';
+    }, 5000);
 }); 

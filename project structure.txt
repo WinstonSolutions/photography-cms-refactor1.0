@@ -1,0 +1,41 @@
+project_name/
+│
+├── public/                 # 前台公共目录
+│   ├── index.php           # 前台入口文件
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── admin/                  # 后台公共目录
+│   ├── index.php           # 后台入口文件
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── src/                    # 源代码目录
+│   ├── Controller/         # 控制器
+│   │   ├── Home/           # 前台控制器
+│   │   └── Admin/          # 后台控制器
+│   │
+│   ├── Model/              # 模型
+│   │   ├── Home/           # 前台模型
+│   │   └── Admin/          # 后台模型
+│   │
+│   ├── View/               # 视图模板
+│   │   ├── Home/           # 前台视图
+│   │   └── Admin/          # 后台视图
+│
+├── config/                 # 配置文件目录
+│   ├── database.php        # 数据库配置
+│   ├── home.php            # 前台配置
+│   └── admin.php           # 后台配置
+│
+├── vendor/                 # Composer依赖
+│
+├── storage/                # 存储目录
+│   ├── logs/
+│   │   ├── home/           # 前台日志
+│   │   └── admin/          # 后台日志
+│   └── uploads/
+│
+└── ...                     # 其他目录保持不变

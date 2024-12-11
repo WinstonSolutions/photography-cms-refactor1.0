@@ -5,7 +5,12 @@ class Database {
     
     // Private constructor to prevent direct creation
     private function __construct() {
-        $config = require_once(__DIR__ . '/../config/database.php');//use the config file to connect to the database
+        $config = require __DIR__ . '/../../config/database.php';
+        
+        if (!is_array($config)) {
+            throw new Exception('Database configuration file must return an array');
+        }
+
         try {
             $this->connection = new PDO(
                 "mysql:host={$config['host']};dbname={$config['dbname']};charset={$config['charset']}",
@@ -30,5 +35,4 @@ class Database {
     public function getConnection() {
         return $this->connection;
     }
-    
 } 

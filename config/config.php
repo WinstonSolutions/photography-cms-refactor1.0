@@ -10,4 +10,7 @@ $config = [
     'thumbnail_height' => 150          // 缩略图高度
 ];
 
+define('BASE_URL', 'http://localhost/WebDevelopment2/photography-cms-refactor1.0/'); // 例如: http://localhost/photography-cms
+
 return $config;
+

@@ -1,55 +1,37 @@
 <?php
-require_once '../config/config.php';;
-
-include __DIR__ . '/../includes/header.php';
-require_once __DIR__ . '/../classes/Image.php';
-require_once __DIR__ . '/../classes/Album.php';
-
-$host = $_SERVER['HTTP_HOST'];
-if ($host === 'localhost') {
-    $host = 'localhost/WebDevelopment2/photography-cms';
-} else {
-    $host = 'web2.byethost18.com';
-}
+require_once __DIR__ . '/../../../config/config.php';
+require_once __DIR__ . '/../../../src/Core/Helpers/functions.php';
+require_once __DIR__ . '/../../../src/Core/Helpers/Session.php';
+require_once __DIR__ . '/../Shared/header.php';
+require_once __DIR__ . '/../../Controller/Home/HomeController.php';
 
 
-$image = new Image();
-$albumModel = new Album();
 
-// 获取所有相册
-$albums = $albumModel->getAllAlbums();
 
-// 获取所有图片
-$images = $image->getAllImages(); // 假设你在 Image 类中有这个方法
 
-// 获取相册 ID
-$selectedAlbumId = isset($_GET['album_id']) ? intval($_GET['album_id']) : null;
+use Core\Helpers\Session;
 
-// 获取排序方式
-$sortBy = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'filename_asc'; // 默认按 filename 升序排序
+Session::start();
 
-// 获取搜索关键字
-$searchQuery = isset($_GET['search']) ? $_GET['search'] : ''; // 获取搜索框的输入
+// 实例化控制器
+$controller = new \Controller\Home\HomeController();
 
-// 获取选择的相册
-$selectedAlbumSearch = isset($_GET['album_search']) ? intval($_GET['album_search']) : null; // 获取选择的相册 ID
-
-// 检查是否有注销请求
+// 处理登出请求
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-    // 清除所有会话变量
-    $_SESSION = [];
-    
-    // 销毁会话
-    session_destroy();
-    
-    // 重定向到 home.php
-    header('Location: home.php');
-    exit();
+    $controller->logout();
 }
+
+// 获取数据
+$viewData = $controller->index();
+
+// 解构数据
+extract($viewData);
+
+// 视图代码开始
 ?>
 
 <!-- 主要内容区域 -->
-<div class="main-content" style="background-color: black; color: white; padding: 20px;">
+<div class="main-content" style="background-color: black; color: white; padding: 20px; flex: 1;">
     <h1>Albums</h1>
     
     <!-- 添加搜索框 -->
@@ -177,14 +159,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 /* 图片画廊容器 */
 .image-gallery {
     column-count: 3;
-    column-gap: 15px; /* 减小列间距 */
+    column-gap: 15px; /* 小列间距 */
     padding: 15px;
     width: 100%;
     max-width: 100%; /* 移除最大宽度限制 */
     margin: 0 auto;
 }
 
-/* 每个图片项的容器 */
+/* 每个图片项���容器 */
 .image-item {
     break-inside: avoid;
     margin-bottom: 15px;
@@ -316,8 +298,4 @@ function closeModal() {
 }
 </script>
 
-<?php
-include __DIR__ . '/../includes/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../Shared/footer.php'; ?>

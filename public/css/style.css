@@ -1,178 +1,52 @@
-/* 重置样式 */
-* {
+/* 基础样式设置 */
+body, html {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    overflow: hidden;
     font-family: Arial, sans-serif;
-    line-height: 1.6;
 }
 
-/* 导航栏样式 */
-header {
-    background: #333;
-    color: #fff;
-    padding: 1rem;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-}
-
-.nav-links a {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* 画廊网格样式 */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.gallery-item {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
+/* 主标题样式 */
+.main-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2.5em;
+    opacity: 0;
     text-align: center;
+    transition: opacity 2s;
 }
 
-.gallery-item img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* 首页样式 */
-.banner {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: #f8f9fa;
-    margin-bottom: 2rem;
-}
-
-.cta-buttons {
-    margin-top: 2rem;
-}
-
-.btn-outline {
-    background: transparent;
-    border: 2px solid #333;
-    color: #333;
-}
-
-/* 认证页面样式 */
-.auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f0f2f5;
-}
-
-.auth-form {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
+/* 背景图片容器 */
+.bg-image {
+    position: absolute;
     width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 2s;
+    object-fit: cover;
 }
 
-.auth-form h1 {
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #555;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-.auth-links {
-    margin-top: 1rem;
-    text-align: center;
-}
-
-.auth-links a {
-    color: #007bff;
+/* CMS入口链接样式 */
+.cms-enter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
     text-decoration: none;
+    font-size: 1.5em;
+    opacity: 0;
+    transition: all 0.3s;
+    padding: 10px 20px;
+    border: 2px solid white;
 }
 
-.auth-links a:hover {
-    text-decoration: underline;
-}
-
-.error {
-    color: #ff0000;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-/* 画廊页面样式 */
-.gallery-filters {
-    margin: 2rem 0;
-    text-align: center;
-}
-
-.filter-form select {
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.pagination {
-    margin: 2rem 0;
-    text-align: center;
-}
-
-.pagination .btn {
-    margin: 0 0.2rem;
-}
-
-.pagination .btn.active {
-    background: #666;
-}
-
-.image-info {
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.05);
-}
-
-.author {
-    color: #666;
-    font-size: 0.9rem;
+.cms-enter:hover {
+    background: rgba(255, 255, 255, 0.2);
 } 

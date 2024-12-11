@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/Database.php';
+require_once __DIR__ . '/../Core/Database.php';
+require_once __DIR__ . '/../../config/config.php';
 
 class Image {
     private $db;
@@ -7,7 +8,7 @@ class Image {
     
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
-        $this->config = require __DIR__ . '/../config/config.php';
+        $this->config = require __DIR__ . '/../../config/config.php';
     }
     
     // 处理图片上传

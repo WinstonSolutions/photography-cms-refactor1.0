@@ -1,6 +1,9 @@
 <?php
-require_once __DIR__ . '/Database.php';
-require_once __DIR__ .'/Image.php';
+
+require_once __DIR__ . '/../Core/Database.php';
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/Image.php';
+
 
 class Album {
     private $db;
