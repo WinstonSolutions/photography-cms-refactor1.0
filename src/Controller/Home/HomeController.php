@@ -21,6 +21,9 @@ class HomeController {
         $albums = $this->albumModel->getAllAlbums();
         $images = $this->imageModel->getAllImages();
         
+        // 从配置文件获取 host
+        $config = include dirname(__DIR__, 3) . '/config/config.php';
+        
         return [
             'title' => 'Photography CMS',
             'albums' => $albums,
@@ -29,7 +32,8 @@ class HomeController {
             'sortBy' => isset($_GET['sort_by']) ? $_GET['sort_by'] : 'filename_asc',
             'searchQuery' => isset($_GET['search']) ? $_GET['search'] : '',
             'selectedAlbumSearch' => isset($_GET['album_search']) ? intval($_GET['album_search']) : null,
-            'image' => $this->imageModel
+            'image' => $this->imageModel,
+            'host' => $config['host']  // 添加 host 配置
         ];
     }
     

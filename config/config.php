@@ -13,7 +13,7 @@ return [
     'db_pass' => '',         // 你的数据库密码
 
     // 其他配置
-    'upload_path' => __DIR__ . '/../public/uploads/',
+    'upload_path' => __DIR__ . '/../storage/uploads/',
     'allowed_image_types' => ['jpg', 'jpeg', 'png', 'gif'],
     'max_file_size' => 5242880, // 5MB in bytes
     'host' => 'localhost',

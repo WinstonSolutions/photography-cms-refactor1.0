@@ -1,137 +1,107 @@
-/* Reset default margins and paddings */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* 图片画廊容器 */
+.image-gallery {
+    column-count: 3;
+    column-gap: 15px; /* 小列间距 */
+    padding: 15px;
+    width: 100%;
+    max-width: 100%; /* 移除最大宽度限制 */
+    margin: 0 auto;
 }
 
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: Arial, sans-serif;
-}
-
-/* Header styles */
-.header {
+/* 每个图片项容器 */
+.image-item {
+    break-inside: avoid;
+    margin-bottom: 15px;
     position: relative;
     width: 100%;
-    height: 200px;
-    overflow: hidden;
+    display: block;
+    cursor: pointer;
 }
 
-.header-image {
+/* 图片样式 */
+.image-item img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    transition: all 0.3s ease;
     object-fit: cover;
 }
 
-.header-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+.image-title {
+    opacity: 0; /* 初始隐藏标题 */
+    transition: opacity 0.3s ease;
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    margin: 0;
 }
 
-/* Main content styles */
+.image-title.loaded {
+    opacity: 1; /* 图片加载完成后显示标题 */
+}
+
+/* 主要内容区域样式 */
 .main-content {
-    flex: 1;
+    width: 100%;
+    max-width: 100%;
     padding: 20px;
-    min-height: calc(100vh - 200px - 300px); /* viewport height - header height - footer height */
-}
-
-/* Footer styles */
-.footer {
-    background-color: #333;
-    color: white;
-    padding: 40px 0;
-    margin-top: auto;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-around;
-    max-width: 1200px;
+    box-sizing: border-box;
     margin: 0 auto;
-    padding: 0 20px;
 }
 
-.footer-section {
-    flex: 1;
-    margin: 0 15px;
+/* 响应式布局优化 */
+@media (min-width: 1200px) {
+    .image-gallery {
+        column-count: 3;
+    }
 }
 
-.footer-bottom {
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+@media (max-width: 1199px) and (min-width: 768px) {
+    .image-gallery {
+        column-count: 2;
+    }
 }
 
-/* Navigation styles */
-.navbar {
-    background-color: #333;
-    padding: 10px 0;
+@media (max-width: 767px) {
+    .image-gallery {
+        column-count: 1;
+    }
 }
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-}
-
-/* Dropdown styles */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.dropdown-content {
+/* 模态框样式优化 */
+.modal {
     display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.close {
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* Social icons styles */
-.social-icons a {
+    top: 20px;
+    right: 30px;
     color: white;
-    margin-right: 15px;
-    font-size: 20px;
-    text-decoration: none;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-.social-icons a:hover {
-    color: #4CAF50;
+.close:hover {
+    color: #999;
 } 

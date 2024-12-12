@@ -78,9 +78,9 @@ extract($viewData);
                 // 检查选择的相册是否匹配
                 $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $selectedAlbumId;
                 if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
-                    <div class="image-item" onclick="openModal('<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>')">
+                    <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/<?php echo htmlspecialchars($img['file_path']); ?>')">
                         <img 
-                            src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>" 
+                            src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/<?php echo htmlspecialchars($img['file_path']); ?>" 
                             alt="<?php echo htmlspecialchars($img['filename']); ?>"
                             loading="lazy"
                         />
@@ -115,9 +115,9 @@ extract($viewData);
                     // 检查选择的相册是否匹配
                     $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $album['id'];
                     if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
-                        <div class="image-item" onclick="openModal('<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>')">
+                        <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/<?php echo htmlspecialchars($img['file_path']); ?>')">
                             <img 
-                                src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['file_path']); ?>" 
+                                src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/<?php echo htmlspecialchars($img['file_path']); ?>" 
                                 alt="<?php echo htmlspecialchars($img['filename']); ?>"
                                 loading="lazy"
                             />
@@ -136,148 +136,5 @@ extract($viewData);
     <img class="modal-content" id="modal-img">
     <div id="caption"></div>
 </div>
-
-<style>
-/* 图片画廊容器 */
-.image-gallery {
-    column-count: 3;
-    column-gap: 15px; /* 小列间距 */
-    padding: 15px;
-    width: 100%;
-    max-width: 100%; /* 移除最大宽度限制 */
-    margin: 0 auto;
-}
-
-/* 每个图片项容器 */
-.image-item {
-    break-inside: avoid;
-    margin-bottom: 15px;
-    position: relative;
-    width: 100%;
-    display: block;
-    cursor: pointer;
-}
-
-/* 图片样式 */
-.image-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    object-fit: cover;
-}
-
-.image-title {
-    opacity: 0; /* 初始隐藏标题 */
-    transition: opacity 0.3s ease;
-    color: white;
-    padding: 8px;
-    margin: 0;
-}
-
-.image-title.loaded {
-    opacity: 1; /* 图片加载完成后显示标题 */
-}
-
-/* 主要内容区域样式 */
-.main-content {
-    width: 100%;
-    max-width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    margin: 0 auto;
-}
-
-/* 响应式布局优化 */
-@media (min-width: 1200px) {
-    .image-gallery {
-        column-count: 3;
-    }
-}
-
-@media (max-width: 1199px) and (min-width: 768px) {
-    .image-gallery {
-        column-count: 2;
-    }
-}
-
-@media (max-width: 767px) {
-    .image-gallery {
-        column-count: 1;
-    }
-}
-
-/* 模态框样式优化 */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    padding: 40px;
-    box-sizing: border-box;
-}
-
-.modal-content {
-    margin: auto;
-    display: block;
-    max-width: 90%;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-.close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: white;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close:hover {
-    color: #999;
-}
-
-
-
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const images = document.querySelectorAll('.image-item img');
-    
-    images.forEach(img => {
-        // 设置懒加载
-        img.loading = 'lazy';
-        
-        // 添加加载事件监听器
-        img.addEventListener('load', function() {
-            // 图片加载完成后的处理
-            img.style.display = 'block';
-            const title = img.nextElementSibling;
-            if (title && title.classList.contains('image-title')) {
-                title.style.display = 'block';
-            }
-        });
-    });
-});
-
-function openModal(src) {
-    document.getElementById("modal").style.display = "block";
-    document.getElementById("modal-img").src = src;
-}
-
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
-</script>
 
 <?php require_once __DIR__ . '/../Shared/footer.php'; ?>

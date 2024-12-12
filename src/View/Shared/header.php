@@ -22,6 +22,7 @@ $albums = $album->getAllAlbums();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/header.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/home.css">
     
     <!-- JavaScript 引用 -->
     <script src="<?php echo BASE_URL; ?>/public/js/main.js" defer></script>
@@ -90,4 +91,7 @@ $albums = $album->getAllAlbums();
             </div>
         </nav>
     </header>
+ 
+    <!-- 在其他 JavaScript 引用后添加 -->
+    <script src="<?php echo BASE_URL; ?>/public/js/home.js" defer></script>
  
