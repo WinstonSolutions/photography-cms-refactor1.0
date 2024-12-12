@@ -28,7 +28,8 @@ class HomeController {
             'selectedAlbumId' => isset($_GET['album_id']) ? intval($_GET['album_id']) : null,
             'sortBy' => isset($_GET['sort_by']) ? $_GET['sort_by'] : 'filename_asc',
             'searchQuery' => isset($_GET['search']) ? $_GET['search'] : '',
-            'selectedAlbumSearch' => isset($_GET['album_search']) ? intval($_GET['album_search']) : null
+            'selectedAlbumSearch' => isset($_GET['album_search']) ? intval($_GET['album_search']) : null,
+            'image' => $this->imageModel
         ];
     }
     
