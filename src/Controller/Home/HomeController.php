@@ -20,24 +20,21 @@ class HomeController {
     public function index() {
         $albums = $this->albumModel->getAllAlbums();
         $images = $this->imageModel->getAllImages();
-        $selectedAlbumId = isset($_GET['album_id']) ? intval($_GET['album_id']) : null;
-        $sortBy = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'filename_asc';
-        $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
-        $selectedAlbumSearch = isset($_GET['album_search']) ? intval($_GET['album_search']) : null;
         
         return [
+            'title' => 'Photography CMS',
             'albums' => $albums,
             'images' => $images,
-            'selectedAlbumId' => $selectedAlbumId,
-            'sortBy' => $sortBy,
-            'searchQuery' => $searchQuery,
-            'selectedAlbumSearch' => $selectedAlbumSearch
+            'selectedAlbumId' => isset($_GET['album_id']) ? intval($_GET['album_id']) : null,
+            'sortBy' => isset($_GET['sort_by']) ? $_GET['sort_by'] : 'filename_asc',
+            'searchQuery' => isset($_GET['search']) ? $_GET['search'] : '',
+            'selectedAlbumSearch' => isset($_GET['album_search']) ? intval($_GET['album_search']) : null
         ];
     }
     
     public function logout() {
         Session::destroy();
-        header('Location: ' . BASE_URL);
+        header('Location: /');
         exit();
     }
 } 

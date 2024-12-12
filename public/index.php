@@ -12,22 +12,26 @@ use App\Core\Helpers\Session;
 
 Session::start();
 
-// 创建控制器实例
-$controller = new HomeController();
-
-// 根据请求路径决定调用哪个方法
-$action = $_GET['action'] ?? 'index';
-
-switch ($action) {
-    case 'logout':
-        $controller->logout();
-        break;
-    default:
-        // 获取视图数据
-        $viewData = $controller->index();
-        // 加载视图
-        require_once ROOT_PATH . '/src/View/Home/home.php';
-        break;
+// 检查是否请求访问 CMS
+if (isset($_GET['access_cms']) || isset($_GET['action'])) {
+    // 创建控制器实例
+    $controller = new HomeController();
+    
+    // 根据请求路径决定调用哪个方法
+    $action = $_GET['action'] ?? 'index';
+    
+    switch ($action) {
+        case 'logout':
+            $controller->logout();
+            break;
+        default:
+            // 获取视图数据
+            $viewData = $controller->index();
+            // 加载视图
+            require_once ROOT_PATH . '/src/View/Home/home.php';
+            break;
+    }
+    exit(); // 确保不会继续显示欢迎页面
 }
 ?>
 <!DOCTYPE html>
