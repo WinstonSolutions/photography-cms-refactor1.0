@@ -3,16 +3,31 @@
 define('ROOT_PATH', dirname(__DIR__));
 
 // 引入必要的类和配置
-require_once ROOT_PATH . '/src/Controller/Home/HomeController.php';
+require_once ROOT_PATH . '/vendor/autoload.php';
 require_once ROOT_PATH . '/config/config.php';
 
-// 如果有请求访问CMS
-if (isset($_GET['access_cms'])) {
-    // 实例化控制器，使用正确的命名空间
-    $controller = new \Src\Controller\Home\HomeController();
-    // 调用index方法
-    $controller->index();
-    exit;
+// 引入必要的命名空间
+use App\Controller\Home\HomeController;
+use App\Core\Helpers\Session;
+
+Session::start();
+
+// 创建控制器实例
+$controller = new HomeController();
+
+// 根据请求路径决定调用哪个方法
+$action = $_GET['action'] ?? 'index';
+
+switch ($action) {
+    case 'logout':
+        $controller->logout();
+        break;
+    default:
+        // 获取视图数据
+        $viewData = $controller->index();
+        // 加载视图
+        require_once ROOT_PATH . '/src/View/Home/home.php';
+        break;
 }
 ?>
 <!DOCTYPE html>

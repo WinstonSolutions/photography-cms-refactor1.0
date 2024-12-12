@@ -1,11 +1,10 @@
 <?php
-namespace Src\Model;
+namespace App\Model;
 
-use Src\Core\Database;
+use App\Core\Database;
 use PDO;
-
-require_once __DIR__ . '/../Core/Database.php';
-require_once __DIR__ . '/../../config/config.php';
+use Exception;
+use InvalidArgumentException;
 
 class Image {
     private $db;
@@ -13,7 +12,7 @@ class Image {
     
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
-        $this->config = require __DIR__ . '/../../config/config.php';
+        $this->config = include dirname(__DIR__, 2) . '/config/config.php';
     }
     
     // 处理图片上传

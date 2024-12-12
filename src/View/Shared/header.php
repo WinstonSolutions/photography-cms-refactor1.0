@@ -1,11 +1,9 @@
 <?php
-require_once __DIR__ . '/../../../src/Core/Helpers/functions.php';
-require_once __DIR__ . '/../../../config/config.php';
-require_once __DIR__ . '/../../Model/Album.php';
-require_once __DIR__ . '/../../Model/User.php';
-
-use Core\Helpers\Session;
-use Core\Helpers\{clean_input, is_logged_in, is_admin};
+// 移除直接的文件引入，改用命名空间
+use App\Core\Helpers\Session;
+use App\Core\Helpers\{clean_input, is_logged_in, is_admin};
+use App\Model\Album;  // 添加模型的命名空间引用
+use App\Model\User;   // 添加模型的命名空间引用
 
 Session::start();
 

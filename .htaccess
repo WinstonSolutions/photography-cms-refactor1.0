@@ -1,6 +1,6 @@
 # 启用 URL 重写引擎
 RewriteEngine On
-RewriteBase /WebDevelopment2/photography-cms/
+RewriteBase /WebDevelopment2/photography-cms-refactor1.0/
 
 # 设置基本访问权限
 Options +FollowSymLinks

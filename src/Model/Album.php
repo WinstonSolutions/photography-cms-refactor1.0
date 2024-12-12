@@ -1,11 +1,9 @@
 <?php
-namespace Src\Model;
+namespace App\Model;
 
-use Src\Core\Database;
+use App\Core\Database;
 use PDO;
 use PDOException;
-
-require_once __DIR__ . '/Image.php';
 
 class Album {
     private $db;
@@ -13,7 +11,7 @@ class Album {
     
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
-        $this->config = require __DIR__ . '/../../config/config.php';
+        $this->config = include dirname(__DIR__, 2) . '/config/config.php';
     }
     
     public function create($data) {

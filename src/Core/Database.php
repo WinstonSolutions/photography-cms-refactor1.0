@@ -1,5 +1,5 @@
 <?php
-namespace Src\Core;
+namespace App\Core;
 
 use PDO;
 use PDOException;
@@ -7,34 +7,18 @@ use PDOException;
 class Database {
     private static $instance = null;
     private $connection;
-    private static $config = null;
     
     private function __construct() {
-        // 只在配置未加载时加载配置
-        if (self::$config === null) {
-            self::$config = require __DIR__ . '/../../config/config.php';
-        }
-        
-        // 检查配置是否正确加载
-        if (!is_array(self::$config)) {
-            throw new PDOException('Database configuration not found or invalid');
-        }
-        
-        // 检查必要的配置项是否存在
-        if (!isset(self::$config['db_host']) || !isset(self::$config['db_name']) || 
-            !isset(self::$config['db_user']) || !isset(self::$config['db_pass'])) {
-            throw new PDOException('Missing required database configuration');
-        }
-        
         try {
-            $dsn = "mysql:host=" . self::$config['db_host'] . 
-                   ";dbname=" . self::$config['db_name'] . 
-                   ";charset=utf8";
+            // 使用 dirname() 函数更安全地获取配置文件
+            $config = include dirname(__DIR__, 2) . '/config/database.php';
+            
+            $dsn = "mysql:host={$config['host']};dbname={$config['dbname']};charset={$config['charset']}";
             
             $this->connection = new PDO(
                 $dsn,
-                self::$config['db_user'],
-                self::$config['db_pass'],
+                $config['username'],
+                $config['password'],
                 [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -42,10 +26,16 @@ class Database {
                 ]
             );
         } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
+            // 记录错误日志而不是直接输出
+            error_log("Database Connection Error: " . $e->getMessage());
+            throw new PDOException("数据库连接失败");
         }
     }
     
+    // 防止克隆
+    private function __clone() {}
+    
+    // 获取数据库实例（单例模式）
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -53,6 +43,7 @@ class Database {
         return self::$instance;
     }
     
+    // 获取数据库连接
     public function getConnection() {
         return $this->connection;
     }

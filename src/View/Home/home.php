@@ -1,28 +1,10 @@
 <?php
-require_once __DIR__ . '/../../../config/config.php';
-require_once __DIR__ . '/../../../src/Core/Helpers/functions.php';
-require_once __DIR__ . '/../../../src/Core/Helpers/Session.php';
-require_once __DIR__ . '/../Shared/header.php';
-require_once __DIR__ . '/../../Controller/Home/HomeController.php';
-
-
-
-
-
-use Core\Helpers\Session;
-
-Session::start();
-
-// 实例化控制器
-$controller = new \Controller\Home\HomeController();
-
-// 处理登出请求
-if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-    $controller->logout();
+// 视图文件不需要重复实例化控制器，只需要使用传入的数据
+if (!isset($viewData)) {
+    die('Direct access to this file is not allowed');
 }
 
-// 获取数据
-$viewData = $controller->index();
+require_once __DIR__ . '/../Shared/header.php';
 
 // 解构数据
 extract($viewData);
@@ -166,7 +148,7 @@ extract($viewData);
     margin: 0 auto;
 }
 
-/* 每个图片项���容器 */
+/* 每个图片项容器 */
 .image-item {
     break-inside: avoid;
     margin-bottom: 15px;

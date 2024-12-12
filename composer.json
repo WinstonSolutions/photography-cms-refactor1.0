@@ -1,7 +1,19 @@
 {
+    "name": "winston/photography-cms-refactor1.0",
+    "description": "my first composer",
+    "authors": [
+        {
+            "name": "winston",
+            "email": "andyredjohn@gmail.com"
+        }
+    ],
+    "require": {},
     "autoload": {
         "psr-4": {
-            "Src\\": "src/"
-        }
+            "App\\": "src/"
+        },
+        "files": [
+            "src/Core/Helpers/functions.php"
+        ]
     }
-} 
+}

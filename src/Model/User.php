@@ -1,7 +1,7 @@
 <?php
-namespace Src\Model;
+namespace App\Model;
 
-use Src\Core\Database;
+use App\Core\Database;
 use PDO;
 
 class User {
@@ -10,7 +10,7 @@ class User {
     
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
-        $this->config = require __DIR__ . '/../../config/config.php';
+        $this->config = include dirname(__DIR__, 2) . '/config/config.php';
     }
     
     // 用户注册
@@ -36,7 +36,7 @@ class User {
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        // 调试信息：检查查询结果
+        // 调试信息：检查���询结果
         if (!$user) {
             echo "No user found with this email.";
             return false;
