@@ -1,8 +1,12 @@
 <?php
+// 确保 session 已启动
+session_start();
 
-require_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../classes/User.php';
-include __DIR__ . '/../includes/header.php';
+// 引入辅助函数
+require_once __DIR__ . '/../../Core/Helpers/functions.php';
+
+// 使用命名空间引入 User 类
+use App\Model\User;
 
 // 如果已经登录，重定向到首页
 if(is_logged_in()) {
@@ -30,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
+// 包含头部文件
+require_once __DIR__ . '/../Shared/header.php';
 ?>
 
 <div class="auth-container">
@@ -64,4 +69,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?> 
+<?php require_once __DIR__ . '/../Shared/footer.php'; ?> 

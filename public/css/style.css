@@ -1,4 +1,4 @@
-/* 基础样式设置 */
+/* 基础样式设置，欢迎页面index.php的样式 */
 body, html {
     margin: 0;
     padding: 0;
@@ -49,4 +49,5 @@ body, html {
 
 .cms-enter:hover {
     background: rgba(255, 255, 255, 0.2);
-} 
+}
+ 

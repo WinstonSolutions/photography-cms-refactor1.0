@@ -33,27 +33,25 @@ if (isset($_GET['access_cms']) || isset($_GET['action'])) {
     }
     exit(); // 确保不会继续显示欢迎页面
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Winston's PHOTOGRAPHY-CMS</title>
-    <!-- 修改CSS文件路径，使用相对于项目根目录的路径 -->
+    <!-- 这里引用了 style.css -->
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <!-- 主标题 -->
     <div id="mainTitle" class="main-title">WINSTON'S PHOTOGRAPHY-CMS</div>
     
-    <!-- 修改背景图片路径，使用相对于当前目录的路径 -->
+    <!-- 背景图片 -->
     <img id="bgImage" class="bg-image" src="./images/background.jpeg" alt="Background">
     
-    <!-- 修改链接，添加access_cms参数 -->
+    <!-- CMS入口链接 -->
     <a href="?access_cms=1" id="cmsEnter" class="cms-enter">ACCESS THE CMS</a>
 
-    <!-- 修改JavaScript文件路径，使用相对于当前目录的路径 -->
     <script src="./js/main.js"></script>
 </body>
 </html>

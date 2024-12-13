@@ -36,7 +36,7 @@ class User {
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        // 调试信息：检查���询结果
+        // 调试信息：检查询结果
         if (!$user) {
             echo "No user found with this email.";
             return false;

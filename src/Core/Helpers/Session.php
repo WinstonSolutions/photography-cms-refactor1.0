@@ -9,7 +9,7 @@ class Session {
     }
     
     public static function destroy() {
-        $_SESSION = [];
+        $_SESSION = array();
         session_destroy();
     }
     

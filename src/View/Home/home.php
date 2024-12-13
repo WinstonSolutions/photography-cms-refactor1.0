@@ -13,7 +13,7 @@ extract($viewData);
 ?>
 
 <!-- 主要内容区域 -->
-<div class="main-content" style="background-color: black; color: white; padding: 20px; flex: 1;">
+<div class="main-content" style="background-color: black; color: white; padding: 20px;">
     <h1>Albums</h1>
     
     <!-- 添加搜索框 -->
@@ -137,4 +137,6 @@ extract($viewData);
     <div id="caption"></div>
 </div>
 
-<?php require_once __DIR__ . '/../Shared/footer.php'; ?>
+<?php 
+require_once __DIR__ . '/../Shared/footer.php'; 
+?>

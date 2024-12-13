@@ -12,7 +12,7 @@
                 "-S",
                 "localhost:8000",  // 使用 localhost 和端口 8000
                 "-t",
-                "E:/xampp/htdocs/WebDevelopment2/photography-cms"  // 本地项目路径，注意使用正斜杠 /
+                "E:/xampp/htdocs/WebDevelopment2/photography-cms-refactor1.0/public"  // 本地项目路径，注意使用正斜杠 /
             ],
             "port": 9003,
             "serverReadyAction": {

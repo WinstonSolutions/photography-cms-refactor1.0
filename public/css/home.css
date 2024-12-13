@@ -1,107 +1,133 @@
-/* 图片画廊容器 */
-.image-gallery {
-    column-count: 3;
-    column-gap: 15px; /* 小列间距 */
-    padding: 15px;
-    width: 100%;
-    max-width: 100%; /* 移除最大宽度限制 */
-    margin: 0 auto;
+/* 重置基础样式，移除浏览器默认的内外边距 */
+html, body {
+    margin: 0;          /* 移除外边距 */
+    padding: 0;         /* 移除内边距 */
+    height: 100%;       /* 设置高度占满整个视口 */
+    width: 100%;        /* 设置宽度占满整个视口 */
+    overflow-x: hidden; /* 隐藏水平滚动条，防止页面左右滚动 */
 }
 
-/* 每个图片项容器 */
-.image-item {
-    break-inside: avoid;
-    margin-bottom: 15px;
-    position: relative;
-    width: 100%;
-    display: block;
-    cursor: pointer;
+/* 设置页面主体布局为弹性盒子，实现页脚固定在底部 */
+body {
+    display: flex;              /* 使用弹性盒子布局 */
+    flex-direction: column;     /* 设置主轴方向为垂直方向 */
+    min-height: 100vh;         /* 最小高度为视口高度，确保页面至少占满整个屏幕 */
+    background-color: black;    /* 设置背景颜色为黑色 */
 }
 
-/* 图片样式 */
-.image-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    object-fit: cover;
-}
-
-.image-title {
-    opacity: 0; /* 初始隐藏标题 */
-    transition: opacity 0.3s ease;
-    color: white;
-    padding: 8px;
-    margin: 0;
-}
-
-.image-title.loaded {
-    opacity: 1; /* 图片加载完成后显示标题 */
-}
-
-/* 主要内容区域样式 */
+/* 添加一个主要内容容器的样式 */
 .main-content {
-    width: 100%;
-    max-width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    margin: 0 auto;
+    flex: 1;                /* 让主内容区域占据剩余空间 */
+    display: flex;          /* 使用弹性盒子布局 */
+    flex-direction: column; /* 垂直方向排列 */
+    width: 100%;           /* 宽度占满 */
+    min-height: 0;         /* 允许内容区域收缩 */
 }
 
-/* 响应式布局优化 */
+/* 图片画廊容器样式，使用多列布局展示图片 */
+.image-gallery {
+    column-count: 3;           /* 设置列数为3列 */
+    column-gap: 15px;          /* 设置列间距为15像素 */
+    padding: 15px;             /* 设置内边距 */
+    width: 100%;              /* 宽度占满父容器 */
+    box-sizing: border-box;    /* 边框盒模型 */
+    margin-bottom: 30px;       /* 底部外边距 */
+    overflow: auto;           /* 添加滚动条，防止内容溢出 */
+    flex: 1;                  /* 让画廊在主内容区域中伸展 */
+}
+
+/* 单个图片项的容器样式 */
+.image-item {
+    break-inside: avoid;       /* 防止图片在分列时被截断 */
+    margin-bottom: 15px;       /* 图片项之间的间距 */
+    position: relative;        /* 相对定位，作为子元素的定位参考 */
+    width: 100%;              /* 宽度占满列宽 */
+    display: block;           /* 块级显示 */
+    cursor: pointer;          /* 鼠标悬停时显示手型光标 */
+}
+
+/* 图片本身的样式 */
+.image-item img {
+    width: 100%;              /* 图片宽度占满容器 */
+    height: auto;             /* 高度自动调整，保持比例 */
+    display: block;           /* 块级显示，避免图片下方的空隙 */
+    border-radius: 8px;       /* 圆角效果 */
+    transition: all 0.3s ease; /* 所有属性变化时的过渡效果 */
+    object-fit: cover;        /* 图片填充方式，保持比例裁剪 */
+}
+
+/* 图片标题样式 */
+.image-title {
+    opacity: 0;               /* 初始透明度为0，即隐藏 */
+    transition: opacity 0.3s ease; /* 透明度变化的过渡效果 */
+    color: white;             /* 文字颜色为白色 */
+    padding: 8px;             /* 内边距 */
+    margin: 0;                /* 移除外边距 */
+}
+
+/* 图片加载完成后的标题样式 */
+.image-title.loaded {
+    opacity: 1;               /* 显示标题 */
+}
+
+
+
+/* 响应式布局设置 */
 @media (min-width: 1200px) {
     .image-gallery {
-        column-count: 3;
+        column-count: 3;      /* 大屏幕显示3列 */
     }
 }
 
 @media (max-width: 1199px) and (min-width: 768px) {
     .image-gallery {
-        column-count: 2;
+        column-count: 2;      /* 中等屏幕显示2列 */
     }
 }
 
 @media (max-width: 767px) {
     .image-gallery {
-        column-count: 1;
+        column-count: 1;      /* 小屏幕显示1列 */
     }
 }
 
-/* 模态框样式优化 */
+/* 模态框（弹窗）样式 */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    padding: 40px;
-    box-sizing: border-box;
+    display: none;            /* 初始隐藏 */
+    position: fixed;          /* 固定定位 */
+    z-index: 1000;           /* 层级设置，确保显示在最上层 */
+    left: 0;                 /* 左对齐 */
+    top: 0;                  /* 顶部对齐 */
+    width: 100%;             /* 宽度占满 */
+    height: 100%;            /* 高度占满 */
+    background-color: rgba(0, 0, 0, 0.9); /* 半透明黑色背景 */
+    padding: 40px;           /* 内边距 */
+    box-sizing: border-box;   /* 边框盒模型 */
 }
 
+/* 模态框内容样式 */
 .modal-content {
-    margin: auto;
-    display: block;
-    max-width: 90%;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: 8px;
+    margin: auto;            /* 居中显示 */
+    display: block;          /* 块级显示 */
+    max-width: 90%;          /* 最大宽度限制 */
+    max-height: 90vh;        /* 最大��度限制，vh为视口高度单位 */
+    object-fit: contain;     /* 图片填充方式，保持比例完整显示 */
+    border-radius: 8px;      /* 圆角效果 */
 }
 
+/* 关闭按钮样式 */
 .close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: white;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
+    position: absolute;      /* 绝对定位 */
+    top: 20px;              /* 距顶部距离 */
+    right: 30px;            /* 距右侧距离 */
+    color: white;           /* 颜色为白色 */
+    font-size: 35px;        /* 字体大小 */
+    font-weight: bold;      /* 字体加粗 */
+    cursor: pointer;        /* 鼠标悬停显示手型 */
+    transition: color 0.3s ease; /* 颜色变化过渡效果 */
 }
 
+/* 关闭按钮悬停效果 */
 .close:hover {
-    color: #999;
-} 
+    color: #999;            /* 悬停时变为灰色 */
+}
