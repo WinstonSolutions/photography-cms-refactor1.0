@@ -55,10 +55,10 @@ $albums = $album->getAllAlbums();
                 <div class="nav-container">
                     <!-- 相册下拉菜单 -->
                     <div class="dropdown">
-                        <a href="<?php echo BASE_URL; ?>/src/View/Home/home.php" class="dropbtn">Albums</a>
+                        <a href="<?php echo BASE_URL; ?>/public/?access_cms=1" class="dropbtn">Albums</a>
                         <div class="dropdown-content">
                             <?php foreach($albums as $album): ?>
-                                <a href="<?php echo BASE_URL; ?>/src/View/Home/home.php?album_id=<?php echo $album['id']; ?>" class="nav-link">
+                                <a href="<?php echo BASE_URL; ?>/public/?access_cms=1?album_id=<?php echo $album['id']; ?>" class="nav-link">
                                     <?php echo htmlspecialchars($album['name']); ?> 
                                 </a>
                             <?php endforeach; ?>

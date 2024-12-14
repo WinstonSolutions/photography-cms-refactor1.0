@@ -1,6 +1,13 @@
 <?php
-require_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../classes/User.php';
+// 确保 autoload 已加载
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+// 使用命名空间引入需要的类
+use App\Core\Helpers\{clean_input, Session};
+use App\Model\User;
+
+// 启动会话
+Session::start();
 
 $error = '';
 
@@ -25,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-include __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../Shared/header.php';
 ?>
 
 <div class="auth-container">
@@ -68,4 +75,4 @@ include __DIR__ . '/../includes/header.php';
     </div>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?> 
+<?php include __DIR__ . '/../Shared/footer.php'; ?> 
