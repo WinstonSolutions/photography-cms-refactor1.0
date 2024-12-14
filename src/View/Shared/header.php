@@ -26,7 +26,7 @@ $albums = $album->getAllAlbums();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/header.css">
-    <!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/home.css"> -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/home.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/login.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/footer.css">
     
