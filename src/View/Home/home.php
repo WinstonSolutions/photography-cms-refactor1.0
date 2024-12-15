@@ -1,5 +1,5 @@
 <?php
-// 视图文件不需要重复实例化控制器，只需要使用传入的数据
+// 确保视图文件是通过控制器加载的
 if (!isset($viewData)) {
     die('Direct access to this file is not allowed');
 }
@@ -108,7 +108,7 @@ extract($viewData);
             <div class="image-gallery">
                 <?php foreach ($images as $img): ?>
                     <?php 
-                    // 检查图片是否与当前相册相关联
+                    // 检查��片是否与当前相册相关联
                     $isAssociated = $image->isImageInAlbum($img['id'], $album['id']); // 使用 img['id'] 来检查
                     // 检查搜索关键字是否匹配
                     $matchesSearch = empty($searchQuery) || stripos($img['filename'], $searchQuery) !== false;

@@ -5,26 +5,31 @@
     box-sizing: border-box;
 }
 
-
+/* 确保 body 和 html 没有限制高度 */
+html, body {
+    height: auto; /* 确保高度是自动的 */
+    overflow-y: auto; /* 确保可以垂直滚动 */
+}
 
 /* 认证容器 */
 .auth-container {
-    min-height: calc(100vh - 490px);
+    min-height: calc(100vh - 350px);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2px;
+    padding: 20px;
     background-color: #00060c;
+    overflow-y: auto;
 }
 
 /* 认证表单 */
 .auth-form {
-    background: white;
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 350px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .auth-form h1 {
@@ -100,7 +105,12 @@
 
 /* 响应式设计 */
 @media (max-width: 480px) {
+    .auth-container {
+        padding: 20px 10px;
+    }
+    
     .auth-form {
+        margin: 10px 0;
         padding: 20px;
     }
     

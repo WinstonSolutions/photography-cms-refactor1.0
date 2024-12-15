@@ -24,7 +24,8 @@ class HomeController {
         // 从配置文件获取 host
         $config = include dirname(__DIR__, 3) . '/config/config.php';
         
-        return [
+        // 加载视图并传递数据
+        $viewData = [
             'title' => 'Photography CMS',
             'albums' => $albums,
             'images' => $images,
@@ -35,6 +36,8 @@ class HomeController {
             'image' => $this->imageModel,
             'host' => $config['host']  // 添加 host 配置
         ];
+        
+        require_once __DIR__ . '/../../View/Home/home.php';
     }
     
     public function logout() {

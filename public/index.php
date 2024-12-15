@@ -28,7 +28,7 @@ if (isset($_GET['access_cms']) || isset($_GET['action'])) {
             // 获取视图数据
             $viewData = $controller->index();
             // 加载视图
-            require_once ROOT_PATH . '/src/View/Home/home.php';
+            // require_once ROOT_PATH . '/src/View/Home/home.php';
             break;
     }
     exit(); // 确保不会继续显示欢迎页面

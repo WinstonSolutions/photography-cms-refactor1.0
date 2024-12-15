@@ -6,14 +6,28 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 use App\Core\Helpers\Session;
 use App\Core\Helpers\{clean_input, is_logged_in, is_admin};
 use App\Model\Album;
-use App\Model\User;
+// use App\Model\User;
 
+
+
+
+// // 调试信息：检查文件是否存在
+// if (class_exists('App\Model\User')) {
+//     echo "User class found.";
+//     exit();
+// } else {
+//     echo "User class not found.";
+//     exit();
+// }
 // 启动会话
 Session::start();
 
 // 实例化Album类获取所有分类
 $album = new Album();
+
 $albums = $album->getAllAlbums();
+
+
 ?>
 
 <!DOCTYPE html>
