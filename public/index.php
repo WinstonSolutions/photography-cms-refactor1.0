@@ -26,7 +26,7 @@ if (isset($_GET['access_cms']) || isset($_GET['action'])) {
             break;
         default:
             // 获取视图数据
-            $viewData = $controller->index();
+            $controller->index();
             // 加载视图
             // require_once ROOT_PATH . '/src/View/Home/home.php';
             break;

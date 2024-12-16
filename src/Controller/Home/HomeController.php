@@ -41,8 +41,19 @@ class HomeController {
     }
     
     public function logout() {
-        Session::destroy();
-        header('Location: /');
+        // 清除所有会话变量
+        $_SESSION = [];
+        
+        // 销毁会话
+        session_destroy();
+        
+        // 设置 HTTP 头部，防止缓存
+        header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
+        header('Pragma: no-cache'); // HTTP 1.0.
+        header('Expires: 0'); // Proxies.
+        
+        // 修改重定向路径为 home 界面
+        header('Location: ' . BASE_URL . 'public/index.php?access_cms=1');
         exit();
     }
 } 
