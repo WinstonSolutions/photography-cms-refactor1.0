@@ -57,33 +57,40 @@ class HomeController {
         exit();
     }
 
+    public function showlogin() {
+        // 设置视图数据
+        $viewData = [
+            'error' => $error ?? ''
+        ];
+
+        require_once __DIR__ . '/../../View/Home/login.php';
+    }
+
     public function login() {
         // 检查请求方法是否为 POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // 获取用户输入的 email 和 password
             $email = clean_input($_POST['email']);
             $password = $_POST['password'];
             
+            // 创建 User 实例并尝试登录
             $user = new User();
             $logged_user = $user->login($email, $password);
             
             if ($logged_user) {
+                // 登录成功，设置会话变量
                 $_SESSION['user_id'] = $logged_user['id'];
                 $_SESSION['username'] = $logged_user['username'];
                 $_SESSION['user_role'] = $logged_user['role'];
                 
-                // 登录成功后重定向到首页
+                // 重定向到首页
                 header('Location: ' . BASE_URL . 'public/index.php?access_cms=1');
                 exit();
             } else {
+                // 登录失败，设置错误信息
                 $error = '邮箱或密码错误';
             }
         }
 
-        // 加载视图并传递错误信息
-        $viewData = [
-            'error' => $error ?? ''
-        ];
-        
-        require_once __DIR__ . '/../../View/Home/login.php';
     }
 } 

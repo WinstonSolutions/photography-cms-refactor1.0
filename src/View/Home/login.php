@@ -19,7 +19,7 @@ $error = $viewData['error'] ?? '';
             <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
         
-        <form method="POST" class="login-form">
+        <form method="POST" action="<?php echo BASE_URL; ?>public/index.php?action=login" class="login-form">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required placeholder="Enter your email" value="">
