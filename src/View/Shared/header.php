@@ -88,7 +88,7 @@ $albums = $album->getAllAlbums();
                                 <a href="<?php echo BASE_URL; ?>/admin/index.php">Backend Management</a>
                                 <a href="<?php echo BASE_URL; ?>public/index.php?action=logout">Logout</a>
                             <?php else: ?>
-                                <a href="<?php echo BASE_URL; ?>src/View/Home/login.php">Login</a>
+                                <a href="<?php echo BASE_URL; ?>/public/index.php?action=login">Login</a>
                                 <a href="<?php echo BASE_URL; ?>/src/View/Home/register.php">Register</a>
                             <?php endif; ?>
                         </div>
@@ -97,9 +97,6 @@ $albums = $album->getAllAlbums();
             </nav>
         </header>
 
-        <div class="main-content">
-            <!-- 在其他 JavaScript 引用后添加 -->
-            <script src="<?php echo BASE_URL; ?>/public/js/home.js" defer></script>
-        </div>
+        
     </div>
  

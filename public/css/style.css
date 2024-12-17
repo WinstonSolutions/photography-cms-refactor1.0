@@ -50,4 +50,24 @@ body, html {
 .cms-enter:hover {
     background: rgba(255, 255, 255, 0.2);
 }
+
+/* 确保页面至少占据整个视窗高度 */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* 主要内容容器 */
+.page-container {
+    min-height: 30vh; /* 最小高度设置为整个视窗高度 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 主要内容区域 */
+.main-content {
+    flex: 1; /* 占据剩余空间 */
+    padding: 20px;
+}
  

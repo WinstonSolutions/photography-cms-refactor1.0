@@ -13,12 +13,12 @@ html, body {
 
 /* 认证容器 */
 .auth-container {
-    min-height: calc(100vh - 350px);
+    min-height: calc(100vh - 450px);
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background-color: #00060c;
+    background-color: #d2d9e0;
     overflow-y: auto;
 }
 

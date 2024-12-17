@@ -20,6 +20,11 @@ switch($page) {
     // ... 其他页面处理
 }
 
+// 确保视图文件是通过控制器加载的
+if (!isset($viewData)) {
+    die('Direct access to this file is not allowed');
+}
+
 // 解构数据
 extract($viewData);
 ?>
@@ -130,7 +135,7 @@ extract($viewData);
                     break;
                 default:
                     // 显示默认的 dashboard 内容
-                    include __DIR__ . '/../src/View/Admin/dashboard.php';
+                    include __DIR__ . '/../src/View/Admin/index.php';
             }
             ?>
         </div>
