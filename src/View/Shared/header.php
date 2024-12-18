@@ -85,7 +85,7 @@ $albums = $album->getAllAlbums();
                         <div class="dropdown-content">
                             <?php if(isset($_SESSION['user_id'])): ?>
                                 <p>Hello <?php echo $_SESSION['username']; ?></p>
-                                <a href="<?php echo BASE_URL; ?>admin/index.php">Backend Management</a>
+                                <a href="<?php echo BASE_URL; ?>public/index.php?action=backend">Backend Management</a>
                                 <a href="<?php echo BASE_URL; ?>public/index.php?action=logout">Logout</a>
                             <?php else: ?>
                                 <a href="<?php echo BASE_URL; ?>public/index.php?action=showlogin">Login</a>

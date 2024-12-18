@@ -1,24 +1,25 @@
 <?php
-require_once __DIR__ . '/../src/Core/Helpers/functions.php';
-require_once __DIR__ . '/../src/Core/Helpers/Session.php';
-require_once __DIR__ . '/../src/Controller/Admin/AdminController.php';
+// 使用 Composer 的自动加载器
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
-use Core\Helpers\Session;
+// 正确的命名空间路径
+use App\Core\Helpers\Session;
+use App\Controller\Admin\AdminController;
 
 Session::start();
 
-$controller = new \Controller\Admin\AdminController();
+// $controller = new AdminController();
 
-// 获取当前页面参数
-$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+// // 获取当前页面参数
+// $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
-// 根据页面参数获取数据
-switch($page) {
-    case 'dashboard':
-        $viewData = $controller->dashboard();
-        break;
-    // ... 其他页面处理
-}
+// // 根据页面参数获取数据
+// switch($page) {
+//     case 'dashboard':
+//         $viewData = $controller->dashboard();
+//         break;
+//     // ... 其他页面处理
+// }
 
 // 确保视图文件是通过控制器加载的
 if (!isset($viewData)) {
