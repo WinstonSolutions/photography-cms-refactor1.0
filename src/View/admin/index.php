@@ -57,7 +57,7 @@ extract($viewData);
     <div class="admin-container">
         <!-- 左侧导航栏 -->
         <div class="admin-sidebar">
-            <a href="index.php" class="sidebar-item <?php echo !isset($_GET['page']) ? 'active' : ''; ?>">
+            <a href="index.php?action=backend" class="sidebar-item <?php echo !isset($_GET['page']) ? 'active' : ''; ?>">
                 <i class="fas fa-desktop"></i> Dashboard
             </a>
             <div class="sidebar-group">
