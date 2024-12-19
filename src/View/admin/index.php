@@ -11,7 +11,7 @@ Session::start();
 // $controller = new AdminController();
 
 // // // 获取当前页面参数
-// $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
 // // // 根据页面参数获取数据
 // switch($page) {
@@ -83,17 +83,17 @@ extract($viewData);
             // 根据页面参数加载不同的内容
             switch($page) {
                 case 'users':
-                    include __DIR__ . '/../src/View/admin/user-management.php';
+                    include __DIR__ . '/user-management.php';
                     break;
                 case 'photos':
-                    include __DIR__ . '/../src/View/admin/post-management.php';
+                    include __DIR__ . '/post-management.php';
                     break;
                 case 'albums':
-                    include __DIR__ . '/../src/View/admin/album-management.php';
+                    include __DIR__ . '/album-management.php';
                     break;
                 default:
                     // 显示默认的 dashboard 内容
-                    include __DIR__ . '/../src/View/admin/dashboard-content.php';
+                    include __DIR__ . '/dashboard-content.php';
             }
             ?>
         </div>

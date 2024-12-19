@@ -21,12 +21,14 @@ class AdminController {
         $usersCount = $this->userModel->getUsersCount();
         $albumsCount = $this->albumModel->getAlbumsCount();
         $imagesCount = $this->imageModel->getPhotosCount();
+        $firstPhotoTime =0;
         
         // 将数据传递给视图
         $viewData = [
             'usersCount' => $usersCount,
             'albumsCount' => $albumsCount,
-            'imagesCount' => $imagesCount
+            'imagesCount' => $imagesCount,
+            'firstPhotoTime' => $firstPhotoTime
         ];
         
                 // 加载视图文件
