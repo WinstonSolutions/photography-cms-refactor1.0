@@ -30,20 +30,14 @@ class AdminController {
         ];
         
                 // 加载视图文件
-        // $this->loadView('admin/index', $viewData);
+       
         require_once __DIR__ . '/../../View/admin/index.php';
 
     }
     
     // 添加一个新的方法来加载视图
-    private function loadView($viewPath, $data = []) {
-        extract($data); // 解构数据以便在视图中使用
-        require_once __DIR__ . '/../../View/' . $viewPath . '.php'; // 加载视图文件
-    }
-    public function backend() {
-        // 重定向到 admin/index.php
-        require_once __DIR__ . '/../../View/admin/index.php';
-    }
-    
-    // 其他管理功能...
-} 
+    // private function loadView($viewPath, $data = []) {
+    //     extract($data); // 解构数据以便在视图中使用
+    //     require_once __DIR__ . '/../../View/' . $viewPath . '.php'; // 加载视图文件
+    // }
+}

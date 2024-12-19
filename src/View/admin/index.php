@@ -10,10 +10,10 @@ Session::start();
 
 // $controller = new AdminController();
 
-// // 获取当前页面参数
+// // // 获取当前页面参数
 // $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
-// // 根据页面参数获取数据
+// // // 根据页面参数获取数据
 // switch($page) {
 //     case 'dashboard':
 //         $viewData = $controller->dashboard();
@@ -23,7 +23,7 @@ Session::start();
 
 // 确保视图文件是通过控制器加载的
 if (!isset($viewData)) {
-    die('Direct access to this file is not allowed');
+    die('Direct access to index.php is not allowed');
 }
 
 // 解构数据
@@ -37,52 +37,9 @@ extract($viewData);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: #f0f2f5;
-        }
-
-        .admin-header {
-            background: #333;
-            color: #fff;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .admin-header a {
-            color: #fff;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: background 0.3s;
-        }
-
-        .admin-header a:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-title {
-            font-size: 1.2em;
-            margin: 0;
-        }
-    </style>
+    <!-- 引入外部 CSS 文件 -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/css/admin.css">
+  
 </head>
 <body>
     <!-- 管理后台顶部导航栏 -->
@@ -126,166 +83,21 @@ extract($viewData);
             // 根据页面参数加载不同的内容
             switch($page) {
                 case 'users':
-                    include __DIR__ . '/../src/View/Admin/users.php';
+                    include __DIR__ . '/../src/View/admin/user-management.php';
                     break;
                 case 'photos':
-                    include __DIR__ . '/../src/View/Admin/photos.php';
+                    include __DIR__ . '/../src/View/admin/post-management.php';
                     break;
                 case 'albums':
-                    include __DIR__ . '/../src/View/Admin/albums.php';
+                    include __DIR__ . '/../src/View/admin/album-management.php';
                     break;
                 default:
                     // 显示默认的 dashboard 内容
-                    include __DIR__ . '/../src/View/Admin/index.php';
+                    include __DIR__ . '/../src/View/admin/dashboard-content.php';
             }
             ?>
         </div>
     </div>
 </body>
 </html>
-
-<style>
-.admin-dashboard {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.admin-section {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.stat-card {
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.2s;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-icon {
-    font-size: 2em;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.stat-number {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-.stat-label {
-    color: #666;
-    font-size: 0.9em;
-}
-
-h1 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-h2 {
-    color: #666;
-    font-size: 1.2em;
-    margin-bottom: 15px;
-}
-
-.admin-container {
-    display: flex;
-    min-height: calc(100vh - 60px); /* 减去header高度 */
-}
-
-.admin-sidebar {
-    width: 250px;
-    background: #333;
-    color: #fff;
-    padding: 20px 0;
-}
-
-.sidebar-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    color: #fff;
-    text-decoration: none;
-    transition: background 0.3s;
-    cursor: pointer;
-}
-
-.sidebar-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.sidebar-item.active {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.sidebar-item i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
-}
-
-.sidebar-item .fa-chevron-down {
-    margin-left: auto;
-    font-size: 0.8em;
-}
-
-.sidebar-submenu {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 5px 0;
-}
-
-.sidebar-subitem {
-    display: flex;
-    align-items: center;
-    padding: 8px 20px 8px 40px;
-    color: #fff;
-    text-decoration: none;
-    transition: background 0.3s;
-    font-size: 0.9em;
-}
-
-.sidebar-subitem:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.sidebar-subitem i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
-}
-
-.admin-content {
-    flex: 1;
-    padding: 20px;
-    background: #f0f2f5;
-}
-
-.sidebar-group {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* 调整原有的样式 */
-.admin-dashboard {
-    max-width: none;
-    padding: 0;
-}
-</style>
 
