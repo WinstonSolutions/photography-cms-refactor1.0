@@ -1,12 +1,14 @@
 <?php
-// print_r($_SESSION);
-require_once '../includes/functions.php';
-require_once '../classes/Album.php';
+// Include Composer's autoload file
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
-$error = ''; // Initialize error message variable
-$success = ''; // Initialize success message variable
-$Album = new Album(); // 创建 Album 类的实例
-// print_r($_SERVER);
+use App\Model\Album; // Import the Album class
+
+// Initialize error and success message variables
+$error = ''; 
+$success = ''; 
+
+$Album = new Album(); // Create an instance of the Album class
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             case 'create':
                 $name = clean_input($_POST['name']);
                 $description = clean_input($_POST['description']);
-                $userId = $_SESSION['user_id']; // 从会话中获取用户 ID
+                $userId = $_SESSION['user_id']; // Get user ID from session
                 if ($Album->create(['name' => $name, 'description' => $description, 'user_id' => $userId])) {
                     $success = 'Album created successfully!'; // Success message
                 } else {
@@ -27,25 +29,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
-
 $Albums = new Album(); 
 $Albums = $Albums->getAllAlbums();
 
-
-// 处理删除请求
+// Handle delete request
 if (isset($_GET['delete_id'])) {
-    $deleteId = intval($_GET['delete_id']); // 获取要删除的专辑 ID
-    // 获取专辑信息
-    $albumToDelete = $Album->getAlbumById($deleteId); // 假设 Album 类中有此方法
+    $deleteId = intval($_GET['delete_id']); // Get the album ID to delete
+    $albumToDelete = $Album->getAlbumById($deleteId); // Assume this method exists in Album class
 
-    // 检查用户权限
+    // Check user permissions
     if ($albumToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['user_role'] === 'admin') {
-        if ($Album->deleteAlbumWithImages($deleteId)) { // 删除专辑及其图片
-            header('Location: index.php?page=albums'); // 重定向到 albums 页面
+        if ($Album->deleteAlbumWithImages($deleteId)) { // Delete album and its images
+            header('Location: index.php?page=albums'); // Redirect to albums page
             exit();
         } else {
-            $error = "Failed to delete the album and its images."; // 添加错误信息
+            $error = "Failed to delete the album and its images."; // Add error message
         }
     } else {
         $error = "You do not have permission to delete this album.";

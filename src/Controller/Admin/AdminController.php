@@ -36,7 +36,32 @@ class AdminController {
         require_once __DIR__ . '/../../View/admin/index.php';
 
     }
-    
+    public function photos() {
+        $usersCount =1;
+        $viewData = [
+            'usersCount' => $usersCount,
+           
+        ];
+        // 加载视图文件
+        require_once __DIR__ . '/../../View/admin/index.php';
+    }
+
+    public function albums() {
+        $albumsCount =1;
+        $viewData = [
+            'albumsCount' => $albumsCount,
+        ];
+        require_once __DIR__ . '/../../View/admin/index.php';
+    }   
+    public function users() {
+        $usersCount =1;
+        $viewData = [
+            'usersCount' => $usersCount,
+        ];
+        require_once __DIR__ . '/../../View/admin/index.php';
+    }
+        
+
     // 添加一个新的方法来加载视图
     // private function loadView($viewPath, $data = []) {
     //     extract($data); // 解构数据以便在视图中使用

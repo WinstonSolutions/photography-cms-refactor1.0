@@ -34,6 +34,15 @@ if (isset($_GET['access_cms']) || isset($_GET['action'])) {//查是否有名为a
         case 'backend':
             $adminController->dashboard();
             break;
+        case 'photos':
+            $adminController->photos();
+            break;
+        case 'albums':
+            $adminController->albums();
+            break;
+        case 'users':
+            $adminController->users();
+            break;
         default:
             $controller->index();
             break;

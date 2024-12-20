@@ -1,10 +1,13 @@
 <?php
+require_once __DIR__ . '/../../../vendor/autoload.php';
+// Import specific functions
+use function App\Core\Helpers\clean_input;
+use function App\Core\Helpers\is_logged_in;
+use function App\Core\Helpers\is_admin;
 
-require_once  __DIR__ . '/../includes/functions.php';
-require_once  __DIR__ . '/../classes/User.php';
 
 
-
+use App\Model\User;
 $user = new User();
 $users = $user->getAllUsers(); // Get all users
 

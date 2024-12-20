@@ -1,16 +1,22 @@
 <?php
+require_once __DIR__ . '/../../../vendor/autoload.php'; // Use Composer's autoloader
+
 error_reporting(E_ALL); // 显示所有错误
 ini_set('display_errors', 1); // 在页面上显示错误
 
-require_once __DIR__ . '/../includes/functions.php'; // 确保在这里调用 session_start()
-require_once __DIR__ . '/../classes/Album.php';
-require_once __DIR__ . '/../classes/Image.php';
-require_once __DIR__ . '/../classes/User.php'; // 确保引入 User 类
+// Import specific functions
+use function App\Core\Helpers\clean_input;
+use function App\Core\Helpers\is_logged_in;
+use function App\Core\Helpers\is_admin;
 
-require_once __DIR__ . '/../lib/php-image-resize/lib/ImageResize.php';
-require_once __DIR__ . '/../lib/php-image-resize/lib/ImageResizeException.php';
-
+// Import necessary classes
+use App\Model\Album;
+use App\Model\Image;
+use App\Model\User;
 use \Gumlet\ImageResize;
+
+// Ensure the correct path to the config file
+$config = require __DIR__ . '/../../../config/config.php'; // Adjusted path to config.php
 
 $albumModel = new Album();
 $albums = $albumModel->getAllAlbums(); // 获取所有相册
@@ -18,8 +24,7 @@ $albums = $albumModel->getAllAlbums(); // 获取所有相册
 $error = '';
 $success = '';
 
-// 获取配置
-$config = require __DIR__ . '/../config/config.php'; // 确保配置文件路径正确
+
 
 $host = $_SERVER['HTTP_HOST'];
 // print_r($host);
@@ -113,7 +118,7 @@ if (isset($_GET['delete_id'])) {
             header('Location: index.php?page=photos'); // 重定向到 photos 页面
             exit();
         } else {
-            $error = "Failed to delete the image."; // 添加错误信息
+            $error = "Failed to delete the image."; // 加错误信息
         }
     } else {
         $error = "You do not have permission to delete this image.";

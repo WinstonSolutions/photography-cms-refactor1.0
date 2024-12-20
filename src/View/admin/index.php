@@ -10,8 +10,9 @@ Session::start();
 
 // $controller = new AdminController();
 
-// // // 获取当前页面参数
-$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+// // // 获取当前页面参数,$_GET 是 PHP 中的一个超全局变量，用于获取 URL 中的查询字符串参数
+$action = isset($_GET['action']) ? $_GET['action'] : 'dashboard';//检查 URL 参数中是否存在 page，如果存在，就将它的值赋给变量 $page；如果不存在，就将默认值 'dashboard' 赋给 $page。
+
 
 // // // 根据页面参数获取数据
 // switch($page) {
@@ -57,21 +58,22 @@ extract($viewData);
     <div class="admin-container">
         <!-- 左侧导航栏 -->
         <div class="admin-sidebar">
-            <a href="index.php?action=backend" class="sidebar-item <?php echo !isset($_GET['page']) ? 'active' : ''; ?>">
+            <!-- 如果 $_GET['page'] 未设置，则返回字符串 'active'， -->
+            <a href="index.php?action=backend" class="sidebar-item <?php echo !isset($_GET['action']) ? 'active' : ''; ?>">
                 <i class="fas fa-desktop"></i> Dashboard
             </a>
             <div class="sidebar-group">
-                <a href="index.php?page=photos" class="sidebar-item <?php echo (htmlspecialchars($_GET['page'] ?? '') === 'photos') ? 'active' : ''; ?>">
+                <a href="index.php?action=photos" class="sidebar-item <?php echo (htmlspecialchars($_GET['action'] ?? '') === 'photos') ? 'active' : ''; ?>">
                     <i class="fas fa-folder"></i> Photos
                 </a>
             </div>
             <div class="sidebar-group">
-                <a href="index.php?page=albums" class="sidebar-item <?php echo (htmlspecialchars($_GET['page'] ?? '') === 'albums') ? 'active' : ''; ?>">
+                <a href="index.php?action=albums" class="sidebar-item <?php echo (htmlspecialchars($_GET['action'] ?? '') === 'albums') ? 'active' : ''; ?>">
                     <i class="fas fa-folder"></i> Albums
                 </a>
             </div>
             <div class="sidebar-group">
-                <a href="index.php?page=users" class="sidebar-item <?php echo (htmlspecialchars($_GET['page'] ?? '') === 'users') ? 'active' : ''; ?>">
+                <a href="index.php?action=users" class="sidebar-item <?php echo (htmlspecialchars($_GET['action'] ?? '') === 'users') ? 'active' : ''; ?>">
                     <i class="fas fa-users"></i> Users
                 </a>
             </div>
@@ -81,7 +83,7 @@ extract($viewData);
         <div class="admin-content">
             <?php
             // 根据页面参数加载不同的内容
-            switch($page) {
+            switch($action) {
                 case 'users':
                     include __DIR__ . '/user-management.php';
                     break;
