@@ -10,6 +10,14 @@ require_once __DIR__ . '/../Shared/header.php';
 extract($viewData);
 
 // 视图代码开始
+$host = $_SERVER['HTTP_HOST'];
+// print_r($host);
+if ($host === 'localhost') {
+    $host = 'localhost/WebDevelopment2/photography-cms-refactor1.0';
+} else {
+    $host = 'web2.byethost18.com';
+}
+
 ?>
 
 <!-- 主要内容区域 -->
@@ -78,9 +86,9 @@ extract($viewData);
                 // 检查选择的相册是否匹配
                 $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $selectedAlbumId;
                 if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
-                    <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/<?php echo htmlspecialchars($img['file_path']); ?>')">
+                    <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>')">
                         <img 
-                            src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/<?php echo htmlspecialchars($img['file_path']); ?>" 
+                            src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>" 
                             alt="<?php echo htmlspecialchars($img['filename']); ?>"
                             loading="lazy"
                         />
@@ -115,9 +123,9 @@ extract($viewData);
                     // 检查选择的相册是否匹配
                     $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $album['id'];
                     if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
-                        <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/<?php echo htmlspecialchars($img['file_path']); ?>')">
+                        <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>')">
                             <img 
-                                src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/<?php echo htmlspecialchars($img['file_path']); ?>" 
+                                src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>" 
                                 alt="<?php echo htmlspecialchars($img['filename']); ?>"
                                 loading="lazy"
                             />

@@ -46,7 +46,7 @@ extract($viewData);
     <!-- 管理后台顶部导航栏 -->
     <div class="admin-header">
         <div class="header-left">
-            <a href="../views/home.php"><i class="fas fa-arrow-left"></i> Visit</a>
+            <a href="index.php?access_cms=1"><i class="fas fa-arrow-left"></i> Visit</a>
         </div>
         <div class="header-right">
             <a href="#"><i class="fas fa-user"></i> <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'User'; ?></a>

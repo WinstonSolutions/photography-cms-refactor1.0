@@ -5,7 +5,7 @@ error_reporting(E_ALL); // 显示所有错误
 ini_set('display_errors', 1); // 在页面上显示错误
 
 // Import specific functions
-use function App\Core\Helpers\clean_input;
+// use function App\Core\Helpers\clean_input;
 use function App\Core\Helpers\is_logged_in;
 use function App\Core\Helpers\is_admin;
 
@@ -13,7 +13,7 @@ use function App\Core\Helpers\is_admin;
 use App\Model\Album;
 use App\Model\Image;
 use App\Model\User;
-use \Gumlet\ImageResize;
+use Gumlet\ImageResize;
 
 // Ensure the correct path to the config file
 $config = require __DIR__ . '/../../../config/config.php'; // Adjusted path to config.php
@@ -29,7 +29,7 @@ $success = '';
 $host = $_SERVER['HTTP_HOST'];
 // print_r($host);
 if ($host === 'localhost') {
-    $host = 'localhost/WebDevelopment2/photography-cms';
+    $host = 'localhost/WebDevelopment2/photography-cms-refactor1.0';
 } else {
     $host = 'web2.byethost18.com';
 }
@@ -177,7 +177,7 @@ if (isset($_GET['delete_id'])) {
                 <?php foreach ($images as $img): ?>
                     <tr>
                         <td>
-                            <img src="<?php echo 'http://' . $host . '/' . htmlspecialchars($img['thumbnail_path']); ?>"
+                            <img src="<?php echo 'http://' . $host . '/storage/' . htmlspecialchars($img['thumbnail_path']); ?>"
                                 alt="Image" style="width: 100px; height: auto;" />
                         </td>
                         <td><?php echo htmlspecialchars($img['filename']); ?></td>
