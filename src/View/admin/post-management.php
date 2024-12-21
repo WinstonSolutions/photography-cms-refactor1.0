@@ -1,4 +1,9 @@
 <?php
+// Start the session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once __DIR__ . '/../../../vendor/autoload.php'; // Use Composer's autoloader
 
 error_reporting(E_ALL); // 显示所有错误
@@ -94,6 +99,12 @@ $userModel = new User(); // 实例化 User 类
 // 获取所有图片
 $images = $imageModel->getAllImages(); // 获取所有图片的信息，包括相册 ID
 
+// Check if there is a delete request and call the controller method
+if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+    $adminController = new \App\Controller\Admin\AdminController();
+    $adminController->deleteImage();
+}
+
 // 检查是否有注销请求
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     // 清除所有会话变量
@@ -105,24 +116,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     // 重定向到登录页面
     header('Location: login.php');
     exit();
-}
-
-// 处理删除请求
-if (isset($_GET['delete_id'])) {
-    $deleteId = intval($_GET['delete_id']); // 获取要删除的图片 ID
-    $imageToDelete = $imageModel->getImageById($deleteId); // 获取图片信息
-
-    // 检查用户权限
-    if ($imageToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['user_role'] === 'admin') {
-        if ($imageModel->deleteImage($deleteId)) { // 删除图片
-            header('Location: index.php?page=photos'); // 重定向到 photos 页面
-            exit();
-        } else {
-            $error = "Failed to delete the image."; // 加错误信息
-        }
-    } else {
-        $error = "You do not have permission to delete this image.";
-    }
 }
 ?>
 
@@ -182,11 +175,11 @@ if (isset($_GET['delete_id'])) {
                         </td>
                         <td><?php echo htmlspecialchars($img['filename']); ?></td>
                         <td><?php echo htmlspecialchars($img['created_at']); ?></td>
-                        <td><?php echo htmlspecialchars($img['album_name']); ?></td> <!-- 显示相册名称 -->
+                        <td><?php echo htmlspecialchars($img['album_name']); ?></td>
                         <td><?php echo htmlspecialchars($userModel->getUsernameById($img['user_id'])); ?></td>
                         <td>
                             <?php if ($img['user_id'] === $_SESSION['user_id'] || $_SESSION['user_role'] === 'admin'): ?>
-                                <a href="post-management.php?delete_id=<?php echo $img['id']; ?>"
+                                <a href="<?php echo BASE_URL; ?>public/index.php?action=delete&delete_id=<?php echo $img['id']; ?>"
                                     onclick="return confirm('Are you sure you want to delete this image?');"
                                     class="delete-btn delete-active">Delete</a>
                             <?php else: ?>

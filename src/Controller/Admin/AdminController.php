@@ -67,4 +67,25 @@ class AdminController {
     //     extract($data); // 解构数据以便在视图中使用
     //     require_once __DIR__ . '/../../View/' . $viewPath . '.php'; // 加载视图文件
     // }
+
+    public function deleteImage() {
+        // Check if delete_id is set in the GET request
+        if (isset($_GET['delete_id'])) {
+            $deleteId = intval($_GET['delete_id']); // Get the image ID to delete
+            $imageModel = new Image(); // Instantiate the Image model
+            $imageToDelete = $imageModel->getImageById($deleteId); // Get image details
+
+            // Check user permissions
+            if ($imageToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['user_role'] === 'admin') {
+                if ($imageModel->deleteImage($deleteId)) { // Delete the image
+                    header('Location: ' . BASE_URL . 'public/index.php?action=photos'); // Redirect to post-management page
+                    exit();
+                } else {
+                    $error = "Failed to delete the image."; // Set error message
+                }
+            } else {
+                $error = "You do not have permission to delete this image."; // Set permission error
+            }
+        }
+    }
 }

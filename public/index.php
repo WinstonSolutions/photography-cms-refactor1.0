@@ -1,4 +1,7 @@
 <?php
+// Start the session
+session_start();
+
 // 定义项目根目录常量
 define('ROOT_PATH', dirname(__DIR__));
 
@@ -44,6 +47,9 @@ if (isset($_GET['access_cms']) || isset($_GET['action'])) {//查是否有名为a
             break;
         case 'users':
             $adminController->users();
+            break;
+        case 'delete':
+            $adminController->deleteImage();
             break;
         default:
             $controller->index();
