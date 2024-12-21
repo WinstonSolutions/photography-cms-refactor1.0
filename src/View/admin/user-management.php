@@ -11,14 +11,6 @@ use App\Model\User;
 $user = new User();
 $users = $user->getAllUsers(); // Get all users
 
-// Handle user deletion
-if (isset($_POST['delete_user'])) {
-    $user_id = clean_input($_POST['user_id']);
-    $user->deleteUser($user_id);
-    header('Location: index.php?page=users'); // Refresh page to show updated user list
-    exit();
-}
-
 ?>
 
 <div class="admin-dashboard">
@@ -47,8 +39,8 @@ if (isset($_POST['delete_user'])) {
                         <td><?php echo htmlspecialchars($user['role']); ?></td>
                         <td>
                             <?php if ($_SESSION['user_role'] === 'admin'): ?>
-                                <a href="post-management.php?delete_id=<?php echo $img['id']; ?>"
-                                    onclick="return confirm('Are you sure you want to delete this image?');"
+                                <a href="index.php?action=deleteUser&delete_id=<?php echo $user['id']; ?>"
+                                    onclick="return confirm('Are you sure you want to delete this user?');"
                                     class="delete-btn delete-active">Delete</a>
                             <?php else: ?>
                                 <a href="#" onclick="alert('You do not have permission to delete this User'); return false;"

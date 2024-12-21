@@ -24,14 +24,20 @@ document.addEventListener('DOMContentLoaded', function() {
  * 打开模态框显示图片
  * @param {string} src - 图片源路径
  */
-function openModal(src) {
-    document.getElementById("modal").style.display = "block";
-    document.getElementById("modal-img").src = src;
+function openModal(imageSrc) {
+    var modal = document.getElementById('modal');
+    var modalImg = document.getElementById('modal-img');
+    var captionText = document.getElementById('caption');
+
+    modal.style.display = "block"; // Show the modal
+    modalImg.src = imageSrc; // Set the image source
+    captionText.innerHTML = imageSrc.split('/').pop(); // Set the caption to the image filename
 }
 
 /**
  * 关闭模态框
  */
 function closeModal() {
-    document.getElementById("modal").style.display = "none";
+    var modal = document.getElementById('modal');
+    modal.style.display = "none"; // Hide the modal
 } 

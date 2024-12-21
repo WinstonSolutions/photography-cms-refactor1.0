@@ -70,7 +70,7 @@ require_once __DIR__ . '/../Shared/header.php';
         </form>
         
         <div class="auth-links">
-            <p>Already have an account? <a href="login.php" class="login-link">Login Now</a></p>
+            <p>Already have an account? <a href="<?php echo BASE_URL; ?>public/index.php?action=showlogin" class="login-link">Login Now</a></p>
         </div>
     </div>
 </div>

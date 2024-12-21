@@ -91,6 +91,7 @@ if ($host === 'localhost') {
                             loading="lazy"
                         />
                         <p class="image-title"><?php echo htmlspecialchars($img['filename']); ?></p>
+                        
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>

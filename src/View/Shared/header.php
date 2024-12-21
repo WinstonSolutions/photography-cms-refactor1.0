@@ -46,7 +46,8 @@ $albums = $album->getAllAlbums();
     
     <!-- JavaScript 引用 -->
     <script src="<?php echo BASE_URL; ?>/public/js/main.js" defer></script>
-    
+    <script src="<?php echo BASE_URL; ?>/public/js/home.js" defer></script>
+
     <!-- 添加 Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
@@ -89,7 +90,7 @@ $albums = $album->getAllAlbums();
                                 <a href="<?php echo BASE_URL; ?>public/index.php?action=logout">Logout</a>
                             <?php else: ?>
                                 <a href="<?php echo BASE_URL; ?>public/index.php?action=showlogin">Login</a>
-                                <a href="<?php echo BASE_URL; ?>src/View/Home/register.php">Register</a>
+                                <a href="<?php echo BASE_URL; ?>public/index.php?action=showRegister">Register</a>
                             <?php endif; ?>
                         </div>
                     </div>

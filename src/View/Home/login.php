@@ -36,7 +36,7 @@ $error = $viewData['error'] ?? '';
         </form>
         
         <div class="auth-links">
-            <p>Don't have an account? <a href="register.php" class="register-link">Register Now</a></p>
+            <p>Don't have an account? <a href="<?php echo BASE_URL; ?>public/index.php?action=showRegister" class="register-link">Register Now</a></p>
             <p><a href="/forgot-password" class="forgot-password-link">Forgot Password?</a></p>
         </div>
     </div>

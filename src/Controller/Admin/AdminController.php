@@ -107,4 +107,23 @@ class AdminController {
             }
         }
     }
+
+    public function deleteUser() {
+        if (isset($_GET['delete_id'])) {
+            $deleteId = intval($_GET['delete_id']); // Get the user ID to delete
+            // $userToDelete = $this->userModel->getUserById($deleteId); // Get user details
+
+            // Check user permissions
+            if ($_SESSION['user_role'] === 'admin') {
+                if ($this->userModel->deleteUser($deleteId)) { // Delete the user
+                    header('Location: ' . BASE_URL . 'public/index.php?action=users'); // Redirect to users page
+                    exit();
+                } else {
+                    $error = "Failed to delete the user."; // Add error message
+                }
+            } else {
+                $error = "You do not have permission to delete this user.";
+            }
+        }
+    }
 }

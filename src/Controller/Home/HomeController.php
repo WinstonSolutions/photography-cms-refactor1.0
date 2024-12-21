@@ -116,4 +116,14 @@ class HomeController {
             }
         }
     }
+
+    public function showRegister() {
+        // Set view data if needed
+        $viewData = [
+            // Add any data you need to pass to the view
+        ];
+
+        // Load the registration view
+        require_once __DIR__ . '/../../View/Home/register.php';
+    }
 } 

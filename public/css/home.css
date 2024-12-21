@@ -24,7 +24,7 @@ body {
     min-height: 0;         /* 允许内容区域收缩 */
 }
 
-/* 图片画廊容器样式，使用多列布局展示图片 */
+/* 图片画廊容器样式，使���多列布局展示图片 */
 .image-gallery {
     column-count: 3;           /* 设置列数为3列 */
     column-gap: 15px;          /* 设置列间距为15像素 */
@@ -58,11 +58,11 @@ body {
 
 /* 图片标题样式 */
 .image-title {
-    opacity: 0;               /* 初始透明度为0，即隐藏 */
-    transition: opacity 0.3s ease; /* 透明度变化的过渡效果 */
-    color: white;             /* 文字颜色为白色 */
-    padding: 8px;             /* 内边距 */
-    margin: 0;                /* 移除外边距 */
+    opacity: 1; /* Set opacity to 1 to make the title fully visible */
+    transition: opacity 0.3s ease;
+    color: rgb(221, 24, 24);
+    padding: 8px;
+    margin: 0;
 }
 
 /* 图片加载完成后的标题样式 */
@@ -110,7 +110,7 @@ body {
     margin: auto;            /* 居中显示 */
     display: block;          /* 块级显示 */
     max-width: 90%;          /* 最大宽度限制 */
-    max-height: 90vh;        /* 最大��度限制，vh为视口高度单位 */
+    max-height: 90vh;        /* 最大高度限制，vh为视口高度单位 */
     object-fit: contain;     /* 图片填充方式，保持比例完整显示 */
     border-radius: 8px;      /* 圆角效果 */
 }
