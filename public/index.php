@@ -12,6 +12,8 @@ use App\Core\Helpers\Session;
 use App\Controller\Admin\AdminController;
 Session::start();
 
+
+
 // 检查是否请求访问 CMS
 if (isset($_GET['access_cms']) || isset($_GET['action'])) {//查是否有名为access_cms或action的GET参数。如果这些参数中的任何一个存在，则进入下面的代码块
     // 创建控制器实例

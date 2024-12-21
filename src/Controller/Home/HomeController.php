@@ -20,7 +20,8 @@ class HomeController {
     public function index() {
         $albums = $this->albumModel->getAllAlbums();
         $images = $this->imageModel->getAllImages();
-        
+        $selectedAlbumId = isset($_GET['album_id']) ? intval($_GET['album_id']) : null;
+        // $selectedAlbumId = 1;
         // 从配置文件获取 host
         $config = include dirname(__DIR__, 3) . '/config/config.php';
         
@@ -29,12 +30,13 @@ class HomeController {
             'title' => 'Photography CMS',
             'albums' => $albums,
             'images' => $images,
-            'selectedAlbumId' => isset($_GET['album_id']) ? intval($_GET['album_id']) : null,
+            'selectedAlbumId' => $selectedAlbumId,
             'sortBy' => isset($_GET['sort_by']) ? $_GET['sort_by'] : 'filename_asc',
             'searchQuery' => isset($_GET['search']) ? $_GET['search'] : '',
             'selectedAlbumSearch' => isset($_GET['album_search']) ? intval($_GET['album_search']) : null,
             'image' => $this->imageModel,
-            'host' => $config['host']  // 添加 host 配置
+            'host' => $config['host'],  // 添加 host 配置
+            'albumModel' => $this->albumModel // Ensure albumModel is passed to the view
         ];
         
         require_once __DIR__ . '/../../View/Home/home.php';

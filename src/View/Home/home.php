@@ -9,6 +9,12 @@ require_once __DIR__ . '/../Shared/header.php';
 // 解构数据
 extract($viewData);
 
+// Ensure that $albumModel is defined and used correctly
+if (isset($albumModel)) {
+    // Use $albumModel as needed
+    // Example: $albumModel->someMethod();
+}
+
 // 视图代码开始
 $host = $_SERVER['HTTP_HOST'];
 // print_r($host);
@@ -18,11 +24,13 @@ if ($host === 'localhost') {
     $host = 'web2.byethost18.com';
 }
 
+
 ?>
 
 <!-- 主要内容区域 -->
 <div class="main-content" style="background-color: black; color: white; padding: 20px;">
     <h1>Albums</h1>
+    <!-- <p>The selected album ID is: <?php echo htmlspecialchars($selectedAlbumId); ?></p> -->
     
     <!-- 添加搜索框 -->
     <div>
@@ -41,8 +49,9 @@ if ($host === 'localhost') {
     </div>
 
     <?php if ($selectedAlbumId !== null): ?>
+      
         <?php 
-        // 获取所选相册的信息
+        // 获��所选相册的信息
         $selectedAlbum = $albumModel->getCategory($selectedAlbumId); // 获取相册信息
         ?>
         <h2><?php echo htmlspecialchars($selectedAlbum['name']); ?></h2> <!-- 只显示所选相册的名称 -->
@@ -116,7 +125,7 @@ if ($host === 'localhost') {
             <div class="image-gallery">
                 <?php foreach ($images as $img): ?>
                     <?php 
-                    // 检查��片是否与当前相册相关联
+                    // 检查图片是否与当前相册相关联
                     $isAssociated = $image->isImageInAlbum($img['id'], $album['id']); // 使用 img['id'] 来检查
                     // 检查搜索关键字是否匹配
                     $matchesSearch = empty($searchQuery) || stripos($img['filename'], $searchQuery) !== false;
