@@ -57,7 +57,7 @@ $albums = $album->getAllAlbums();
         <!-- 头部区域 -->
         <header class="main-header">
             <div class="header-image-container">
-                <img src="<?php echo BASE_URL; ?>/public/images/homeheader.jpg" alt="Header Image" class="header-image">
+                <img src="<?php echo BASE_URL; ?>public/images/homeheader.jpg" alt="Header Image" class="header-image">
                 <div class="header-text">
                     <h1>Welcome to Winston's Photography CMS</h1>
                     <p>Capture the moment, preserve the memory</p>
@@ -69,7 +69,7 @@ $albums = $album->getAllAlbums();
                 <div class="nav-container">
                     <!-- 相册下拉菜单 -->
                     <div class="dropdown">
-                        <a href="<?php echo BASE_URL; ?>/public/?access_cms=1" class="dropbtn">Albums</a>
+                        <a href="<?php echo BASE_URL; ?>public/?access_cms=1" class="dropbtn">Albums</a>
                         <div class="dropdown-content">
                             <?php foreach($albums as $album): ?>
                                 <a href="<?php echo BASE_URL; ?>public/index.php?access_cms=1&album_id=<?php echo $album['id']; ?>" class="nav-link">

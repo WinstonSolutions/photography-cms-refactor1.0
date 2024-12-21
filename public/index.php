@@ -51,6 +51,9 @@ if (isset($_GET['access_cms']) || isset($_GET['action'])) {//查是否有名为a
         case 'delete':
             $adminController->deleteImage();
             break;
+        case 'deleteAlbum':
+            $adminController->deleteAlbum();
+            break;
         default:
             $controller->index();
             break;

@@ -32,24 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $Albums = new Album(); 
 $Albums = $Albums->getAllAlbums();
 
-// Handle delete request
-if (isset($_GET['delete_id'])) {
-    $deleteId = intval($_GET['delete_id']); // Get the album ID to delete
-    $albumToDelete = $Album->getAlbumById($deleteId); // Assume this method exists in Album class
-
-    // Check user permissions
-    if ($albumToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['user_role'] === 'admin') {
-        if ($Album->deleteAlbumWithImages($deleteId)) { // Delete album and its images
-            header('Location: index.php?page=albums'); // Redirect to albums page
-            exit();
-        } else {
-            $error = "Failed to delete the album and its images."; // Add error message
-        }
-    } else {
-        $error = "You do not have permission to delete this album.";
-    }
-}
-
 ?>
 
 <div class="admin-content">
@@ -107,7 +89,7 @@ if (isset($_GET['delete_id'])) {
                         <td><?php echo $cat['created_at']; ?></td>
                         <td>
                             <?php if ($_SESSION['user_role'] === 'admin'): ?>
-                                <a href="album-management.php?delete_id=<?php echo $cat['id']; ?>"
+                                <a href="index.php?action=deleteAlbum&delete_id=<?php echo $cat['id']; ?>"
                                     onclick="return confirm('Are you sure you want to delete All Posts in this Album?');"
                                     class="delete-btn delete-active">Delete</a>
                             <?php else: ?>

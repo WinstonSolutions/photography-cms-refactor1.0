@@ -88,4 +88,23 @@ class AdminController {
             }
         }
     }
+
+    public function deleteAlbum() {
+        if (isset($_GET['delete_id'])) {
+            $deleteId = intval($_GET['delete_id']); // Get the album ID to delete
+            $albumToDelete = $this->albumModel->getAlbumById($deleteId); // Get album details
+
+            // Check user permissions
+            if ($albumToDelete['user_id'] === $_SESSION['user_id'] || $_SESSION['user_role'] === 'admin') {
+                if ($this->albumModel->deleteAlbumWithImages($deleteId)) { // Delete album and its images
+                    header('Location: ' . BASE_URL . 'public/index.php?action=albums');  // Redirect to albums page
+                    exit();
+                } else {
+                    $error = "Failed to delete the album and its images."; // Add error message
+                }
+            } else {
+                $error = "You do not have permission to delete this album.";
+            }
+        }
+    }
 }
