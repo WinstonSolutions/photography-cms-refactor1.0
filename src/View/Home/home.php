@@ -38,103 +38,36 @@ if ($host === 'localhost') {
         </form>
     </div>
 
-    <?php if ($selectedAlbumId !== null): ?>
+    <!-- Display albums and their images -->
+    <?php foreach ($albums as $album): ?>
         <?php 
-        // Get selected album information
-        $selectedAlbum = $albumModel->getCategory($selectedAlbumId);
-        ?>
-        <h2><?php echo htmlspecialchars($selectedAlbum['name']); ?></h2>
-        
-        <!-- Sorting options -->
-        <div>
-            <form method="GET" action="">
-                <input type="hidden" name="album_id" value="<?php echo $selectedAlbumId; ?>">
-                <label for="sort_by">Sort by:</label>
-                <select name="sort_by" id="sort_by" onchange="this.form.submit()">
-                    <option value="filename_asc" <?php echo $sortBy === 'filename_asc' ? 'selected' : ''; ?>>Filename A-Z</option>
-                    <option value="filename_desc" <?php echo $sortBy === 'filename_desc' ? 'selected' : ''; ?>>Filename Z-A</option>
-                    <option value="created_at_new_old" <?php echo $sortBy === 'created_at_new_old' ? 'selected' : ''; ?>>Created At New-Old</option>
-                    <option value="created_at_old_new" <?php echo $sortBy === 'created_at_old_new' ? 'selected' : ''; ?>>Created At Old-New</option>
-                </select>
-            </form>
-        </div>
-
-        <div class="image-gallery">
-            <?php 
-            // Sort images based on selected criteria
-            usort($images, function($a, $b) use ($sortBy) {
-                switch ($sortBy) {
-                    case 'filename_asc':
-                        return strcmp($a['filename'], $b['filename']);
-                    case 'filename_desc':
-                        return strcmp($b['filename'], $a['filename']);
-                    case 'created_at_new_old':
-                        return strtotime($b['created_at']) - strtotime($a['created_at']);
-                    case 'created_at_old_new':
-                        return strtotime($a['created_at']) - strtotime($b['created_at']);
-                }
-            });
-
-            foreach ($images as $img): ?>
-                <?php 
-                // Check if image is associated with the selected album
-                $isAssociated = $image->isImageInAlbum($img['id'], $selectedAlbumId);
-                // Check if search keyword matches
-                $matchesSearch = empty($searchQuery) || stripos($img['filename'], $searchQuery) !== false;
-                // Check if selected album matches
-                $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $selectedAlbumId;
-                if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
-                    <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>')">
-                        <img 
-                            src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>" 
-                            alt="<?php echo htmlspecialchars($img['filename']); ?>"
-                            loading="lazy"
-                        />
-                        <p class="image-title"><?php echo htmlspecialchars($img['filename']); ?></p>
-                        
-                    </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </div>
-    <?php else: ?>
-        <!-- Display all albums and their images -->
-        <?php foreach ($albums as $album): ?>
-            <?php 
-            // Check if the album has images
-            $hasImages = false;
-            foreach ($images as $img) {
-                if ($image->isImageInAlbum($img['id'], $album['id'])) {
-                    $hasImages = true;
-                    break; // Exit loop after finding at least one image
-                }
+        // Check if the album has images
+        $hasImages = false;
+        foreach ($images as $img) {
+            if ($img['album_id'] === $album['id']) {
+                $hasImages = true;
+                break; // Exit loop after finding at least one image
             }
-            ?>
-            <?php if ($hasImages): // Only display album name if it has images ?>
-                <h2><?php echo htmlspecialchars($album['name']); ?></h2>
-                <div class="image-gallery">
-                    <?php foreach ($images as $img): ?>
-                        <?php 
-                        // Check if image is associated with the current album
-                        $isAssociated = $image->isImageInAlbum($img['id'], $album['id']);
-                        // Check if search keyword matches
-                        $matchesSearch = empty($searchQuery) || stripos($img['filename'], $searchQuery) !== false;
-                        // Check if selected album matches
-                        $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $album['id'];
-                        if ($isAssociated && $matchesSearch && $matchesAlbum): ?>
-                            <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>')">
-                                <img 
-                                    src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>" 
-                                    alt="<?php echo htmlspecialchars($img['filename']); ?>"
-                                    loading="lazy"
-                                />
-                                <p class="image-title"><?php echo htmlspecialchars($img['filename']); ?></p>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    <?php endif; ?>
+        }
+        ?>
+        <?php if ($hasImages): // Only display album name if it has images ?>
+            <h2><?php echo htmlspecialchars($album['name']); ?></h2>
+            <div class="image-gallery">
+                <?php foreach ($images as $img): ?>
+                    <?php if ($img['album_id'] === $album['id']): ?>
+                        <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>')">
+                            <img 
+                                src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>" 
+                                alt="<?php echo htmlspecialchars($img['filename']); ?>"
+                                loading="lazy"
+                            />
+                            <p class="image-title"><?php echo htmlspecialchars($img['filename']); ?></p>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
 </div>
 
 <!-- Modal -->

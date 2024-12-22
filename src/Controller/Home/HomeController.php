@@ -18,30 +18,56 @@ class HomeController {
     }
     
     public function index() {
+        // Get search and sort parameters
+        $searchQuery = $_GET['search'] ?? '';
+        $selectedAlbumSearch = $_GET['album_search'] ?? '';
+        $sortBy = $_GET['sort_by'] ?? 'filename_asc';
+
+        // Fetch albums and images
         $albums = $this->albumModel->getAllAlbums();
         $images = $this->imageModel->getAllImages();
-        $selectedAlbumId = isset($_GET['album_id']) ? intval($_GET['album_id']) : null;
-        // $selectedAlbumId = 1;
-        // 从配置文件获取 host
-        $config = include dirname(__DIR__, 3) . '/config/config.php';
-        
-        // 加载视图并传递数据
+
+        // Filter and sort images
+        $filteredImages = $this->filterAndSortImages($images, $searchQuery, $selectedAlbumSearch, $sortBy);
+
+        // Prepare data for the view
         $viewData = [
-            'title' => 'Photography CMS',
             'albums' => $albums,
-            'images' => $images,
-            'selectedAlbumId' => $selectedAlbumId,
-            'sortBy' => isset($_GET['sort_by']) ? $_GET['sort_by'] : 'filename_asc',
-            'searchQuery' => isset($_GET['search']) ? $_GET['search'] : '',
-            'selectedAlbumSearch' => isset($_GET['album_search']) ? intval($_GET['album_search']) : null,
-            'image' => $this->imageModel,
-            'host' => $config['host'],  // 添加 host 配置
-            'albumModel' => $this->albumModel // Ensure albumModel is passed to the view
+            'images' => $filteredImages,
+            'searchQuery' => $searchQuery,
+            'selectedAlbumSearch' => $selectedAlbumSearch,
+            'sortBy' => $sortBy,
         ];
-        
-        require_once __DIR__ . '/../../View/Home/home.php';
+
+        // Load the view
+        $this->loadView('Home/home', $viewData);
     }
-    
+
+    private function filterAndSortImages($images, $searchQuery, $selectedAlbumSearch, $sortBy) {
+        // Filter images based on search query and selected album
+        $filteredImages = array_filter($images, function($img) use ($searchQuery, $selectedAlbumSearch) {
+            $matchesSearch = empty($searchQuery) || stripos($img['filename'], $searchQuery) !== false;
+            $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $img['album_id'];
+            return $matchesSearch && $matchesAlbum;
+        });
+
+        // Sort images based on selected criteria
+        usort($filteredImages, function($a, $b) use ($sortBy) {
+            switch ($sortBy) {
+                case 'filename_asc':
+                    return strcmp($a['filename'], $b['filename']);
+                case 'filename_desc':
+                    return strcmp($b['filename'], $a['filename']);
+                case 'created_at_new_old':
+                    return strtotime($b['created_at']) - strtotime($a['created_at']);
+                case 'created_at_old_new':
+                    return strtotime($a['created_at']) - strtotime($b['created_at']);
+            }
+        });
+
+        return $filteredImages;
+    }
+
     public function logout() {
         // 清除所有会话变量
         $_SESSION = [];
@@ -125,5 +151,20 @@ class HomeController {
 
         // Load the registration view
         require_once __DIR__ . '/../../View/Home/register.php';
+    }
+
+    private function loadView($viewPath, $viewData = []) {
+        // Extract the view data to be used in the view
+        extract($viewData);
+
+        // Construct the full path to the view file
+        $viewFile = __DIR__ . '/../../View/' . $viewPath . '.php';
+
+        // Check if the view file exists
+        if (file_exists($viewFile)) {
+            require_once $viewFile; // Include the view file
+        } else {
+            die("View file not found: " . $viewFile); // Handle error if view file is missing
+        }
     }
 } 
