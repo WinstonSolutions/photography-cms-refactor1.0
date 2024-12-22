@@ -47,7 +47,7 @@ class HomeController {
         // Filter images based on search query and selected album
         $filteredImages = array_filter($images, function($img) use ($searchQuery, $selectedAlbumSearch) {
             $matchesSearch = empty($searchQuery) || stripos($img['filename'], $searchQuery) !== false;
-            $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch === $img['album_id'];
+            $matchesAlbum = empty($selectedAlbumSearch) || $selectedAlbumSearch == $img['album_id'];
             return $matchesSearch && $matchesAlbum;
         });
 
