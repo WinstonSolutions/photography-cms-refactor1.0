@@ -21,6 +21,7 @@ class HomeController {
         // Get search and sort parameters
         $searchQuery = $_GET['search'] ?? '';
         $selectedAlbumSearch = $_GET['album_search'] ?? '';
+        $selectedAlbumId = $_GET['album_id'] ?? null;
         $sortBy = $_GET['sort_by'] ?? 'filename_asc';
 
         // Fetch albums and images
@@ -36,6 +37,7 @@ class HomeController {
             'images' => $filteredImages,
             'searchQuery' => $searchQuery,
             'selectedAlbumSearch' => $selectedAlbumSearch,
+            'selectedAlbumId' => $selectedAlbumId,
             'sortBy' => $sortBy,
         ];
 
@@ -62,6 +64,8 @@ class HomeController {
                     return strtotime($b['created_at']) - strtotime($a['created_at']);
                 case 'created_at_old_new':
                     return strtotime($a['created_at']) - strtotime($b['created_at']);
+                default:
+                    return strcmp($a['filename'], $b['filename']); // Default sorting
             }
         });
 
