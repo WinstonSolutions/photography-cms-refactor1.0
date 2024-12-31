@@ -9,6 +9,9 @@ require_once __DIR__ . '/../Shared/header.php';
 // Extract data
 extract($viewData);
 
+// Check if an album ID is provided in the query string
+$selectedAlbumId = $_GET['album_id'] ?? null;
+
 // View code starts
 $host = $_SERVER['HTTP_HOST'];
 if ($host === 'localhost') {
@@ -41,10 +44,10 @@ if ($host === 'localhost') {
     <!-- Display albums and their images -->
     <?php foreach ($albums as $album): ?>
         <?php 
-        // Check if the album has images
+        // Check if the album has images and matches the selected album ID
         $hasImages = false;
         foreach ($images as $img) {
-            if ($img['album_id'] === $album['id']) {
+            if ($img['album_id'] === $album['id'] && (!$selectedAlbumId || $selectedAlbumId == $album['id'])) {
                 $hasImages = true;
                 break; // Exit loop after finding at least one image
             }
@@ -54,7 +57,7 @@ if ($host === 'localhost') {
             <h2><?php echo htmlspecialchars($album['name']); ?></h2>
             <div class="image-gallery">
                 <?php foreach ($images as $img): ?>
-                    <?php if ($img['album_id'] === $album['id']): ?>
+                    <?php if ($img['album_id'] === $album['id'] && (!$selectedAlbumId || $selectedAlbumId == $album['id'])): ?>
                         <div class="image-item" onclick="openModal('<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>')">
                             <img 
                                 src="<?php echo isset($host) ? 'http://' . $host : ''; ?>/storage/<?php echo htmlspecialchars($img['file_path']); ?>" 
