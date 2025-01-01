@@ -171,4 +171,29 @@ class HomeController {
             die("View file not found: " . $viewFile); // Handle error if view file is missing
         }
     }
+
+    public function sort() {
+        // 获取排序参数
+        $sortBy = $_GET['sort_by'] ?? 'filename_asc';
+        $albumId = $_GET['album_id'] ?? null;
+        
+        // 获取图片
+        $images = $this->imageModel->getAllImages();
+        
+        // 过滤指定相册的图片
+        $albumImages = array_filter($images, function($img) use ($albumId) {
+            return $img['album_id'] == $albumId;
+        });
+        
+        // 排序图片
+        $sortedImages = $this->filterAndSortImages($albumImages, '', '', $sortBy);
+        
+        // 返回JSON响应，只返回相对路径
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'images' => $sortedImages
+        ]);
+        exit;
+    }
 } 

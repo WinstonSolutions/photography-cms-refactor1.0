@@ -61,17 +61,14 @@ if ($host === 'localhost') {
             <div>
             <?php if (!empty($selectedAlbumId)): ?>
                 <!-- Sort By dropdown -->
-                <form method="GET" action="" id="sortForm">
-                    <!-- Preserve existing search parameters -->
-                    <input type="hidden" name="access_cms" value="1">
-                    <input type="hidden" name="album_id" value="<?php echo htmlspecialchars($selectedAlbumId); ?>">
-                    <select name="sort_by" onchange="this.form.submit()">
+                <div>
+                    <select id="sort_by" data-album-id="<?php echo htmlspecialchars($selectedAlbumId); ?>">
                         <option value="filename_asc" <?php echo $sortBy === 'filename_asc' ? 'selected' : ''; ?>>Filename Ascending</option>
                         <option value="filename_desc" <?php echo $sortBy === 'filename_desc' ? 'selected' : ''; ?>>Filename Descending</option>
                         <option value="created_at_new_old" <?php echo $sortBy === 'created_at_new_old' ? 'selected' : ''; ?>>Newest First</option>
                         <option value="created_at_old_new" <?php echo $sortBy === 'created_at_old_new' ? 'selected' : ''; ?>>Oldest First</option>
                     </select>
-                </form>
+                </div>
             <?php endif; ?>
             </div>
             <div class="image-gallery">

@@ -60,6 +60,9 @@ if (isset($_GET['access_cms']) || isset($_GET['action']) || isset($_GET['search'
         case 'showRegister':
             $homeController->showRegister();
             break;
+        case 'sort':
+            $homeController->sort();
+            break;
         default:
             $homeController->index();
             break;
